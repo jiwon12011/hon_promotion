@@ -1086,6 +1086,511 @@ a {
   animation-delay: -2s;
 }
 
+.job-section {
+  isolation: isolate;
+  background: #11100d;
+}
+
+.job-section__bg,
+.job-section__shade,
+.job-section__effects,
+.job-section__ambient,
+.job-section__showcase,
+.job-section__platform,
+.job-section__weapon-glow {
+  position: absolute;
+  pointer-events: none;
+}
+
+.job-section__bg {
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  filter: saturate(1.08) brightness(0.94);
+}
+
+.job-section__shade {
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at 44% 47%, rgba(255, 226, 148, 0.28), transparent 28%),
+    linear-gradient(90deg, rgba(9, 8, 6, 0.64) 0%, rgba(9, 8, 6, 0.22) 35%, rgba(9, 8, 6, 0.08) 62%, rgba(9, 8, 6, 0.34) 100%),
+    linear-gradient(180deg, rgba(255, 231, 155, 0.04) 0%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+.job-section__effects,
+.job-section__ambient {
+  inset: 0;
+  z-index: 7;
+  overflow: hidden;
+}
+
+.job-section__leaf {
+  position: absolute;
+  top: -8vh;
+  left: var(--x);
+  width: var(--size);
+  height: calc(var(--size) * 0.72);
+  border-radius: 90% 0 90% 0;
+  background: linear-gradient(135deg, rgba(230, 183, 77, 0.9), rgba(81, 120, 37, 0.62));
+  filter: drop-shadow(0 0 5px rgba(255, 223, 139, 0.38));
+  opacity: 0.52;
+  transform: rotate(28deg);
+  animation: jobLeafFall 8s linear infinite;
+  animation-delay: var(--delay);
+}
+
+.job-section__index {
+  position: absolute;
+  z-index: 6;
+  top: clamp(28px, 4vh, 46px);
+  left: clamp(32px, 4.3vw, 70px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(420px, 28vw);
+  color: #d4a65f;
+  font-family: "GapyeongHanseokbongBigBrush", serif;
+  font-size: clamp(17px, 1.2vw, 24px);
+  font-weight: 700;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.48);
+}
+
+.job-section__index strong {
+  font-size: 1.45em;
+}
+
+.job-section__index::after {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 166, 95, 0.7), rgba(212, 166, 95, 0));
+  content: "";
+}
+
+.job-section__left {
+  position: absolute;
+  z-index: 6;
+  top: clamp(112px, 14vh, 154px);
+  left: clamp(36px, 5vw, 86px);
+  width: min(34vw, 510px);
+  color: #f1d59b;
+}
+
+.job-section__title-group {
+  position: relative;
+}
+
+.job-section__seal {
+  position: absolute;
+  top: 12px;
+  left: -42px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 118px;
+  border-radius: 999px;
+  background: rgba(116, 41, 24, 0.72);
+  color: rgba(255, 225, 173, 0.88);
+  font-family: "GapyeongHanseokbongBigBrush", serif;
+  font-size: 17px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  box-shadow: inset 0 0 0 1px rgba(255, 202, 124, 0.18), 0 12px 22px rgba(0, 0, 0, 0.24);
+}
+
+.job-section__title {
+  margin: 0;
+  color: #24160d;
+  font-family: "GapyeongHanseokbongBigBrush", AppleMyungjo, serif;
+  font-size: clamp(66px, 6.1vw, 118px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-shadow:
+    0 2px 0 rgba(255, 225, 174, 0.42),
+    0 12px 22px rgba(255, 222, 151, 0.3);
+}
+
+.job-section__copy {
+  margin: clamp(22px, 2vh, 30px) 0 0;
+  color: #3e2a1c;
+  font-size: clamp(22px, 1.55vw, 32px);
+  font-weight: 800;
+  line-height: 1.48;
+  text-shadow: 0 1px 0 rgba(255, 231, 179, 0.25);
+}
+
+.job-section__info {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 16px;
+  align-items: center;
+  width: min(370px, 100%);
+  margin-top: clamp(190px, 24vh, 260px);
+  padding: 13px 16px;
+  border-left: 2px solid rgba(241, 200, 117, 0.56);
+  background: linear-gradient(90deg, rgba(15, 13, 10, 0.52), rgba(15, 13, 10, 0.08));
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.22));
+}
+
+.job-section__info img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px var(--job-color));
+}
+
+.job-section__info h3 {
+  margin: 0;
+  color: #fff2c7;
+  font-family: "GapyeongHanseokbongBigBrush", serif;
+  font-size: clamp(25px, 1.8vw, 38px);
+  line-height: 1;
+}
+
+.job-section__info p {
+  margin: 8px 0 0;
+  color: #f6e0aa;
+  font-size: clamp(14px, 0.9vw, 17px);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.job-section__skills {
+  position: absolute;
+  z-index: 8;
+  left: clamp(54px, 6.2vw, 106px);
+  bottom: clamp(28px, 5vh, 56px);
+  width: min(770px, 53vw);
+  color: #f5d998;
+}
+
+.job-section__skills p {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 14px;
+  font-family: "GapyeongHanseokbongBigBrush", serif;
+  font-size: clamp(19px, 1.25vw, 26px);
+  font-weight: 700;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.58);
+}
+
+.job-section__skills p::before,
+.job-section__skills p::after {
+  width: clamp(70px, 8vw, 160px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(209, 161, 79, 0), rgba(209, 161, 79, 0.78));
+  content: "";
+}
+
+.job-section__skills p::after {
+  background: linear-gradient(90deg, rgba(209, 161, 79, 0.78), rgba(209, 161, 79, 0));
+}
+
+.job-section__skill-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(84px, 1fr));
+  gap: clamp(12px, 1.2vw, 22px);
+}
+
+.job-section__skill {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  min-width: 0;
+  color: #f6dda2;
+  font-size: clamp(12px, 0.8vw, 15px);
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.62);
+  cursor: pointer;
+  will-change: transform;
+}
+
+.job-section__skill::before {
+  position: absolute;
+  top: -7px;
+  width: clamp(76px, 5.8vw, 108px);
+  aspect-ratio: 1;
+  border: 2px solid rgba(255, 220, 132, 0.56);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(255, 255, 235, 0.1), transparent 55%),
+    conic-gradient(from 20deg, rgba(255, 224, 139, 0.15), var(--job-color), rgba(255, 224, 139, 0.15), var(--job-color), rgba(255, 224, 139, 0.15));
+  box-shadow:
+    inset 0 0 14px rgba(255, 231, 156, 0.26),
+    0 0 18px color-mix(in srgb, var(--job-color) 70%, transparent),
+    0 12px 16px rgba(0, 0, 0, 0.34);
+  content: "";
+  animation: skillFrameSpin 5.8s linear infinite;
+}
+
+.job-section__skill img {
+  position: relative;
+  z-index: 1;
+  width: clamp(70px, 5.35vw, 100px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.18);
+  clip-path: circle(45% at 50% 50%);
+  filter:
+    saturate(1.12)
+    drop-shadow(0 0 10px color-mix(in srgb, var(--job-color) 72%, transparent));
+  transition: filter 180ms ease;
+}
+
+.job-section__skill:hover img {
+  filter:
+    brightness(1.2)
+    saturate(1.24)
+    drop-shadow(0 0 18px var(--job-color));
+}
+
+.job-section__skill span {
+  position: relative;
+  z-index: 1;
+}
+
+.job-section__showcase {
+  z-index: 5;
+  left: 30%;
+  bottom: 5vh;
+  width: min(40vw, 680px);
+  height: 78vh;
+}
+
+.job-section__platform {
+  z-index: 1;
+  left: 50%;
+  bottom: 6vh;
+  width: min(27vw, 450px);
+  height: min(9vw, 130px);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(255, 236, 170, 0.36), rgba(210, 157, 80, 0.18) 35%, rgba(40, 22, 8, 0.62) 68%, transparent 72%);
+  filter: blur(2px) drop-shadow(0 20px 22px rgba(0, 0, 0, 0.35));
+  transform: translateX(-50%);
+}
+
+.job-section__main-character {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 49%;
+  width: min(42vw, 660px);
+  max-height: 78vh;
+  object-fit: contain;
+  transform: translateX(-50%);
+  filter:
+    drop-shadow(0 28px 30px rgba(0, 0, 0, 0.48))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--job-color) 60%, transparent));
+  user-select: none;
+  will-change: transform, opacity, filter;
+}
+
+.job-section__weapon-glow {
+  z-index: 2;
+  left: 22%;
+  bottom: 17%;
+  width: 44%;
+  height: 12%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--job-color) 62%, white), transparent);
+  filter: blur(15px);
+  mix-blend-mode: screen;
+  opacity: 0.58;
+  transform: rotate(-18deg);
+  animation: weaponGlow 1.8s ease-in-out infinite alternate;
+}
+
+.job-section__cards {
+  position: absolute;
+  z-index: 8;
+  top: clamp(76px, 9vh, 100px);
+  right: clamp(30px, 4.6vw, 78px);
+  display: grid;
+  gap: clamp(12px, 1.4vh, 18px);
+  width: min(36vw, 550px);
+}
+
+.job-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38% 1fr 76px;
+  align-items: center;
+  min-height: clamp(92px, 12.4vh, 128px);
+  overflow: hidden;
+  padding: 10px 18px 10px 4px;
+  border: 1px solid rgba(211, 159, 78, 0.42);
+  border-radius: 4px;
+  background:
+    linear-gradient(90deg, rgba(255, 235, 184, 0.93), rgba(255, 248, 221, 0.82)),
+    rgba(246, 218, 163, 0.9);
+  box-shadow:
+    inset 0 0 18px rgba(91, 49, 17, 0.14),
+    0 12px 22px rgba(0, 0, 0, 0.22);
+  color: #382012;
+  text-align: left;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.job-card::before {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 234, 175, 0.32);
+  content: "";
+  pointer-events: none;
+}
+
+.job-card::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--job-color) 24%, transparent), transparent 44%),
+    linear-gradient(105deg, transparent 0%, transparent 36%, rgba(255, 255, 235, 0.42) 50%, transparent 64%, transparent 100%);
+  content: "";
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.job-card.is-active {
+  border-color: color-mix(in srgb, var(--job-color) 75%, #fff);
+  box-shadow:
+    inset 0 0 24px color-mix(in srgb, var(--job-color) 24%, transparent),
+    0 0 22px color-mix(in srgb, var(--job-color) 46%, transparent),
+    0 18px 28px rgba(0, 0, 0, 0.26);
+}
+
+.job-card.is-active::after {
+  opacity: 0.9;
+  animation: cardShine 2.6s ease-in-out infinite;
+}
+
+.job-card__image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: clamp(72px, 10vh, 112px);
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.18));
+  transform-origin: center bottom;
+}
+
+.job-card__text {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding-left: 6px;
+}
+
+.job-card__text strong {
+  display: block;
+  color: color-mix(in srgb, var(--job-color) 76%, #321607);
+  font-family: "GapyeongHanseokbongBigBrush", serif;
+  font-size: clamp(26px, 2.1vw, 40px);
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(255, 246, 214, 0.5);
+}
+
+.job-card__text span {
+  display: block;
+  margin-top: 8px;
+  color: rgba(54, 34, 20, 0.84);
+  font-size: clamp(12px, 0.85vw, 16px);
+  font-weight: 800;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.job-card__symbol {
+  position: relative;
+  z-index: 1;
+  width: clamp(54px, 4.6vw, 76px);
+  height: clamp(54px, 4.6vw, 76px);
+  object-fit: contain;
+  opacity: 0.82;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--job-color) 45%, transparent));
+}
+
+.job-section__shockwave,
+.job-section__burst-particle {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.job-section__shockwave {
+  width: 8px;
+  height: 8px;
+  border: 2px solid;
+  border-radius: 50%;
+  opacity: 0.72;
+  transform: translate(-50%, -50%);
+}
+
+.job-section__burst-particle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50% 0 50% 0;
+  box-shadow: 0 0 12px currentColor;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+
+@keyframes jobLeafFall {
+  0% {
+    translate: 0 -10vh;
+    rotate: 0deg;
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.64;
+  }
+
+  100% {
+    translate: 120px 118vh;
+    rotate: 520deg;
+    opacity: 0;
+  }
+}
+
+@keyframes skillFrameSpin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes weaponGlow {
+  to {
+    opacity: 0.9;
+    scale: 1.08;
+  }
+}
+
+@keyframes cardShine {
+  0%,
+  42% {
+    transform: translateX(-58%);
+  }
+
+  78%,
+  100% {
+    transform: translateX(58%);
+  }
+}
+
 @keyframes towerAuraSpin {
   to {
     rotate: 360deg;
@@ -1337,5 +1842,138 @@ a {
     left: auto;
     right: 8vw;
     transform: none;
+  }
+
+  .job-section__index {
+    top: 4vh;
+    left: 20px;
+    width: calc(100% - 40px);
+  }
+
+  .job-section__left {
+    top: 10vh;
+    left: 24px;
+    width: calc(100% - 48px);
+  }
+
+  .job-section__seal {
+    left: 0;
+    top: -8px;
+    width: 28px;
+    height: 90px;
+    font-size: 13px;
+    opacity: 0.72;
+  }
+
+  .job-section__title {
+    padding-left: 34px;
+    font-size: clamp(56px, 17vw, 86px);
+  }
+
+  .job-section__copy {
+    padding-left: 34px;
+    font-size: 18px;
+  }
+
+  .job-section__info {
+    width: min(310px, 76vw);
+    margin-top: 22vh;
+    grid-template-columns: 44px 1fr;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .job-section__info img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .job-section__info h3 {
+    font-size: 25px;
+  }
+
+  .job-section__info p {
+    font-size: 12px;
+  }
+
+  .job-section__showcase {
+    left: 18%;
+    bottom: 23vh;
+    width: 76vw;
+    height: 50vh;
+    opacity: 0.9;
+  }
+
+  .job-section__main-character {
+    left: 50%;
+    width: min(92vw, 430px);
+    max-height: 50vh;
+  }
+
+  .job-section__platform,
+  .job-section__weapon-glow {
+    opacity: 0.55;
+  }
+
+  .job-section__cards {
+    top: auto;
+    right: 14px;
+    bottom: 15vh;
+    gap: 7px;
+    width: min(47vw, 210px);
+  }
+
+  .job-card {
+    grid-template-columns: 42% 1fr;
+    min-height: 58px;
+    padding: 5px 8px 5px 0;
+  }
+
+  .job-card__image {
+    height: 52px;
+  }
+
+  .job-card__text strong {
+    font-size: 20px;
+  }
+
+  .job-card__text span,
+  .job-card__symbol {
+    display: none;
+  }
+
+  .job-section__skills {
+    left: 16px;
+    right: 16px;
+    bottom: 12px;
+    width: auto;
+  }
+
+  .job-section__skills p {
+    margin-bottom: 8px;
+    font-size: 17px;
+  }
+
+  .job-section__skills p::before,
+  .job-section__skills p::after {
+    width: 42px;
+  }
+
+  .job-section__skill-list {
+    grid-template-columns: repeat(5, minmax(50px, 1fr));
+    gap: 5px;
+  }
+
+  .job-section__skill {
+    gap: 4px;
+    font-size: 10px;
+  }
+
+  .job-section__skill::before {
+    width: 52px;
+  }
+
+  .job-section__skill img {
+    width: 50px;
   }
 }
