@@ -122,10 +122,10 @@ a {
 .hero-section__sunlight {
   position: absolute;
   z-index: 2;
-  top: 5.6vh;
-  left: 19vw;
-  width: 50vw;
-  height: 48vh;
+  top: 1.8vh;
+  left: 11vw;
+  width: 70vw;
+  height: 58vh;
   opacity: 0;
   pointer-events: none;
   mix-blend-mode: screen;
@@ -133,9 +133,9 @@ a {
 
 .hero-section__sun-core {
   position: absolute;
-  top: 26%;
-  left: 52%;
-  width: 18%;
+  top: 23%;
+  left: 42%;
+  width: 15%;
   aspect-ratio: 1;
   border-radius: 50%;
   background:
@@ -146,13 +146,13 @@ a {
 
 .hero-section__sun-rays {
   position: absolute;
-  inset: -26% -8% -14% -8%;
+  inset: -18% -4% -24% -10%;
   background:
-    repeating-conic-gradient(from -12deg at 52% 26%, rgba(255, 255, 235, 0.38) 0deg 4deg, rgba(255, 224, 130, 0.04) 5deg 13deg, rgba(255, 255, 255, 0) 14deg 22deg),
-    radial-gradient(circle at 52% 26%, rgba(255, 247, 198, 0.86) 0%, rgba(255, 221, 128, 0.34) 23%, rgba(255, 255, 255, 0) 58%);
-  filter: blur(8px);
-  mask-image: radial-gradient(circle at 52% 26%, #000 0%, rgba(0, 0, 0, 0.86) 28%, rgba(0, 0, 0, 0.18) 58%, transparent 76%);
-  opacity: 0.82;
+    repeating-conic-gradient(from -20deg at 42% 23%, rgba(255, 255, 238, 0.36) 0deg 3deg, rgba(255, 224, 130, 0.08) 5deg 12deg, rgba(255, 255, 255, 0) 15deg 26deg),
+    radial-gradient(ellipse at 42% 23%, rgba(255, 249, 204, 0.72) 0%, rgba(255, 222, 133, 0.28) 25%, rgba(255, 255, 255, 0) 62%);
+  filter: blur(11px);
+  mask-image: radial-gradient(ellipse at 42% 24%, #000 0%, rgba(0, 0, 0, 0.86) 24%, rgba(0, 0, 0, 0.28) 56%, transparent 82%);
+  opacity: 0.9;
 }
 
 .hero-section__glint {
@@ -182,19 +182,33 @@ a {
   text-align: center;
 }
 
-.hero-section__content::before {
+.hero-section__content::before,
+.hero-section__content::after {
   position: absolute;
   z-index: 0;
-  inset: 7% -8% 5% -8%;
-  border-radius: 46%;
-  background:
-    radial-gradient(circle at 45% 42%, rgba(255, 251, 222, 0.7), rgba(255, 228, 150, 0.38) 36%, rgba(255, 202, 104, 0.15) 56%, rgba(255, 255, 255, 0) 76%),
-    radial-gradient(ellipse at 48% 58%, rgba(255, 244, 202, 0.42), rgba(255, 255, 255, 0) 68%);
-  backdrop-filter: blur(1.5px) brightness(1.08);
   content: "";
   mix-blend-mode: screen;
-  opacity: 0.95;
   pointer-events: none;
+}
+
+.hero-section__content::before {
+  inset: -9% -32% -7% -28%;
+  background:
+    radial-gradient(ellipse at 42% 21%, rgba(255, 250, 218, 0.76), rgba(255, 229, 151, 0.34) 26%, rgba(255, 220, 126, 0.12) 47%, rgba(255, 255, 255, 0) 74%),
+    linear-gradient(115deg, rgba(255, 251, 222, 0) 4%, rgba(255, 238, 177, 0.22) 22%, rgba(255, 231, 153, 0.14) 44%, rgba(255, 255, 255, 0) 72%);
+  filter: blur(18px);
+  mask-image: radial-gradient(ellipse at 42% 31%, #000 0%, rgba(0, 0, 0, 0.76) 35%, rgba(0, 0, 0, 0.22) 62%, transparent 82%);
+  opacity: 0.86;
+}
+
+.hero-section__content::after {
+  inset: -13% -38% 24% -34%;
+  background:
+    repeating-conic-gradient(from -26deg at 43% 24%, rgba(255, 255, 235, 0.28) 0deg 2deg, rgba(255, 225, 147, 0.09) 4deg 8deg, rgba(255, 255, 255, 0) 10deg 20deg),
+    radial-gradient(ellipse at 43% 24%, rgba(255, 246, 197, 0.5), rgba(255, 232, 158, 0.15) 32%, rgba(255, 255, 255, 0) 68%);
+  filter: blur(6px);
+  mask-image: radial-gradient(ellipse at 43% 27%, #000 0%, rgba(0, 0, 0, 0.64) 34%, rgba(0, 0, 0, 0.16) 62%, transparent 82%);
+  opacity: 0.78;
 }
 
 .hero-section__title {
