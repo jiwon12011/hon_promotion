@@ -84,6 +84,9 @@ onBeforeUnmount(() => {
     <img class="world-section__island world-section__island--one" :src="islandOneUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--two" :src="islandTwoUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--three" :src="islandThreeUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__island world-section__island--four" :src="islandTwoUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__island world-section__island--five" :src="islandOneUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__island world-section__island--six" :src="islandThreeUrl" alt="" aria-hidden="true" loading="lazy" />
 
     <div class="world-section__index" aria-hidden="true">
       <strong>02</strong>
