@@ -262,8 +262,8 @@ a {
   display: grid;
   justify-items: center;
   gap: clamp(12px, 1.35vw, 20px);
-  width: min(720px, calc(100% - 40px));
-  margin-left: clamp(42px, 8.7vw, 174px);
+  width: min(650px, calc(100% - 40px));
+  margin-left: clamp(28px, 5.4vw, 104px);
   padding-top: clamp(58px, 10.4vh, 112px);
   color: #17110b;
   text-align: center;
@@ -320,7 +320,7 @@ a {
   display: grid;
   gap: 0;
   width: max-content;
-  max-width: min(690px, 51vw);
+  max-width: min(630px, 45vw);
   margin: clamp(14px, 2.1vh, 24px) 0 0;
   color: #080706;
   font-family: "GapyeongHanseokbongBigBrush", AppleMyungjo, serif;
@@ -334,7 +334,7 @@ a {
     0 2px 0 rgba(255, 226, 168, 0.32),
     0 8px 12px rgba(255, 226, 164, 0.24),
     0 12px 18px rgba(0, 0, 0, 0.26);
-  opacity: 0;
+  opacity: 1;
 }
 
 .hero-section__copy-line {
