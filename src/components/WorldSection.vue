@@ -9,6 +9,8 @@ import islandThreeUrl from "@/assets/images/section2-island-3.png";
 import characterGreenUrl from "@/assets/images/section2-character-green-cut.png";
 import characterPinkUrl from "@/assets/images/section2-character-pink-cut.png";
 import characterPurpleUrl from "@/assets/images/section2-character-purple-cut.png";
+import trialButtonUrl from "@/assets/images/section2-trial-button.png";
+import trialScrollUrl from "@/assets/images/section2-trial-scroll.png";
 import rewardCoinsUrl from "@/assets/images/section2-reward-coins.png";
 import rewardChestUrl from "@/assets/images/section2-reward-chest-red.png";
 import rewardCrystalUrl from "@/assets/images/section2-reward-crystal.png";
@@ -21,12 +23,6 @@ const rewards = [
   { image: rewardCrystalUrl, label: "승급석" },
   { image: rewardOrbUrl, label: "화신의 기운" },
   { image: rewardKeyUrl, label: "탑의 열쇠" }
-];
-
-const features = [
-  { icon: "⚔", title: "50층까지 도전!", text: "점점 더 강력한 요괴가 당신을 기다립니다." },
-  { icon: "🏆", title: "풍성한 보상!", text: "층을 올라서 보상과 최고 기록 보상을 획득하세요." },
-  { icon: "👥", title: "팀을 구성하라!", text: "계정 내 다양한 캐릭터로 최강의 팀을 만드세요." }
 ];
 
 const sectionRef = ref(null);
@@ -51,9 +47,8 @@ onMounted(() => {
     .fromTo(section.querySelector(".world-section__heading"), { x: -52, opacity: 0, clipPath: "inset(0 100% 0 0)" }, { x: 0, opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "expo.out" }, 0.58)
     .fromTo(section.querySelector(".world-section__description"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.88)
     .fromTo(section.querySelector(".world-section__divider"), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.45, transformOrigin: "center" }, 0.98)
-    .fromTo(section.querySelector(".world-section__panel"), { x: -32, y: 22, opacity: 0, rotateX: -9 }, { x: 0, y: 0, opacity: 1, rotateX: 0, duration: 0.7, ease: "back.out(1.35)" }, 1.08)
-    .fromTo(section.querySelectorAll(".feature-row"), { x: -18, opacity: 0 }, { x: 0, opacity: 1, duration: 0.42, stagger: 0.12 }, 1.22)
-    .fromTo(section.querySelector(".world-section__cta"), { y: 22, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.52, ease: "back.out(1.8)" }, 1.54)
+    .fromTo(section.querySelector(".world-section__trial-scroll"), { x: -32, y: 22, opacity: 0, rotateX: -9 }, { x: 0, y: 0, opacity: 1, rotateX: 0, duration: 0.7, ease: "back.out(1.35)" }, 1.08)
+    .fromTo(section.querySelector(".world-section__trial-button"), { y: 22, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.52, ease: "back.out(1.8)" }, 1.42)
     .fromTo(section.querySelector(".world-section__reward-strip"), { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: 0.62 }, 1.48)
     .fromTo(section.querySelectorAll(".reward-card"), { y: 22, scale: 0.62, opacity: 0, rotate: -8 }, { y: 0, scale: 1, opacity: 1, rotate: 0, duration: 0.52, stagger: 0.08, ease: "back.out(2.1)" }, 1.62)
     .fromTo(section.querySelectorAll(".world-section__character"), { y: 70, x: 34, scale: 0.88, opacity: 0 }, { y: 0, x: 0, scale: 1, opacity: 1, duration: 0.78, stagger: 0.1, ease: "back.out(1.55)" }, 1.72)
@@ -101,17 +96,16 @@ onBeforeUnmount(() => {
 
       <div class="world-section__divider" aria-hidden="true" />
 
-      <div class="world-section__panel">
-        <article v-for="feature in features" :key="feature.title" class="feature-row">
-          <span class="feature-row__icon" aria-hidden="true">{{ feature.icon }}</span>
-          <span>
-            <strong>{{ feature.title }}</strong>
-            <em>{{ feature.text }}</em>
-          </span>
-        </article>
-      </div>
+      <img
+        class="world-section__trial-scroll"
+        :src="trialScrollUrl"
+        alt="50층까지 도전! 풍성한 보상! 팀을 구성하라!"
+        loading="lazy"
+      />
 
-      <button class="world-section__cta" type="button">탑 도전하기 <span aria-hidden="true">→</span></button>
+      <button class="world-section__trial-button" type="button" aria-label="탑 도전하기">
+        <img :src="trialButtonUrl" alt="" aria-hidden="true" loading="lazy" />
+      </button>
     </div>
 
     <div class="world-section__reward-strip">
