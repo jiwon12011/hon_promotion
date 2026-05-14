@@ -208,14 +208,12 @@ async function changeJob(jobKey) {
       })
       .to(root.querySelector(".job-section__info"), { y: -24, opacity: 0, duration: 0.22 }, 0)
       .to(root.querySelectorAll(".job-section__skill"), {
-        x: (index) => (index - 2) * 32,
-        y: 34,
-        scale: 0,
-        rotate: (index) => (index % 2 ? -45 : 45),
+        y: 12,
+        scale: 0.82,
         opacity: 0,
         stagger: 0.03,
-        duration: 0.22,
-        ease: "back.in(1.5)"
+        duration: 0.18,
+        ease: "power2.in"
       }, 0.03);
   });
 
@@ -229,11 +227,11 @@ async function changeJob(jobKey) {
   );
   gsap.fromTo(root.querySelector(".job-section__info"), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, delay: 0.16 });
   gsap.fromTo(root.querySelectorAll(".job-section__skill"),
-    { scale: 0, opacity: 0, rotate: -90, x: 0, y: 0 },
-    { scale: 1, opacity: 1, rotate: 0, duration: 0.54, stagger: { each: 0.07, from: "center" }, ease: "elastic.out(1, 0.55)", delay: 0.12 }
+    { scale: 0.82, opacity: 0, x: 0, y: 10 },
+    { scale: 1, opacity: 1, y: 0, duration: 0.32, stagger: { each: 0.05, from: "center" }, ease: "power2.out", delay: 0.12 }
   );
 
-  skillPulseTween?.restart();
+  skillPulseTween?.restart(true).pause();
   window.setTimeout(() => {
     isSwitching.value = false;
   }, 520);
@@ -272,7 +270,7 @@ onMounted(() => {
     .fromTo(root.querySelector(".job-section__main-character"), { y: 92, scale: 0.82, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.92, ease: "back.out(1.25)" }, 0.58)
     .fromTo(root.querySelector(".job-section__info"), { x: -34, opacity: 0 }, { x: 0, opacity: 1, duration: 0.52 }, 0.88)
     .fromTo(root.querySelectorAll(".job-card"), { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.62, stagger: 0.1 }, 0.78)
-    .fromTo(root.querySelectorAll(".job-section__skill"), { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.48, stagger: 0.08, ease: "elastic.out(1, 0.55)" }, 1.16)
+    .fromTo(root.querySelectorAll(".job-section__skill"), { scale: 0.82, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.34, stagger: 0.06, ease: "power2.out" }, 1.16)
     .fromTo(root.querySelectorAll(".job-section__leaf"), { y: -40, opacity: 0 }, { y: "110vh", opacity: 0.7, duration: 5.8, stagger: 0.12, ease: "none" }, 0.1);
 
   if (!prefersReducedMotion) {
@@ -284,14 +282,7 @@ onMounted(() => {
       ease: "sine.inOut"
     });
 
-    skillPulseTween = gsap.to(root.querySelectorAll(".job-section__skill"), {
-      scale: 1.045,
-      duration: 1.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      stagger: { each: 0.18, from: "center" }
-    });
+    skillPulseTween = gsap.to(root.querySelectorAll(".job-section__skill"), { scale: 1, duration: 0.01, paused: true });
   }
 
   observer = new IntersectionObserver(([entry]) => {
