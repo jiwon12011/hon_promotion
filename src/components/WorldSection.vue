@@ -9,6 +9,7 @@ import islandThreeUrl from "@/assets/images/section2-island-3.png";
 import characterGreenUrl from "@/assets/images/section2-character-green-cut.png";
 import characterPinkUrl from "@/assets/images/section2-character-pink-cut.png";
 import characterPurpleUrl from "@/assets/images/section2-character-purple-cut.png";
+import rightTreeUrl from "@/assets/images/section2-right-tree.png";
 import trialButtonUrl from "@/assets/images/section2-trial-button.png";
 import trialScrollUrl from "@/assets/images/section2-trial-scroll.png";
 import rewardCoinsUrl from "@/assets/images/section2-reward-coins.png";
@@ -41,6 +42,7 @@ onMounted(() => {
   timeline
     .fromTo(section.querySelector(".world-section__bg"), { scale: 1.08, filter: "saturate(0.85) brightness(0.72)" }, { scale: 1, filter: "saturate(1.08) brightness(1)", duration: 1.65, ease: "power2.out" })
     .fromTo(section.querySelector(".world-section__tower"), { y: "28vh", scale: 0.78, opacity: 0, filter: "brightness(1.45) blur(5px)" }, { y: 0, scale: 1, opacity: 1, filter: "brightness(1) blur(0px)", duration: 1.2, ease: "back.out(1.25)" }, 0.12)
+    .fromTo(section.querySelector(".world-section__right-tree"), { x: 60, y: -24, opacity: 0, rotate: 2 }, { x: 0, y: 0, opacity: 1, rotate: 0, duration: 1.05, ease: "power3.out" }, 0.22)
     .fromTo(section.querySelector(".world-section__tower-aura"), { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "sine.out" }, 0.22)
     .fromTo(section.querySelectorAll(".world-section__island"), { y: -28, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 0.78, duration: 0.82, stagger: 0.13, ease: "back.out(1.6)" }, 0.34)
     .fromTo(section.querySelector(".world-section__index"), { x: -28, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55 }, 0.42)
@@ -78,6 +80,7 @@ onBeforeUnmount(() => {
     <span class="world-section__spark world-section__spark--four" aria-hidden="true" />
 
     <img class="world-section__tower" :src="towerUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__right-tree" :src="rightTreeUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--one" :src="islandOneUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--two" :src="islandTwoUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--three" :src="islandThreeUrl" alt="" aria-hidden="true" loading="lazy" />
