@@ -742,18 +742,18 @@ a {
 }
 
 .world-section__character--green {
-  left: 58%;
+  left: 63%;
   transform: translateX(-50%);
 }
 
 .world-section__character--pink {
-  left: 68%;
+  left: 73%;
   height: min(38vh, 390px);
   transform: translateX(-50%);
 }
 
 .world-section__character--purple {
-  left: 79%;
+  left: 84.5%;
   transform: translateX(-50%);
 }
 
@@ -897,14 +897,20 @@ a {
   }
 
   .world-section__character--green {
-    right: 48vw;
+    left: auto;
+    right: 34vw;
+    transform: none;
   }
 
   .world-section__character--pink {
-    right: 28vw;
+    left: auto;
+    right: 13vw;
+    transform: none;
   }
 
   .world-section__character--purple {
-    right: 4vw;
+    left: auto;
+    right: -10vw;
+    transform: none;
   }
 }
