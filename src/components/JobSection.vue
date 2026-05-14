@@ -243,14 +243,14 @@ function hoverCard(event, job) {
   if (job.key === activeJobKey.value) return;
   const card = event.currentTarget;
   gsap.to(card, { x: -16, scale: 1.035, duration: 0.28, ease: "power2.out" });
-  gsap.to(card.querySelector(".job-card__image"), { scale: 1.08, y: -5, duration: 0.28 });
+  gsap.to(card.querySelector(".job-card__image"), { scale: 1.035, duration: 0.28 });
 }
 
 function leaveCard(event, job) {
   if (job.key === activeJobKey.value) return;
   const card = event.currentTarget;
   gsap.to(card, { x: 0, scale: 1, duration: 0.28, ease: "power2.out" });
-  gsap.to(card.querySelector(".job-card__image"), { scale: 1, y: 0, duration: 0.28 });
+  gsap.to(card.querySelector(".job-card__image"), { scale: 1, duration: 0.28 });
 }
 
 function playIntro() {
@@ -277,8 +277,8 @@ onMounted(() => {
 
   if (!prefersReducedMotion) {
     idleTween = gsap.to(root.querySelector(".job-section__main-character"), {
-      y: -8,
-      duration: 2.4,
+      y: -2,
+      duration: 2.8,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"
@@ -333,7 +333,6 @@ onBeforeUnmount(() => {
 
     <div class="job-section__left">
       <div class="job-section__title-group">
-        <span class="job-section__seal">귀혼M</span>
         <h2 id="job-title" class="job-section__title">직업 소개</h2>
         <p class="job-section__copy">당신의 혼을 깨울<br />직업을 선택하세요.</p>
       </div>
@@ -380,7 +379,6 @@ onBeforeUnmount(() => {
           <strong>{{ job.name }}</strong>
           <span>{{ job.summary }}</span>
         </div>
-        <img class="job-card__symbol" :src="symbolUrl" alt="" aria-hidden="true" loading="lazy" />
       </button>
     </aside>
   </section>
