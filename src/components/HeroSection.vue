@@ -15,7 +15,7 @@ onMounted(() => {
 
   timeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
   timeline
-    .fromTo(section.querySelector(".hero-section__video"), { scale: 1.08, filter: "saturate(0.78) brightness(0.8)" }, { scale: 1, filter: "saturate(1.08) brightness(1)", duration: 2.8, ease: "power2.out" })
+    .fromTo(section.querySelector(".hero-section__video"), { scale: 1.035, opacity: 0.92 }, { scale: 1, opacity: 1, duration: 1.25, ease: "power2.out" })
     .fromTo(section.querySelector(".hero-section__sunlight"), { scale: 0.82, opacity: 0, rotate: -3 }, { scale: 1, opacity: 1, rotate: 0, duration: 1.45, ease: "sine.out" }, 0.08)
     .fromTo(section.querySelector(".hero-section__logo"), { y: 24, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.78 }, 0.28)
     .fromTo(section.querySelector(".hero-section__copy"), { x: -18, y: 14, scale: 1.03, opacity: 0, clipPath: "inset(0 100% 0 0)" }, { x: 0, y: 0, scale: 1, opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.72, ease: "expo.out" }, 0.74)
@@ -25,6 +25,7 @@ onMounted(() => {
     .fromTo(section.querySelector(".hero-section__glint"), { xPercent: -120, opacity: 0 }, { xPercent: 120, opacity: 0.54, duration: 1.05, ease: "power2.inOut" }, 0.96);
 
   timeline.play(0);
+  videoRef.value?.load?.();
   videoRef.value?.play?.().catch(() => {});
 });
 
@@ -43,7 +44,7 @@ onBeforeUnmount(() => {
       muted
       loop
       playsinline
-      preload="metadata"
+      preload="auto"
     />
     <div class="hero-section__shade" aria-hidden="true" />
     <div class="hero-section__sunlight" aria-hidden="true">

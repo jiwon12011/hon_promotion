@@ -214,7 +214,8 @@ a {
   z-index: 1;
   display: grid;
   gap: 0;
-  width: min(560px, 43vw);
+  width: max-content;
+  max-width: min(620px, 48vw);
   margin: clamp(14px, 2.1vh, 24px) 0 0;
   color: #080706;
   font-family: "GapyeongHanseokbongBigBrush", AppleMyungjo, serif;
@@ -235,6 +236,7 @@ a {
 .hero-section__copy strong {
   display: block;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .hero-section__copy strong {
@@ -427,9 +429,9 @@ a {
 
 .world-section__tower {
   z-index: 2;
-  top: clamp(92px, 12vh, 138px);
-  left: 68.5%;
-  height: min(58vh, 620px);
+  bottom: 0;
+  left: 71.2%;
+  height: min(104vh, 1080px);
   width: auto;
   filter:
     drop-shadow(0 0 18px rgba(255, 218, 147, 0.5))
@@ -804,7 +806,8 @@ a {
 
   .hero-section__copy {
     margin-top: 8px;
-    width: min(420px, 86vw);
+    width: max-content;
+    max-width: 92vw;
     font-size: clamp(38px, 11vw, 58px);
   }
 
@@ -842,10 +845,13 @@ a {
   }
 
   .world-section__tower {
-    top: 9vh;
-    right: -8vw;
-    width: 72vw;
-    opacity: 0.75;
+    right: -36vw;
+    left: auto;
+    bottom: 0;
+    width: auto;
+    height: 96vh;
+    opacity: 0.62;
+    transform: none;
   }
 
   .world-section__index {
