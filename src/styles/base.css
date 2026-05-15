@@ -1363,18 +1363,18 @@ a {
 
 .job-section__showcase {
   z-index: 5;
-  left: 35%;
-  bottom: 14vh;
-  width: min(40vw, 660px);
-  height: 66vh;
+  left: 32%;
+  bottom: 4vh;
+  width: min(68vw, 1120px);
+  height: 82vh;
 }
 
 .job-section__platform {
   z-index: 1;
   left: 50%;
   bottom: 0;
-  width: min(27vw, 430px);
-  height: min(7.2vw, 112px);
+  width: min(38vw, 620px);
+  height: min(9vw, 142px);
   border-radius: 50%;
   background:
     radial-gradient(ellipse at 50% 35%, rgba(255, 236, 170, 0.36), rgba(210, 157, 80, 0.18) 35%, rgba(40, 22, 8, 0.62) 68%, transparent 72%);
@@ -1387,8 +1387,8 @@ a {
   z-index: 3;
   bottom: 0;
   left: 50%;
-  width: min(40vw, 650px);
-  max-height: 66vh;
+  width: min(70vw, 1120px);
+  max-height: 82vh;
   object-fit: contain;
   transform: translateX(-50%);
   filter:
@@ -1400,10 +1400,10 @@ a {
 
 .job-section__weapon-glow {
   z-index: 2;
-  left: 15%;
-  bottom: 17%;
-  width: 44%;
-  height: 12%;
+  left: 12%;
+  bottom: 15%;
+  width: 50%;
+  height: 14%;
   border-radius: 999px;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--job-color) 62%, white), transparent);
   filter: blur(15px);
