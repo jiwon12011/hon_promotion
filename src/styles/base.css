@@ -1266,8 +1266,8 @@ a {
   position: absolute;
   z-index: 8;
   left: clamp(54px, 6.2vw, 106px);
-  bottom: clamp(28px, 5vh, 56px);
-  width: min(770px, 53vw);
+  bottom: clamp(18px, 3.1vh, 36px);
+  width: min(690px, 48vw);
   color: #f5d998;
 }
 
@@ -1296,15 +1296,15 @@ a {
 
 .job-section__skill-list {
   display: grid;
-  grid-template-columns: repeat(5, minmax(84px, 1fr));
-  gap: clamp(12px, 1.2vw, 22px);
+  grid-template-columns: repeat(5, minmax(74px, 1fr));
+  gap: clamp(10px, 1vw, 18px);
 }
 
 .job-section__skill {
   position: relative;
   display: grid;
   justify-items: center;
-  gap: 9px;
+  gap: 7px;
   min-width: 0;
   color: #f6dda2;
   font-size: clamp(12px, 0.8vw, 15px);
@@ -1317,8 +1317,8 @@ a {
 
 .job-section__skill::before {
   position: absolute;
-  top: -7px;
-  width: clamp(76px, 5.8vw, 108px);
+  top: -5px;
+  width: clamp(66px, 5vw, 92px);
   aspect-ratio: 1;
   border: 2px solid rgba(255, 220, 132, 0.56);
   border-radius: 50%;
@@ -1326,9 +1326,9 @@ a {
     radial-gradient(circle at 50% 52%, rgba(255, 255, 235, 0.1), transparent 55%),
     conic-gradient(from 20deg, rgba(255, 224, 139, 0.15), var(--job-color), rgba(255, 224, 139, 0.15), var(--job-color), rgba(255, 224, 139, 0.15));
   box-shadow:
-    inset 0 0 14px rgba(255, 231, 156, 0.26),
-    0 0 18px color-mix(in srgb, var(--job-color) 70%, transparent),
-    0 12px 16px rgba(0, 0, 0, 0.34);
+    inset 0 0 10px rgba(255, 231, 156, 0.2),
+    0 0 11px color-mix(in srgb, var(--job-color) 54%, transparent),
+    0 8px 12px rgba(0, 0, 0, 0.28);
   content: "";
   animation: none;
 }
@@ -1336,12 +1336,12 @@ a {
 .job-section__skill img {
   position: relative;
   z-index: 1;
-  width: clamp(70px, 5.35vw, 100px);
+  width: clamp(62px, 4.65vw, 86px);
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
-  transform: scale(1.36);
+  transform: scale(1.22);
   clip-path: circle(47% at 50% 50%);
   filter:
     saturate(1.12)
@@ -1363,18 +1363,18 @@ a {
 
 .job-section__showcase {
   z-index: 5;
-  left: 32.5%;
-  bottom: 13vh;
-  width: min(34vw, 560px);
-  height: 62vh;
+  left: 34%;
+  bottom: 19vh;
+  width: min(31vw, 510px);
+  height: 54vh;
 }
 
 .job-section__platform {
   z-index: 1;
   left: 50%;
-  bottom: 1.6vh;
-  width: min(24vw, 390px);
-  height: min(7vw, 104px);
+  bottom: 0;
+  width: min(22vw, 350px);
+  height: min(6.2vw, 92px);
   border-radius: 50%;
   background:
     radial-gradient(ellipse at 50% 35%, rgba(255, 236, 170, 0.36), rgba(210, 157, 80, 0.18) 35%, rgba(40, 22, 8, 0.62) 68%, transparent 72%);
@@ -1387,8 +1387,8 @@ a {
   z-index: 3;
   bottom: 0;
   left: 50%;
-  width: min(33vw, 535px);
-  max-height: 62vh;
+  width: min(31vw, 500px);
+  max-height: 54vh;
   object-fit: contain;
   transform: translateX(-50%);
   filter:
@@ -1400,8 +1400,8 @@ a {
 
 .job-section__weapon-glow {
   z-index: 2;
-  left: 16%;
-  bottom: 18%;
+  left: 14%;
+  bottom: 16%;
   width: 44%;
   height: 12%;
   border-radius: 999px;
@@ -1416,17 +1416,17 @@ a {
 .job-section__cards {
   position: absolute;
   z-index: 8;
-  top: clamp(92px, 10vh, 118px);
-  right: clamp(34px, 4.8vw, 82px);
+  top: clamp(110px, 12vh, 140px);
+  right: clamp(46px, 5.4vw, 96px);
   display: grid;
-  gap: clamp(10px, 1.15vh, 14px);
-  width: min(36vw, 590px);
+  gap: clamp(12px, 1.35vh, 18px);
+  width: min(34vw, 560px);
 }
 
 .job-card {
   position: relative;
   display: block;
-  height: clamp(104px, 11.6vh, 126px);
+  height: clamp(100px, 10.2vh, 118px);
   min-height: 0;
   overflow: hidden;
   padding: 0;
@@ -1475,7 +1475,8 @@ a {
   z-index: 0;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
+  object-position: center center;
   filter:
     saturate(1.04)
     drop-shadow(0 10px 12px rgba(0, 0, 0, 0.2));
@@ -1486,8 +1487,8 @@ a {
   position: absolute;
   z-index: 1;
   top: 50%;
-  left: 44%;
-  width: 41%;
+  left: 45%;
+  width: 40%;
   min-width: 0;
   padding-left: 0;
   transform: translateY(-50%);
@@ -1497,7 +1498,7 @@ a {
   display: block;
   color: color-mix(in srgb, var(--job-color) 76%, #321607);
   font-family: "GapyeongHanseokbongBigBrush", serif;
-  font-size: clamp(24px, 1.86vw, 36px);
+  font-size: clamp(23px, 1.72vw, 33px);
   line-height: 1;
   text-shadow: 0 1px 0 rgba(255, 246, 214, 0.5);
 }
@@ -1506,7 +1507,7 @@ a {
   display: block;
   margin-top: 8px;
   color: rgba(54, 34, 20, 0.84);
-  font-size: clamp(11px, 0.76vw, 14px);
+  font-size: clamp(10px, 0.68vw, 13px);
   font-weight: 800;
   line-height: 1.35;
   word-break: keep-all;
