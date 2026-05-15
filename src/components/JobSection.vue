@@ -275,8 +275,8 @@ onMounted(() => {
 
   if (!prefersReducedMotion) {
     idleTween = gsap.to(root.querySelector(".job-section__main-character"), {
-      y: -2,
-      duration: 2.8,
+      y: -0.7,
+      duration: 3.6,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"

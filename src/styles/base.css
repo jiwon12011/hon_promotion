@@ -1363,18 +1363,18 @@ a {
 
 .job-section__showcase {
   z-index: 5;
-  left: 32%;
-  bottom: 4vh;
-  width: min(68vw, 1120px);
-  height: 82vh;
+  left: 30%;
+  bottom: 6vh;
+  width: min(64vw, 1040px);
+  height: 78vh;
 }
 
 .job-section__platform {
   z-index: 1;
   left: 50%;
   bottom: 0;
-  width: min(38vw, 620px);
-  height: min(9vw, 142px);
+  width: min(35vw, 570px);
+  height: min(8.4vw, 132px);
   border-radius: 50%;
   background:
     radial-gradient(ellipse at 50% 35%, rgba(255, 236, 170, 0.36), rgba(210, 157, 80, 0.18) 35%, rgba(40, 22, 8, 0.62) 68%, transparent 72%);
@@ -1387,8 +1387,8 @@ a {
   z-index: 3;
   bottom: 0;
   left: 50%;
-  width: min(70vw, 1120px);
-  max-height: 82vh;
+  width: min(66vw, 1060px);
+  max-height: 78vh;
   object-fit: contain;
   transform: translateX(-50%);
   filter:
@@ -1540,8 +1540,20 @@ a {
 
 @media (min-width: 1200px) and (max-width: 1599px) {
   .job-section__showcase {
-    left: 20%;
+    left: 17%;
     bottom: 10vh;
+    width: min(61vw, 900px);
+    height: 74vh;
+  }
+
+  .job-section__main-character {
+    width: min(63vw, 910px);
+    max-height: 74vh;
+  }
+
+  .job-section__platform {
+    width: min(34vw, 500px);
+    height: min(8.2vw, 112px);
   }
 }
 
