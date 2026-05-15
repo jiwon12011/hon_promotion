@@ -1538,6 +1538,13 @@ a {
   mix-blend-mode: screen;
 }
 
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .job-section__showcase {
+    left: 20%;
+    bottom: 10vh;
+  }
+}
+
 @keyframes jobLeafFall {
   0% {
     translate: 0 -10vh;
