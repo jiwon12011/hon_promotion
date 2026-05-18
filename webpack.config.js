@@ -1,6 +1,19 @@
 const path = require("path");
+const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
+
+class CopyPublicAssetsPlugin {
+  apply(compiler) {
+    compiler.hooks.afterEmit.tap("CopyPublicAssetsPlugin", () => {
+      const source = path.resolve(__dirname, "public/assets");
+      const destination = path.resolve(__dirname, "dist/assets");
+      if (fs.existsSync(source)) {
+        fs.cpSync(source, destination, { recursive: true });
+      }
+    });
+  }
+}
 
 module.exports = (_env, argv) => {
   const isProduction = argv.mode === "production";
@@ -31,7 +44,7 @@ module.exports = (_env, argv) => {
           use: ["style-loader", "css-loader"]
         },
         {
-          test: /\.(png|jpe?g|gif|webp|svg|mp4|webm)$/i,
+          test: /\.(png|jpe?g|gif|webp|svg|mp4|webm|m4a)$/i,
           type: "asset/resource"
         }
       ]
@@ -40,7 +53,8 @@ module.exports = (_env, argv) => {
       new VueLoaderPlugin(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html")
-      })
+      }),
+      new CopyPublicAssetsPlugin()
     ],
     devServer: {
       host: "127.0.0.1",

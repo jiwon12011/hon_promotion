@@ -19,11 +19,11 @@ import rewardKeyUrl from "@/assets/images/section2-reward-key.png";
 import rewardOrbUrl from "@/assets/images/section2-reward-chest-gold.png";
 
 const rewards = [
-  { image: rewardCoinsUrl, label: "금전" },
-  { image: rewardChestUrl, label: "화신의 상자" },
-  { image: rewardCrystalUrl, label: "승급석" },
-  { image: rewardOrbUrl, label: "화신의 기운" },
-  { image: rewardKeyUrl, label: "탑의 열쇠" }
+  { image: rewardCoinsUrl, label: "금전", description: "탑 정복에 필요한 성장 재화", color: "#f2c45b" },
+  { image: rewardChestUrl, label: "화신의 상자", description: "층별 보상을 담은 특별 상자", color: "#ff9d5d" },
+  { image: rewardCrystalUrl, label: "승급석", description: "캐릭터 한계를 여는 보석", color: "#b77cff" },
+  { image: rewardOrbUrl, label: "화신의 기운", description: "강력한 기운이 깃든 결정", color: "#ff75df" },
+  { image: rewardKeyUrl, label: "탑의 열쇠", description: "상층 진입에 필요한 열쇠", color: "#ffd276" }
 ];
 
 const sectionRef = ref(null);
@@ -44,7 +44,7 @@ onMounted(() => {
     .fromTo(section.querySelector(".world-section__tower"), { y: "28vh", scale: 0.78, opacity: 0, filter: "brightness(1.45) blur(5px)" }, { y: 0, scale: 1, opacity: 1, filter: "brightness(1) blur(0px)", duration: 1.2, ease: "back.out(1.25)" }, 0.12)
     .fromTo(section.querySelector(".world-section__right-tree"), { x: 60, y: -24, opacity: 0, rotate: 2 }, { x: 0, y: 0, opacity: 1, rotate: 0, duration: 1.05, ease: "power3.out" }, 0.22)
     .fromTo(section.querySelector(".world-section__tower-aura"), { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "sine.out" }, 0.22)
-    .fromTo(section.querySelectorAll(".world-section__island"), { y: -28, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 0.78, duration: 0.82, stagger: 0.13, ease: "back.out(1.6)" }, 0.34)
+    .fromTo(section.querySelectorAll(".world-section__island"), { y: -28, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.82, stagger: 0.13, ease: "back.out(1.6)" }, 0.34)
     .fromTo(section.querySelector(".world-section__index"), { x: -28, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55 }, 0.42)
     .fromTo(section.querySelector(".world-section__heading"), { x: -52, opacity: 0, clipPath: "inset(0 100% 0 0)" }, { x: 0, opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "expo.out" }, 0.58)
     .fromTo(section.querySelector(".world-section__description"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.88)
@@ -108,16 +108,21 @@ onBeforeUnmount(() => {
         alt="50층까지 도전! 풍성한 보상! 팀을 구성하라!"
         loading="lazy"
       />
-
-      <button class="world-section__trial-button" type="button" aria-label="탑 도전하기">
-        <img :src="trialButtonUrl" alt="" aria-hidden="true" loading="lazy" />
-      </button>
     </div>
+
+    <button class="world-section__trial-button" type="button" aria-label="탑 도전하기">
+      <img :src="trialButtonUrl" alt="" aria-hidden="true" loading="lazy" />
+    </button>
 
     <div class="world-section__reward-strip">
       <p>주요 보상</p>
       <div class="world-section__rewards" aria-label="주요 보상">
-        <article v-for="reward in rewards" :key="reward.label" class="reward-card">
+        <article
+          v-for="reward in rewards"
+          :key="reward.label"
+          class="reward-card"
+          :style="{ '--reward-color': reward.color }"
+        >
           <img :src="reward.image" :alt="reward.label" loading="lazy" />
           <span>{{ reward.label }}</span>
         </article>
