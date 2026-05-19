@@ -49,7 +49,24 @@ onMounted(() => {
     .fromTo(section.querySelector(".world-section__heading"), { x: -52, opacity: 0, clipPath: "inset(0 100% 0 0)" }, { x: 0, opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "expo.out" }, 0.58)
     .fromTo(section.querySelector(".world-section__description"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.88)
     .fromTo(section.querySelector(".world-section__divider"), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.45, transformOrigin: "center" }, 0.98)
-    .fromTo(section.querySelector(".world-section__trial-scroll"), { x: -32, y: 22, opacity: 0, rotateX: -9 }, { x: 0, y: 0, opacity: 1, rotateX: 0, duration: 0.7, ease: "back.out(1.35)" }, 1.08)
+    .fromTo(section.querySelector(".world-section__trial-scroll"), {
+      x: -42,
+      y: 22,
+      opacity: 0,
+      scaleX: 0.18,
+      rotateX: -9,
+      clipPath: "inset(0 46% 0 46%)",
+      transformOrigin: "left center"
+    }, {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      scaleX: 1,
+      rotateX: 0,
+      clipPath: "inset(0 0% 0 0%)",
+      duration: 0.88,
+      ease: "expo.out"
+    }, 1.08)
     .fromTo(section.querySelector(".world-section__trial-button"), { y: 22, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.52, ease: "back.out(1.8)" }, 1.42)
     .fromTo(section.querySelector(".world-section__reward-strip"), { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: 0.62 }, 1.48)
     .fromTo(section.querySelectorAll(".reward-card"), { y: 22, scale: 0.62, opacity: 0, rotate: -8 }, { y: 0, scale: 1, opacity: 1, rotate: 0, duration: 0.52, stagger: 0.08, ease: "back.out(2.1)" }, 1.62)

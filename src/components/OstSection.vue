@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import bgUrl from "@/assets/images/section5-bg-ost.png";
-import cdUrl from "@/assets/images/section5-cd-balanced.png";
+import cdUrl from "@/assets/images/section5-cd-centered.png";
 import tonearmUrl from "@/assets/images/section5-tonearm.png";
 import thumbOneUrl from "@/assets/images/section5-thumb-1.png";
 import thumbTwoUrl from "@/assets/images/section5-thumb-2.png";
@@ -162,11 +162,18 @@ function selectTrack(index, autoplay = true) {
   currentTime.value = video.currentTime;
   moveToneArm(index, autoplay);
 
-  const center = root?.querySelector(".ost-section__cd-center");
+  const center = root?.querySelector(".ost-section__cd-label");
+  const playButton = root?.querySelector(".ost-section__cd-center");
   if (center) {
     gsap.fromTo(center,
       { opacity: 0.45, scale: 0.88 },
       { opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.5)" }
+    );
+  }
+  if (playButton) {
+    gsap.fromTo(playButton,
+      { scale: 0.92 },
+      { scale: 1, duration: 0.32, ease: "back.out(1.45)" }
     );
   }
 
@@ -224,7 +231,7 @@ onMounted(() => {
   if (!root || !video) return;
 
   video.volume = 0;
-  cdRotation = gsap.to(root.querySelector(".ost-section__cd"), {
+  cdRotation = gsap.to(root.querySelector(".ost-section__disc-spin"), {
     rotate: 360,
     duration: 4.2,
     repeat: -1,
@@ -340,11 +347,17 @@ onBeforeUnmount(() => {
 
     <div class="ost-section__turntable">
       <div class="ost-section__disc">
-        <img class="ost-section__cd" :src="cdUrl" alt="" aria-hidden="true" loading="lazy" />
+        <div class="ost-section__disc-spin">
+          <img class="ost-section__cd" :src="cdUrl" alt="" aria-hidden="true" loading="lazy" />
+          <div
+            class="ost-section__cd-label"
+            :style="{ backgroundImage: `url(${activeTrack.thumbnail})` }"
+            aria-hidden="true"
+          ></div>
+        </div>
         <button
           class="ost-section__cd-center"
           type="button"
-          :style="{ backgroundImage: `url(${activeTrack.thumbnail})` }"
           :aria-label="isPlaying ? 'OST 일시정지' : 'OST 재생'"
           @click="togglePlay"
         >

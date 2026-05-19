@@ -183,6 +183,69 @@ function createBurst(job) {
   }
 }
 
+function playSkillEffect(event, skill, index) {
+  const root = sectionRef.value;
+  const container = root?.querySelector(".job-section__effects");
+  const target = event.currentTarget;
+  if (!root || !container || !target) return;
+
+  const color = activeJob.value.color;
+  const rect = target.getBoundingClientRect();
+  const parentRect = root.getBoundingClientRect();
+  const x = rect.left - parentRect.left + rect.width * 0.5;
+  const y = rect.top - parentRect.top + rect.height * 0.38;
+
+  gsap.fromTo(target,
+    { scale: 0.94, rotate: index % 2 === 0 ? -3 : 3 },
+    { scale: 1, rotate: 0, duration: 0.5, ease: "elastic.out(1, 0.45)" }
+  );
+
+  const ring = document.createElement("span");
+  ring.className = `job-section__skill-flash job-section__skill-flash--${index % 5}`;
+  ring.style.left = `${x}px`;
+  ring.style.top = `${y}px`;
+  ring.style.borderColor = color;
+  ring.style.setProperty("--job-color", color);
+  container.appendChild(ring);
+
+  gsap.fromTo(ring,
+    { width: 18, height: 18, opacity: 0.92, rotate: 0 },
+    {
+      width: 120 + index * 10,
+      height: 120 + index * 10,
+      opacity: 0,
+      rotate: index % 2 === 0 ? 90 : -90,
+      duration: 0.72,
+      ease: "power2.out",
+      onComplete: () => ring.remove()
+    }
+  );
+
+  const particleCount = 8 + index * 2;
+  for (let i = 0; i < particleCount; i += 1) {
+    const particle = document.createElement("span");
+    particle.className = `job-section__skill-particle job-section__skill-particle--${index % 5}`;
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+    particle.style.background = color;
+    particle.style.setProperty("--job-color", color);
+    container.appendChild(particle);
+
+    const angle = (Math.PI * 2 * i) / particleCount + index * 0.25;
+    const distance = 42 + Math.random() * (42 + index * 9);
+    gsap.to(particle, {
+      x: Math.cos(angle) * distance,
+      y: Math.sin(angle) * distance - 20 - index * 4,
+      rotate: (index % 2 === 0 ? 1 : -1) * (180 + Math.random() * 280),
+      opacity: 0,
+      scale: 0.25 + Math.random() * 0.45,
+      duration: 0.55 + Math.random() * 0.35,
+      ease: "power2.out",
+      onComplete: () => particle.remove()
+    });
+  }
+}
+
 async function changeJob(jobKey) {
   if (jobKey === activeJobKey.value || isSwitching.value) return;
 
@@ -201,7 +264,7 @@ async function changeJob(jobKey) {
       .to(root.querySelector(".job-section__main-character"), {
         scale: 0.82,
         opacity: 0,
-        y: 42,
+        y: 18,
         filter: "blur(16px) brightness(1.8)",
         duration: 0.3,
         ease: "power2.in"
@@ -222,7 +285,7 @@ async function changeJob(jobKey) {
   createBurst(nextJob);
 
   gsap.fromTo(root.querySelector(".job-section__main-character"),
-    { scale: 1.18, opacity: 0, y: 60, filter: `blur(18px) drop-shadow(0 0 48px ${nextJob.color})` },
+    { scale: 1.12, opacity: 0, y: 24, filter: `blur(18px) drop-shadow(0 0 48px ${nextJob.color})` },
     { scale: 1, opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62, ease: "back.out(1.25)" }
   );
   gsap.fromTo(root.querySelector(".job-section__info"), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, delay: 0.16 });
@@ -240,15 +303,13 @@ async function changeJob(jobKey) {
 function hoverCard(event, job) {
   if (job.key === activeJobKey.value) return;
   const card = event.currentTarget;
-  gsap.to(card, { x: -16, scale: 1.035, duration: 0.28, ease: "power2.out" });
-  gsap.to(card.querySelector(".job-card__image"), { scale: 1.035, duration: 0.28 });
+  gsap.to(card, { x: -12, scale: 1.012, duration: 0.28, ease: "power2.out", overwrite: "auto" });
 }
 
 function leaveCard(event, job) {
   if (job.key === activeJobKey.value) return;
   const card = event.currentTarget;
-  gsap.to(card, { x: 0, scale: 1, duration: 0.28, ease: "power2.out" });
-  gsap.to(card.querySelector(".job-card__image"), { scale: 1, duration: 0.28 });
+  gsap.to(card, { x: 0, scale: 1, duration: 0.28, ease: "power2.out", overwrite: "auto" });
 }
 
 function playIntro() {
@@ -267,7 +328,7 @@ onMounted(() => {
     .fromTo(root.querySelector(".job-section__index"), { y: -34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.2)
     .fromTo(root.querySelector(".job-section__title"), { clipPath: "inset(0 100% 0 0)", opacity: 0 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.76, ease: "expo.out" }, 0.38)
     .fromTo(root.querySelector(".job-section__copy"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.46 }, 0.72)
-    .fromTo(root.querySelector(".job-section__main-character"), { y: 92, scale: 0.82, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.92, ease: "back.out(1.25)" }, 0.58)
+    .fromTo(root.querySelector(".job-section__main-character"), { y: 42, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.86, ease: "back.out(1.18)" }, 0.58)
     .fromTo(root.querySelector(".job-section__info"), { x: -34, opacity: 0 }, { x: 0, opacity: 1, duration: 0.52 }, 0.88)
     .fromTo(root.querySelectorAll(".job-card"), { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.62, stagger: 0.1 }, 0.78)
     .fromTo(root.querySelectorAll(".job-section__skill"), { scale: 0.82, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.34, stagger: 0.06, ease: "power2.out" }, 1.16)
@@ -275,8 +336,8 @@ onMounted(() => {
 
   if (!prefersReducedMotion) {
     idleTween = gsap.to(root.querySelector(".job-section__main-character"), {
-      y: -0.7,
-      duration: 3.6,
+      y: -0.25,
+      duration: 4.2,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"
@@ -340,10 +401,16 @@ onBeforeUnmount(() => {
     <div class="job-section__skills" :style="{ '--job-color': activeJob.color }">
       <p>주요 스킬 미리보기</p>
       <div class="job-section__skill-list">
-        <article v-for="skill in activeJob.skills" :key="skill.name" class="job-section__skill">
+        <button
+          v-for="(skill, index) in activeJob.skills"
+          :key="skill.name"
+          class="job-section__skill"
+          type="button"
+          @click="playSkillEffect($event, skill, index)"
+        >
           <img :src="skill.image" :alt="skill.name" loading="lazy" />
           <span>{{ skill.name }}</span>
-        </article>
+        </button>
       </div>
     </div>
 
@@ -358,7 +425,7 @@ onBeforeUnmount(() => {
         v-for="job in jobs"
         :key="job.key"
         class="job-card"
-        :class="{ 'is-active': job.key === activeJobKey }"
+        :class="[`job-card--${job.key}`, { 'is-active': job.key === activeJobKey }]"
         :style="{ '--job-color': job.color }"
         type="button"
         @click="changeJob(job.key)"
