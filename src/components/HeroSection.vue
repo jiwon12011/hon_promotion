@@ -40,7 +40,7 @@ onMounted(() => {
       .fromTo(section.querySelector(".hero-section__character-depth"), { y: 56, scale: 0.92, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 1, ease: "back.out(1.2)" }, 0.3)
       .fromTo(section.querySelector(".hero-section__sunlight"), { scale: 0.82, opacity: 0, rotate: -3 }, { scale: 1, opacity: 1, rotate: 0, duration: 1.45, ease: "sine.out" }, 0.08)
       .fromTo(section.querySelector(".hero-section__logo"), { y: 22, scale: 0.58, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.88, ease: "elastic.out(1, 0.58)" }, 0.72)
-      .fromTo(section.querySelectorAll(".copy-char"), { y: 24, opacity: 0, rotateX: -22 }, { y: 0, opacity: 1, rotateX: 0, duration: 0.54, stagger: 0.025, ease: "power3.out" }, 0.98)
+      .fromTo(section.querySelectorAll(".copy-char"), { y: 30, opacity: 0, rotateX: -90, transformPerspective: 700 }, { y: 0, opacity: 1, rotateX: 0, duration: 0.6, stagger: 0.03, ease: "back.out(1.7)" }, 0.98)
       .fromTo(section.querySelector(".hero-section__subcopy"), { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.58 }, 1.46)
       .fromTo(section.querySelectorAll(".store-link"), { y: 34, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.62, stagger: 0.1, ease: "back.out(1.45)" }, 1.68)
       .fromTo(section.querySelector(".trailer-button"), { y: 28, scale: 0.88, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.58, ease: "back.out(1.6)" }, 1.86)
@@ -58,9 +58,9 @@ onMounted(() => {
   if (!prefersReducedMotion) {
     const moveVideoX = gsap.quickTo(section.querySelector(".hero-section__video"), "x", { duration: 1.1, ease: "power2.out" });
     const moveVideoY = gsap.quickTo(section.querySelector(".hero-section__video"), "y", { duration: 1.1, ease: "power2.out" });
-    const moveDepthX = gsap.quickTo(section.querySelector(".hero-section__character-depth"), "x", { duration: 0.8, ease: "power2.out" });
-    const rotateDepthY = gsap.quickTo(section.querySelector(".hero-section__character-depth"), "rotationY", { duration: 0.8, ease: "power2.out" });
-    const rotateDepthX = gsap.quickTo(section.querySelector(".hero-section__character-depth"), "rotationX", { duration: 0.8, ease: "power2.out" });
+    const moveDepthX = gsap.quickTo(section.querySelector(".hero-section__character-depth"), "x", { duration: 0.45, ease: "power2.out" });
+    const rotateDepthY = gsap.quickTo(section.querySelector(".hero-section__character-depth"), "rotationY", { duration: 0.4, ease: "power2.out" });
+    const rotateDepthX = gsap.quickTo(section.querySelector(".hero-section__character-depth"), "rotationX", { duration: 0.4, ease: "power2.out" });
 
     const handlePointerMove = (event) => {
       const x = (event.clientX / window.innerWidth - 0.5) * 2;
@@ -68,9 +68,9 @@ onMounted(() => {
 
       moveVideoX(-x * 12);
       moveVideoY(-y * 6);
-      moveDepthX(x * 10);
-      rotateDepthY(x * 3.5);
-      rotateDepthX(-y * 2);
+      moveDepthX(x * 8);
+      rotateDepthY(x * 4);
+      rotateDepthX(-y * 3);
     };
 
     window.addEventListener("pointermove", handlePointerMove);

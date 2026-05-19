@@ -97,13 +97,14 @@ function moveToneArm(index, playing = isPlaying.value) {
   const target = root?.querySelector(".ost-section__tonearm");
   if (!target) return;
 
-  gsap.to(target, {
-    x: playing ? -50 : -12,
-    y: playing ? 18 : 0,
-    rotate: playing ? toneArmPlayRotation + index * 4.5 : toneArmRestRotation,
-    duration: 0.78,
-    ease: "power2.inOut"
-  });
+  const targetRotation = playing ? toneArmPlayRotation + index * 4.2 : toneArmRestRotation;
+  const targetX = playing ? -56 : -18;
+  const targetY = playing ? 18 : 0;
+
+  gsap.timeline({ defaults: { ease: "power2.inOut" } })
+    .to(target, { y: playing ? 10 : 4, duration: 0.18 }, 0)
+    .to(target, { x: targetX, rotate: targetRotation, duration: 0.66 }, 0.08)
+    .to(target, { y: targetY, duration: 0.22, ease: "sine.out" }, 0.58);
 }
 
 async function startPlayback() {

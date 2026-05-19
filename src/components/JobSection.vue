@@ -10,9 +10,9 @@ import geomgaekCardUrl from "@/assets/images/section3-geomgaek-card.png";
 import musaMainUrl from "@/assets/images/section3-musa-main.png";
 import musaCardUrl from "@/assets/images/section3-musa-card.png";
 import yeoksaMainUrl from "@/assets/images/section3-yeoksa-main.png";
-import yeoksaCardUrl from "@/assets/images/section3-yeoksa-card.png";
+import yeoksaCardUrl from "@/assets/images/section3-yeoksa-card-normalized.png";
 import sasuMainUrl from "@/assets/images/section3-sasu-main.png";
-import sasuCardUrl from "@/assets/images/section3-sasu-card.png";
+import sasuCardUrl from "@/assets/images/section3-sasu-card-normalized.png";
 import dosaSkillOneUrl from "@/assets/images/section3-skill-dosa-1.png";
 import dosaSkillTwoUrl from "@/assets/images/section3-skill-dosa-2.png";
 import dosaSkillThreeUrl from "@/assets/images/section3-skill-dosa-3.png";
@@ -131,6 +131,34 @@ let introTimeline;
 let idleTween;
 let skillPulseTween;
 let observer;
+
+function getCharacterEntrance(job) {
+  const filter = `blur(18px) brightness(1.45) drop-shadow(0 0 48px ${job.color})`;
+  const presets = {
+    dosa: {
+      from: { scale: 0.9, opacity: 0, x: -20, y: 20, rotate: -3, filter },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.66, ease: "back.out(1.18)" }
+    },
+    geomgaek: {
+      from: { scale: 1.08, opacity: 0, x: -68, y: 10, rotate: -7, filter },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.54, ease: "power3.out" }
+    },
+    musa: {
+      from: { scale: 0.88, opacity: 0, x: 10, y: 46, rotate: 5, filter: `blur(20px) brightness(1.9) drop-shadow(0 0 58px ${job.color})` },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.7, ease: "back.out(1.38)" }
+    },
+    yeoksa: {
+      from: { scale: 1.05, opacity: 0, x: 26, y: -34, rotate: 3, filter: `blur(16px) brightness(1.7) drop-shadow(0 0 54px ${job.color})` },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.64, ease: "power2.out" }
+    },
+    sasu: {
+      from: { scale: 0.94, opacity: 0, x: 74, y: 14, rotate: 4, filter },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.56, ease: "power3.out" }
+    }
+  };
+
+  return presets[job.key] ?? presets.dosa;
+}
 
 function createBurst(job) {
   const container = sectionRef.value?.querySelector(".job-section__effects");
@@ -258,6 +286,7 @@ async function changeJob(jobKey) {
   }
 
   skillPulseTween?.pause();
+  idleTween?.pause();
 
   await new Promise((resolve) => {
     gsap.timeline({ onComplete: resolve })
@@ -284,9 +313,15 @@ async function changeJob(jobKey) {
   await nextTick();
   createBurst(nextJob);
 
+  const characterEntrance = getCharacterEntrance(nextJob);
   gsap.fromTo(root.querySelector(".job-section__main-character"),
-    { scale: 1.12, opacity: 0, y: 24, filter: `blur(18px) drop-shadow(0 0 48px ${nextJob.color})` },
-    { scale: 1, opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62, ease: "back.out(1.25)" }
+    characterEntrance.from,
+    {
+      ...characterEntrance.to,
+      onComplete: () => {
+        idleTween?.restart(true);
+      }
+    }
   );
   gsap.fromTo(root.querySelector(".job-section__info"), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, delay: 0.16 });
   gsap.fromTo(root.querySelectorAll(".job-section__skill"),
@@ -327,7 +362,7 @@ onMounted(() => {
     .fromTo(root.querySelector(".job-section__bg"), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.1 })
     .fromTo(root.querySelector(".job-section__index"), { y: -34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.2)
     .fromTo(root.querySelector(".job-section__title"), { clipPath: "inset(0 100% 0 0)", opacity: 0 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.76, ease: "expo.out" }, 0.38)
-    .fromTo(root.querySelector(".job-section__copy"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.46 }, 0.72)
+    .fromTo(root.querySelectorAll(".job-section__copy, .job-section__subcopy"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.46, stagger: 0.08 }, 0.72)
     .fromTo(root.querySelector(".job-section__main-character"), { y: 42, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.86, ease: "back.out(1.18)" }, 0.58)
     .fromTo(root.querySelector(".job-section__info"), { x: -34, opacity: 0 }, { x: 0, opacity: 1, duration: 0.52 }, 0.88)
     .fromTo(root.querySelectorAll(".job-card"), { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.62, stagger: 0.1 }, 0.78)
@@ -386,7 +421,8 @@ onBeforeUnmount(() => {
     <div class="job-section__left">
       <div class="job-section__title-group">
         <h2 id="job-title" class="job-section__title">직업 소개</h2>
-        <p class="job-section__copy">당신의 혼을 깨울<br />직업을 선택하세요.</p>
+        <p class="job-section__copy">당신의 혼을 깨울 직업을 선택하세요.</p>
+        <p class="job-section__subcopy">다섯 가지 전투 스타일과 주요 스킬을 확인하고, 나에게 맞는 영혼의 길을 찾아보세요.</p>
       </div>
 
       <div class="job-section__info" :style="{ '--job-color': activeJob.color }">

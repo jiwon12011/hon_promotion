@@ -80,9 +80,50 @@ function createBurst(target, count = 18) {
   }
 }
 
+function createSpiritTrail(target, monster) {
+  const root = sectionRef.value;
+  const container = root?.querySelector(".monster-dex__effects");
+  const destination = root?.querySelector(".monster-dex__character");
+  if (!target || !root || !container || !destination) return;
+
+  const sourceRect = target.getBoundingClientRect();
+  const destRect = destination.getBoundingClientRect();
+  const parent = root.getBoundingClientRect();
+  const startX = sourceRect.left - parent.left + sourceRect.width / 2;
+  const startY = sourceRect.top - parent.top + sourceRect.height / 2;
+  const endX = destRect.left - parent.left + destRect.width / 2;
+  const endY = destRect.top - parent.top + destRect.height * 0.62;
+
+  for (let index = 0; index < 14; index += 1) {
+    const particle = document.createElement("span");
+    particle.className = "monster-dex__particle";
+    particle.style.left = `${startX + (Math.random() - 0.5) * 34}px`;
+    particle.style.top = `${startY + (Math.random() - 0.5) * 34}px`;
+    particle.style.background = monster.aura;
+    particle.style.boxShadow = `0 0 18px ${monster.aura}`;
+    container.appendChild(particle);
+
+    gsap.to(particle, {
+      x: endX - startX + (Math.random() - 0.5) * 64,
+      y: endY - startY + (Math.random() - 0.5) * 52,
+      scale: 0.2,
+      opacity: 0,
+      duration: 0.72 + index * 0.018,
+      delay: index * 0.018,
+      ease: "power2.inOut",
+      onComplete: () => particle.remove()
+    });
+  }
+}
+
 function selectMonster(monster, event) {
   if (selectedId.value === monster.id) {
-    createBurst(event?.currentTarget, 12);
+    const currentTarget = event?.currentTarget;
+    createBurst(currentTarget, 12);
+    gsap.fromTo(currentTarget?.querySelector("span"),
+      { scale: 1.2, opacity: 0.95, filter: "blur(5px)" },
+      { scale: 1, opacity: 0.5, filter: "blur(4px)", duration: 0.55, ease: "power2.out" }
+    );
     return;
   }
 
@@ -105,7 +146,12 @@ function selectMonster(monster, event) {
     { scale: 1.18, filter: "drop-shadow(0 0 30px rgba(255, 214, 102, 0.95))" },
     { scale: 1, filter: "drop-shadow(0 0 18px rgba(255, 214, 102, 0.62))", duration: 0.9, ease: "power2.out" }
   );
+  gsap.fromTo(event?.currentTarget?.querySelector("span"),
+    { scale: 1.45, opacity: 0.95, filter: "blur(5px) brightness(1.35)" },
+    { scale: 1, opacity: 0.5, filter: "blur(4px)", duration: 0.9, ease: "elastic.out(1, 0.5)" }
+  );
   createBurst(event?.currentTarget, 24);
+  createSpiritTrail(event?.currentTarget, monster);
 }
 
 function startIdleMotion() {

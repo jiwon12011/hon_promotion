@@ -1,15 +1,20 @@
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
 const currentIndex = ref(0);
 const isMoving = ref(false);
 let sections = [];
+let navButtons = [];
+let sectionTriggers = [];
 let touchStartY = 0;
 let touchDeltaY = 0;
 let resizeTimer;
+let wheelAccumulatedDelta = 0;
+let wheelResetTimer;
 
 function clampIndex(index) {
   return Math.max(0, Math.min(index, sections.length - 1));
@@ -27,23 +32,32 @@ function moveTo(index) {
   currentIndex.value = nextIndex;
 
   gsap.to(window, {
-    duration: 0.68,
+    duration: 0.72,
     scrollTo: { y: sections[nextIndex], autoKill: false },
-    ease: "power3.out",
+    ease: "power2.inOut",
     onComplete: () => {
       window.scrollTo({ top: sections[nextIndex].offsetTop, left: 0, behavior: "auto" });
       window.setTimeout(() => {
         isMoving.value = false;
-      }, 80);
+      }, 48);
     }
   });
 }
 
 function handleWheel(event) {
-  if (Math.abs(event.deltaY) < 24) return;
   event.preventDefault();
   if (isMoving.value) return;
-  moveTo(currentIndex.value + (event.deltaY > 0 ? 1 : -1));
+
+  wheelAccumulatedDelta += event.deltaY;
+  window.clearTimeout(wheelResetTimer);
+  wheelResetTimer = window.setTimeout(() => {
+    wheelAccumulatedDelta = 0;
+  }, 90);
+
+  if (Math.abs(wheelAccumulatedDelta) < 54) return;
+  const direction = wheelAccumulatedDelta > 0 ? 1 : -1;
+  wheelAccumulatedDelta = 0;
+  moveTo(currentIndex.value + direction);
 }
 
 function handleKeydown(event) {
@@ -85,6 +99,37 @@ function handleTouchEnd(event) {
 
 function refreshSections() {
   sections = Array.from(document.querySelectorAll(".section"));
+  navButtons = Array.from(document.querySelectorAll(".section-nav__button"));
+  setupSectionTriggers();
+}
+
+function setupSectionTriggers() {
+  sectionTriggers.forEach((trigger) => trigger.kill());
+  sectionTriggers = [];
+  navButtons.forEach((button) => button.style.setProperty("--section-progress", "0"));
+
+  sections.forEach((section, index) => {
+    sectionTriggers.push(
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => {
+          currentIndex.value = index;
+        },
+        onEnterBack: () => {
+          currentIndex.value = index;
+        },
+        onUpdate: (self) => {
+          const button = navButtons[index];
+          if (!button) return;
+          button.style.setProperty("--section-progress", self.progress.toFixed(3));
+        }
+      })
+    );
+  });
+
+  ScrollTrigger.refresh();
 }
 
 function nearestSectionIndex() {
@@ -108,6 +153,9 @@ function snapToCurrentSection(animated = false) {
   if (!sections.length) return;
   const nextIndex = nearestSectionIndex();
   currentIndex.value = nextIndex;
+  navButtons.forEach((button, index) => {
+    button.style.setProperty("--section-progress", index === nextIndex ? "1" : "0");
+  });
 
   if (animated) {
     gsap.to(window, {
@@ -144,6 +192,9 @@ export function useFullPage() {
 
   onBeforeUnmount(() => {
     window.clearTimeout(resizeTimer);
+    window.clearTimeout(wheelResetTimer);
+    sectionTriggers.forEach((trigger) => trigger.kill());
+    sectionTriggers = [];
     window.removeEventListener("wheel", handleWheel);
     window.removeEventListener("keydown", handleKeydown);
     window.removeEventListener("touchstart", handleTouchStart);
