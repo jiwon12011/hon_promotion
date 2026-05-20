@@ -274,6 +274,118 @@ function playSkillEffect(event, skill, index) {
   }
 }
 
+function createCharacterHoverEffect(job) {
+  const root = sectionRef.value;
+  const container = root?.querySelector(".job-section__effects");
+  const character = root?.querySelector(".job-section__main-character");
+  if (!root || !container || !character) return;
+
+  const rect = character.getBoundingClientRect();
+  const parentRect = root.getBoundingClientRect();
+  const x = rect.left - parentRect.left + rect.width * 0.55;
+  const y = rect.top - parentRect.top + rect.height * 0.52;
+
+  const ring = document.createElement("span");
+  ring.className = "job-section__hover-ring";
+  ring.style.left = `${x}px`;
+  ring.style.top = `${y}px`;
+  ring.style.borderColor = job.color;
+  ring.style.setProperty("--job-color", job.color);
+  container.appendChild(ring);
+
+  gsap.fromTo(ring,
+    { width: 40, height: 40, opacity: 0.86, rotate: -20 },
+    {
+      width: 460,
+      height: 460,
+      opacity: 0,
+      rotate: 42,
+      duration: 0.82,
+      ease: "power2.out",
+      onComplete: () => ring.remove()
+    }
+  );
+
+  for (let i = 0; i < 16; i += 1) {
+    const particle = document.createElement("span");
+    particle.className = "job-section__hover-particle";
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+    particle.style.background = job.color;
+    particle.style.setProperty("--job-color", job.color);
+    container.appendChild(particle);
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 56 + Math.random() * 130;
+    gsap.to(particle, {
+      x: Math.cos(angle) * distance,
+      y: Math.sin(angle) * distance - 26,
+      scale: 0.15 + Math.random() * 0.65,
+      opacity: 0,
+      rotate: 180 + Math.random() * 280,
+      duration: 0.58 + Math.random() * 0.28,
+      ease: "power2.out",
+      onComplete: () => particle.remove()
+    });
+  }
+}
+
+function hoverMainCharacter() {
+  if (isSwitching.value) return;
+
+  const root = sectionRef.value;
+  const character = root?.querySelector(".job-section__main-character");
+  const weaponGlow = root?.querySelector(".job-section__weapon-glow");
+  if (!root || !character || !weaponGlow) return;
+
+  idleTween?.pause();
+  createCharacterHoverEffect(activeJob.value);
+
+  gsap.to(character, {
+    y: -14,
+    scale: 1.035,
+    rotate: 1.2,
+    filter: `drop-shadow(0 32px 34px rgba(0, 0, 0, 0.52)) drop-shadow(0 0 34px ${activeJob.value.color}) brightness(1.08)`,
+    duration: 0.34,
+    ease: "back.out(1.45)",
+    overwrite: "auto"
+  });
+  gsap.to(weaponGlow, {
+    opacity: 0.92,
+    scale: 1.12,
+    filter: "blur(20px)",
+    duration: 0.32,
+    ease: "power2.out",
+    overwrite: "auto"
+  });
+}
+
+function leaveMainCharacter() {
+  const root = sectionRef.value;
+  const character = root?.querySelector(".job-section__main-character");
+  const weaponGlow = root?.querySelector(".job-section__weapon-glow");
+  if (!character || !weaponGlow) return;
+
+  gsap.to(character, {
+    y: 0,
+    scale: 1,
+    rotate: 0,
+    duration: 0.3,
+    ease: "power2.out",
+    clearProps: "filter,scale,rotate,y",
+    overwrite: "auto",
+    onComplete: () => idleTween?.restart(true)
+  });
+  gsap.to(weaponGlow, {
+    opacity: 0.58,
+    scale: 1,
+    filter: "blur(15px)",
+    duration: 0.3,
+    ease: "power2.out",
+    overwrite: "auto"
+  });
+}
+
 async function changeJob(jobKey) {
   if (jobKey === activeJobKey.value || isSwitching.value) return;
 
@@ -450,7 +562,12 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div class="job-section__showcase" :style="{ '--job-color': activeJob.color }">
+    <div
+      class="job-section__showcase"
+      :style="{ '--job-color': activeJob.color }"
+      @mouseenter="hoverMainCharacter"
+      @mouseleave="leaveMainCharacter"
+    >
       <div class="job-section__platform" aria-hidden="true" />
       <img class="job-section__main-character" :src="activeJob.mainImage" :alt="`${activeJob.name} 대표 캐릭터`" loading="lazy" />
       <div class="job-section__weapon-glow" aria-hidden="true" />

@@ -8,6 +8,7 @@ import iconScrollUrl from "@/assets/images/section4-icon-scroll.png";
 import iconFlameUrl from "@/assets/images/section4-icon-flame.png";
 import iconBookUrl from "@/assets/images/section4-icon-book.png";
 import iconUpgradeUrl from "@/assets/images/section4-icon-upgrade.png";
+import bookGoButtonUrl from "@/assets/images/book_gobtn.png";
 import monsterOneUrl from "@/assets/images/section4-monster-1.png";
 import monsterTwoUrl from "@/assets/images/section4-monster-2.png";
 import monsterThreeUrl from "@/assets/images/section4-monster-3.png";
@@ -152,6 +153,21 @@ function selectMonster(monster, event) {
   );
   createBurst(event?.currentTarget, 24);
   createSpiritTrail(event?.currentTarget, monster);
+}
+
+function clickBookButton(event) {
+  const target = event?.currentTarget;
+  if (!target) return;
+
+  createBurst(target, 22);
+  gsap.fromTo(target,
+    { scale: 0.96, filter: "brightness(1.28) drop-shadow(0 0 34px rgba(255, 213, 103, 0.65))" },
+    { scale: 1, filter: "brightness(1) drop-shadow(0 16px 28px rgba(0, 0, 0, 0.42))", duration: 0.45, ease: "elastic.out(1, 0.45)" }
+  );
+  gsap.fromTo(target.querySelector(".monster-dex__go-shine"),
+    { x: "-120%", opacity: 0.1 },
+    { x: "120%", opacity: 0, duration: 0.72, ease: "power2.out" }
+  );
 }
 
 function startIdleMotion() {
@@ -396,11 +412,14 @@ onBeforeUnmount(() => {
 
     <div class="monster-dex__bottom">
       <div class="monster-dex__actions">
-        <button type="button" class="is-gold">
-          <span class="monster-dex__action-icon">
-            <img :src="iconBookUrl" alt="" aria-hidden="true" loading="lazy" />
-          </span>
-          <strong>도감 정보 바로가기</strong>
+        <button
+          type="button"
+          class="monster-dex__go-button"
+          aria-label="도감 정보 바로가기"
+          @click="clickBookButton"
+        >
+          <img :src="bookGoButtonUrl" alt="도감 정보 바로가기" loading="lazy" />
+          <span class="monster-dex__go-shine" aria-hidden="true" />
         </button>
       </div>
     </div>

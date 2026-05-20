@@ -1484,6 +1484,7 @@ a {
   bottom: 13vh;
   width: min(64vw, 1040px);
   height: 72vh;
+  pointer-events: auto;
 }
 
 .job-section__platform {
@@ -1511,6 +1512,8 @@ a {
   filter:
     drop-shadow(0 28px 30px rgba(0, 0, 0, 0.48))
     drop-shadow(0 0 18px color-mix(in srgb, var(--job-color) 60%, transparent));
+  cursor: pointer;
+  pointer-events: auto;
   user-select: none;
   will-change: transform, opacity, filter;
 }
@@ -1646,7 +1649,9 @@ a {
 }
 
 .job-section__shockwave,
-.job-section__burst-particle {
+.job-section__burst-particle,
+.job-section__hover-ring,
+.job-section__hover-particle {
   position: absolute;
   z-index: 1;
   pointer-events: none;
@@ -1666,6 +1671,27 @@ a {
   height: 8px;
   border-radius: 50% 0 50% 0;
   box-shadow: 0 0 12px currentColor;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+
+.job-section__hover-ring {
+  border: 2px solid;
+  border-radius: 50%;
+  box-shadow:
+    0 0 28px color-mix(in srgb, var(--job-color) 76%, transparent),
+    inset 0 0 28px color-mix(in srgb, var(--job-color) 44%, transparent);
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+
+.job-section__hover-particle {
+  width: 7px;
+  height: 7px;
+  border-radius: 50% 0 50% 0;
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--job-color) 80%, transparent),
+    0 0 28px color-mix(in srgb, var(--job-color) 44%, transparent);
   transform: translate(-50%, -50%);
   mix-blend-mode: screen;
 }
@@ -2551,6 +2577,95 @@ a {
     radial-gradient(ellipse at 50% 0%, rgba(255, 231, 151, 0.3), transparent 62%),
     linear-gradient(180deg, rgba(128, 80, 33, 0.96), rgba(45, 27, 13, 0.96));
   color: #f5d494;
+}
+
+.monster-dex__actions .monster-dex__go-button {
+  width: clamp(280px, 25vw, 440px);
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  isolation: isolate;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.42));
+}
+
+.monster-dex__actions .monster-dex__go-button::before {
+  left: 6%;
+  top: 32%;
+  z-index: -1;
+  width: 88%;
+  height: 44%;
+  border: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(ellipse at 18% 50%, rgba(255, 224, 124, 0.32), transparent 42%),
+    radial-gradient(ellipse at 62% 48%, rgba(255, 187, 55, 0.28), transparent 64%);
+  filter: blur(18px);
+  opacity: 0.62;
+  transform: scale(0.96);
+  transition: opacity 220ms ease, transform 220ms ease, filter 220ms ease;
+}
+
+.monster-dex__actions .monster-dex__go-button::after {
+  display: none;
+}
+
+.monster-dex__go-button img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.monster-dex__go-shine {
+  position: absolute;
+  inset: 30% 10% 34%;
+  z-index: 2;
+  background: linear-gradient(100deg, transparent 0%, rgba(255, 248, 206, 0.55) 48%, transparent 100%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateX(-120%) skewX(-16deg);
+  pointer-events: none;
+}
+
+.monster-dex__actions .monster-dex__go-button:hover {
+  transform: translateY(-5px) scale(1.035);
+  filter: brightness(1.08) drop-shadow(0 20px 32px rgba(0, 0, 0, 0.46)) drop-shadow(0 0 22px rgba(255, 203, 91, 0.32));
+}
+
+.monster-dex__actions .monster-dex__go-button:hover::before {
+  opacity: 1;
+  filter: blur(22px);
+  transform: scale(1.06);
+}
+
+.monster-dex__actions .monster-dex__go-button:hover .monster-dex__go-shine {
+  animation: monster-dex-go-shine 1.15s ease forwards;
+}
+
+.monster-dex__actions .monster-dex__go-button:active {
+  transform: translateY(-1px) scale(0.985);
+  filter: brightness(1.18) drop-shadow(0 0 26px rgba(255, 213, 103, 0.46));
+}
+
+@keyframes monster-dex-go-shine {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%) skewX(-16deg);
+  }
+  18% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%) skewX(-16deg);
+  }
 }
 
 .monster-dex__particle {
