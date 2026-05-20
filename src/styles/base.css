@@ -1914,8 +1914,8 @@ a {
 
 .monster-dex__character {
   position: absolute;
-  left: clamp(20px, 4.8vw, 92px);
-  top: clamp(326px, 40vh, 452px);
+  left: clamp(42px, 6.4vw, 128px);
+  top: clamp(344px, 42vh, 472px);
   width: min(22vw, 390px);
   aspect-ratio: 0.9;
 }
