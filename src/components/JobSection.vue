@@ -339,25 +339,79 @@ function hoverMainCharacter() {
   if (!root || !character || !weaponGlow) return;
 
   idleTween?.pause();
-  createCharacterHoverEffect(activeJob.value);
 
   gsap.to(character, {
-    y: -14,
-    scale: 1.035,
-    rotate: 1.2,
-    filter: `drop-shadow(0 32px 34px rgba(0, 0, 0, 0.52)) drop-shadow(0 0 34px ${activeJob.value.color}) brightness(1.08)`,
-    duration: 0.34,
-    ease: "back.out(1.45)",
-    overwrite: "auto"
-  });
-  gsap.to(weaponGlow, {
-    opacity: 0.92,
-    scale: 1.12,
-    filter: "blur(20px)",
-    duration: 0.32,
+    y: -8,
+    scale: 1.018,
+    filter: `drop-shadow(0 30px 32px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 24px ${activeJob.value.color}) brightness(1.05)`,
+    duration: 0.28,
     ease: "power2.out",
     overwrite: "auto"
   });
+  gsap.to(weaponGlow, {
+    opacity: 0.78,
+    scale: 1.06,
+    filter: "blur(18px)",
+    duration: 0.28,
+    ease: "power2.out",
+    overwrite: "auto"
+  });
+}
+
+function moveMainCharacter(event) {
+  if (isSwitching.value) return;
+
+  const root = sectionRef.value;
+  const character = root?.querySelector(".job-section__main-character");
+  const weaponGlow = root?.querySelector(".job-section__weapon-glow");
+  if (!character || !weaponGlow) return;
+
+  const rect = character.getBoundingClientRect();
+  const clamp = (value) => Math.max(-1, Math.min(1, value));
+  const dx = clamp((event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2));
+  const dy = clamp((event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2));
+
+  gsap.to(character, {
+    x: dx * 10,
+    y: -8 + dy * 5,
+    rotate: dx * 1.15,
+    scale: 1.024,
+    duration: 0.28,
+    ease: "power2.out",
+    overwrite: "auto"
+  });
+  gsap.to(weaponGlow, {
+    x: dx * 9,
+    y: dy * 5,
+    opacity: 0.82,
+    duration: 0.3,
+    ease: "power2.out",
+    overwrite: "auto"
+  });
+}
+
+function clickMainCharacter() {
+  if (isSwitching.value) return;
+
+  const root = sectionRef.value;
+  const character = root?.querySelector(".job-section__main-character");
+  if (!character) return;
+
+  createCharacterHoverEffect(activeJob.value);
+  gsap.timeline()
+    .to(character, {
+      scale: 1.065,
+      filter: `drop-shadow(0 34px 36px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 44px ${activeJob.value.color}) brightness(1.14)`,
+      duration: 0.16,
+      ease: "power2.out",
+      overwrite: "auto"
+    })
+    .to(character, {
+      scale: 1.024,
+      duration: 0.34,
+      ease: "elastic.out(1, 0.55)",
+      overwrite: "auto"
+    });
 }
 
 function leaveMainCharacter() {
@@ -372,11 +426,13 @@ function leaveMainCharacter() {
     rotate: 0,
     duration: 0.3,
     ease: "power2.out",
-    clearProps: "filter,scale,rotate,y",
+    clearProps: "filter,scale,rotate,x,y",
     overwrite: "auto",
     onComplete: () => idleTween?.restart(true)
   });
   gsap.to(weaponGlow, {
+    x: 0,
+    y: 0,
     opacity: 0.58,
     scale: 1,
     filter: "blur(15px)",
@@ -566,7 +622,9 @@ onBeforeUnmount(() => {
       class="job-section__showcase"
       :style="{ '--job-color': activeJob.color }"
       @mouseenter="hoverMainCharacter"
+      @mousemove="moveMainCharacter"
       @mouseleave="leaveMainCharacter"
+      @click="clickMainCharacter"
     >
       <div class="job-section__platform" aria-hidden="true" />
       <img class="job-section__main-character" :src="activeJob.mainImage" :alt="`${activeJob.name} 대표 캐릭터`" loading="lazy" />

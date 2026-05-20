@@ -418,8 +418,10 @@ onBeforeUnmount(() => {
           aria-label="도감 정보 바로가기"
           @click="clickBookButton"
         >
-          <img :src="bookGoButtonUrl" alt="도감 정보 바로가기" loading="lazy" />
-          <span class="monster-dex__go-shine" aria-hidden="true" />
+          <span class="monster-dex__go-crop">
+            <img :src="bookGoButtonUrl" alt="도감 정보 바로가기" loading="lazy" />
+            <span class="monster-dex__go-shine" aria-hidden="true" />
+          </span>
         </button>
       </div>
     </div>

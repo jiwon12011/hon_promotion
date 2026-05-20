@@ -2416,7 +2416,7 @@ a {
   z-index: 9;
   left: clamp(42px, 5vw, 90px);
   right: clamp(42px, 5vw, 90px);
-  bottom: clamp(22px, 3vh, 40px);
+  bottom: clamp(4px, 1.1vh, 16px);
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -2580,24 +2580,27 @@ a {
 }
 
 .monster-dex__actions .monster-dex__go-button {
-  width: clamp(280px, 25vw, 440px);
+  position: relative;
+  width: clamp(310px, 27vw, 500px);
+  aspect-ratio: 3.84 / 1;
   min-width: 0;
   min-height: 0;
   padding: 0;
   border: 0;
   background: transparent;
-  box-shadow: none;
+  box-shadow: none !important;
   overflow: visible;
   isolation: isolate;
   filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.42));
+  animation: monster-dex-go-breathe 3.4s ease-in-out infinite;
 }
 
 .monster-dex__actions .monster-dex__go-button::before {
-  left: 6%;
-  top: 32%;
+  left: 8%;
+  top: 22%;
   z-index: -1;
-  width: 88%;
-  height: 44%;
+  width: 84%;
+  height: 62%;
   border: 0;
   border-radius: 999px;
   background:
@@ -2613,19 +2616,32 @@ a {
   display: none;
 }
 
-.monster-dex__go-button img {
-  position: relative;
+.monster-dex__go-crop {
+  position: absolute;
+  inset: 0;
   z-index: 1;
   display: block;
-  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.monster-dex__go-button img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  display: block;
+  width: 124%;
   height: auto;
+  max-width: none;
   object-fit: contain;
+  transform: translate(-48%, -54%);
   pointer-events: none;
 }
 
 .monster-dex__go-shine {
   position: absolute;
-  inset: 30% 10% 34%;
+  inset: 24% 8% 24%;
   z-index: 2;
   background: linear-gradient(100deg, transparent 0%, rgba(255, 248, 206, 0.55) 48%, transparent 100%);
   mix-blend-mode: screen;
@@ -2636,7 +2652,9 @@ a {
 
 .monster-dex__actions .monster-dex__go-button:hover {
   transform: translateY(-5px) scale(1.035);
+  box-shadow: none !important;
   filter: brightness(1.08) drop-shadow(0 20px 32px rgba(0, 0, 0, 0.46)) drop-shadow(0 0 22px rgba(255, 203, 91, 0.32));
+  animation-play-state: paused;
 }
 
 .monster-dex__actions .monster-dex__go-button:hover::before {
@@ -2651,7 +2669,19 @@ a {
 
 .monster-dex__actions .monster-dex__go-button:active {
   transform: translateY(-1px) scale(0.985);
+  box-shadow: none !important;
   filter: brightness(1.18) drop-shadow(0 0 26px rgba(255, 213, 103, 0.46));
+}
+
+@keyframes monster-dex-go-breathe {
+  0%, 100% {
+    transform: translateY(0);
+    filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 10px rgba(255, 211, 105, 0.12));
+  }
+  50% {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 20px 32px rgba(0, 0, 0, 0.46)) drop-shadow(0 0 20px rgba(255, 211, 105, 0.25));
+  }
 }
 
 @keyframes monster-dex-go-shine {
