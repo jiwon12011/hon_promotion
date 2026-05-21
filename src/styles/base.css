@@ -79,35 +79,62 @@ a {
   position: fixed;
   z-index: 20;
   top: 50%;
-  right: 28px;
+  right: 24px;
   display: grid;
-  gap: 12px;
+  gap: 13px;
   transform: translateY(-50%);
 }
 
 .section-nav__button {
   --section-progress: 0;
   position: relative;
-  width: 12px;
-  height: 12px;
+  width: 22px;
+  height: 24px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   cursor: pointer;
-  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  filter: drop-shadow(0 0 8px rgba(255, 211, 122, 0.22));
+  transition: transform 180ms ease, filter 180ms ease;
 }
 
 .section-nav__button::before {
   position: absolute;
-  inset: -7px;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: conic-gradient(rgba(255, 225, 157, 0.95) calc(var(--section-progress) * 1turn), rgba(255, 255, 255, 0.18) 0);
+  background:
+    conic-gradient(rgba(255, 225, 157, 0.95) calc(var(--section-progress) * 1turn), rgba(92, 190, 255, 0.18) 0),
+    radial-gradient(circle, rgba(255, 225, 142, 0.62), rgba(98, 185, 255, 0.22) 45%, transparent 70%);
   content: "";
-  opacity: 0;
-  transition: opacity 180ms ease;
-  -webkit-mask: radial-gradient(circle, transparent 55%, #000 59%);
-  mask: radial-gradient(circle, transparent 55%, #000 59%);
+  opacity: 0.32;
+  transform: translate(-50%, -50%) scale(0.72);
+  transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
+  -webkit-mask: radial-gradient(circle, transparent 48%, #000 52%);
+  mask: radial-gradient(circle, transparent 48%, #000 52%);
+}
+
+.section-nav__button::after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 15px;
+  border-radius: 58% 42% 50% 50% / 66% 66% 34% 34%;
+  background:
+    radial-gradient(circle at 48% 66%, rgba(255, 255, 236, 0.92) 0 18%, rgba(255, 225, 128, 0.76) 22%, transparent 42%),
+    radial-gradient(ellipse at 50% 60%, rgba(255, 202, 77, 0.95), rgba(255, 131, 45, 0.72) 55%, rgba(74, 179, 255, 0.42) 100%);
+  box-shadow:
+    0 0 12px rgba(255, 193, 75, 0.42),
+    0 0 22px rgba(70, 181, 255, 0.18);
+  content: "";
+  opacity: 0.62;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0.78);
+  transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  animation: sectionNavSpirit 2.8s ease-in-out infinite;
 }
 
 .section-nav__button span {
@@ -120,13 +147,43 @@ a {
 }
 
 .section-nav__button.is-active {
-  background: #fff;
-  border-color: #ffe19d;
+  filter:
+    drop-shadow(0 0 10px rgba(255, 226, 145, 0.72))
+    drop-shadow(0 0 18px rgba(82, 190, 255, 0.28));
   transform: scale(1.18);
 }
 
 .section-nav__button.is-active::before {
   opacity: 1;
+  filter: blur(0.2px);
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.section-nav__button.is-active::after {
+  opacity: 1;
+  box-shadow:
+    0 0 15px rgba(255, 223, 134, 0.88),
+    0 0 32px rgba(94, 198, 255, 0.38);
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.06);
+}
+
+@keyframes sectionNavSpirit {
+  0%,
+  100% {
+    border-radius: 58% 42% 50% 50% / 66% 66% 34% 34%;
+    filter: hue-rotate(0deg);
+    translate: 0 0;
+  }
+
+  45% {
+    border-radius: 46% 54% 48% 52% / 72% 58% 42% 28%;
+    filter: hue-rotate(8deg);
+    translate: 0 -1px;
+  }
+
+  70% {
+    border-radius: 64% 36% 54% 46% / 58% 72% 28% 42%;
+  }
 }
 
 .hero-section {
