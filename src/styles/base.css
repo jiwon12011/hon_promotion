@@ -2162,20 +2162,21 @@ a {
 
 .monster-dex__energy-rise {
   left: 50%;
-  bottom: 5%;
+  bottom: -1%;
   z-index: 2;
-  width: 112%;
-  height: 52%;
-  overflow: hidden;
-  border-radius: 45% 45% 28% 28%;
+  width: 138%;
+  height: 96%;
+  overflow: visible;
+  border-radius: 50%;
   background:
-    radial-gradient(ellipse at 50% 86%, rgba(255, 228, 139, 0.68) 0%, rgba(255, 184, 45, 0.28) 28%, rgba(255, 184, 45, 0.09) 52%, transparent 72%),
-    radial-gradient(ellipse at 50% 100%, rgba(255, 238, 174, 0.54), transparent 56%);
-  filter: drop-shadow(0 0 16px rgba(255, 206, 83, 0.58));
+    radial-gradient(ellipse at 50% 86%, rgba(255, 232, 143, 0.34) 0%, rgba(255, 183, 47, 0.16) 28%, transparent 58%),
+    radial-gradient(circle at 36% 48%, rgba(255, 234, 145, 0.22), transparent 19%),
+    radial-gradient(circle at 72% 40%, rgba(255, 200, 76, 0.18), transparent 20%);
+  filter: drop-shadow(0 0 20px rgba(255, 206, 83, 0.66));
   mix-blend-mode: screen;
-  opacity: 0.9;
+  opacity: 0.96;
   translate: -50% 0;
-  animation: monsterEnergyBreath 2.8s ease-in-out infinite;
+  animation: monsterEnergyBreath 2.35s ease-in-out infinite;
 }
 
 .monster-dex__energy-rise::before,
@@ -2186,65 +2187,116 @@ a {
 
 .monster-dex__energy-rise::before {
   left: 50%;
-  bottom: 4%;
-  width: 82%;
-  height: 26%;
-  border-radius: 50%;
+  bottom: 5%;
+  width: 118%;
+  height: 52%;
+  border-radius: 46% 46% 40% 40%;
   background:
-    radial-gradient(ellipse at center, rgba(255, 241, 180, 0.58) 0%, rgba(255, 205, 80, 0.22) 38%, transparent 70%),
-    repeating-conic-gradient(from 12deg, rgba(255, 228, 132, 0.64) 0deg 2deg, transparent 2deg 18deg);
-  filter: blur(0.5px);
-  opacity: 0.86;
+    repeating-conic-gradient(from -18deg at 50% 78%, rgba(255, 240, 172, 0) 0deg 10deg, rgba(255, 230, 132, 0.52) 12deg 15deg, transparent 18deg 30deg),
+    radial-gradient(ellipse at 50% 86%, rgba(255, 245, 190, 0.58) 0%, rgba(255, 202, 69, 0.2) 32%, transparent 72%);
+  filter: blur(1.2px);
+  opacity: 0.74;
   translate: -50% 0;
-  transform: rotateX(66deg);
+  transform: rotateX(58deg);
+  animation: monsterEnergyFan 2.6s ease-in-out infinite;
 }
 
 .monster-dex__energy-rise::after {
-  inset: 2% 10% 18%;
+  inset: -2% 2% 16%;
   background:
-    linear-gradient(82deg, transparent 6%, rgba(255, 244, 184, 0.42) 9%, transparent 13%),
-    linear-gradient(96deg, transparent 20%, rgba(255, 196, 69, 0.36) 23%, transparent 28%),
-    linear-gradient(76deg, transparent 36%, rgba(255, 239, 164, 0.48) 39%, transparent 44%),
-    linear-gradient(102deg, transparent 58%, rgba(255, 200, 82, 0.34) 61%, transparent 66%),
-    linear-gradient(86deg, transparent 76%, rgba(255, 236, 151, 0.4) 79%, transparent 84%);
-  filter: blur(4px);
-  opacity: 0.72;
-  animation: monsterEnergyFlow 1.75s linear infinite;
+    radial-gradient(circle at 18% 50%, rgba(255, 246, 198, 0.95) 0 3px, transparent 8px),
+    radial-gradient(circle at 34% 22%, rgba(255, 211, 88, 0.82) 0 2px, transparent 7px),
+    radial-gradient(circle at 58% 28%, rgba(255, 247, 196, 0.9) 0 3px, transparent 9px),
+    radial-gradient(circle at 82% 54%, rgba(255, 193, 50, 0.78) 0 2px, transparent 8px),
+    radial-gradient(circle at 64% 72%, rgba(255, 239, 168, 0.78) 0 2px, transparent 7px);
+  filter: blur(0.4px) drop-shadow(0 0 12px rgba(255, 213, 88, 0.76));
+  opacity: 0.86;
+  animation: monsterEnergyPopLayer 1.8s ease-in-out infinite;
 }
 
 .monster-dex__energy-rise span {
   position: absolute;
-  bottom: 12%;
-  width: 5px;
-  height: 42%;
+  left: var(--spark-left, 50%);
+  bottom: var(--spark-bottom, 18%);
+  width: var(--spark-size, 6px);
+  height: var(--spark-height, 52px);
   border-radius: 999px;
-  background: linear-gradient(180deg, transparent, rgba(255, 237, 154, 0.78), rgba(255, 177, 42, 0));
-  filter: blur(2px);
+  background:
+    radial-gradient(circle, rgba(255, 250, 212, 0.95) 0 3px, transparent 6px),
+    linear-gradient(180deg, transparent, rgba(255, 238, 150, 0.76), rgba(255, 176, 39, 0));
+  filter: blur(1.2px) drop-shadow(0 0 12px rgba(255, 213, 82, 0.86));
   opacity: 0;
-  animation: monsterEnergySpark 2.2s ease-in-out infinite;
+  translate: -50% 0;
+  rotate: var(--spark-rotate, 0deg);
+  animation: monsterEnergySpark 1.8s ease-in-out infinite;
+  animation-delay: var(--spark-delay, 0s);
 }
 
 .monster-dex__energy-rise span:nth-child(1) {
-  left: 26%;
-  animation-delay: -0.2s;
+  --spark-left: 18%;
+  --spark-bottom: 22%;
+  --spark-height: 64px;
+  --spark-rotate: -28deg;
+  --spark-delay: -0.2s;
 }
 
 .monster-dex__energy-rise span:nth-child(2) {
-  left: 42%;
-  height: 52%;
-  animation-delay: -1.1s;
+  --spark-left: 31%;
+  --spark-bottom: 40%;
+  --spark-height: 82px;
+  --spark-rotate: -14deg;
+  --spark-delay: -1.1s;
 }
 
 .monster-dex__energy-rise span:nth-child(3) {
-  left: 61%;
-  height: 46%;
-  animation-delay: -0.65s;
+  --spark-left: 48%;
+  --spark-bottom: 54%;
+  --spark-height: 92px;
+  --spark-rotate: 4deg;
+  --spark-delay: -0.65s;
 }
 
 .monster-dex__energy-rise span:nth-child(4) {
-  left: 74%;
-  height: 36%;
-  animation-delay: -1.55s;
+  --spark-left: 66%;
+  --spark-bottom: 42%;
+  --spark-height: 74px;
+  --spark-rotate: 18deg;
+  --spark-delay: -1.55s;
+}
+
+.monster-dex__energy-rise span:nth-child(5) {
+  --spark-left: 82%;
+  --spark-bottom: 24%;
+  --spark-height: 56px;
+  --spark-rotate: 30deg;
+  --spark-delay: -0.95s;
+}
+
+.monster-dex__energy-rise span:nth-child(6) {
+  --spark-left: 26%;
+  --spark-bottom: 66%;
+  --spark-size: 5px;
+  --spark-height: 34px;
+  --spark-rotate: -42deg;
+  --spark-delay: -1.35s;
+}
+
+.monster-dex__energy-rise span:nth-child(7) {
+  --spark-left: 72%;
+  --spark-bottom: 68%;
+  --spark-size: 5px;
+  --spark-height: 38px;
+  --spark-rotate: 38deg;
+  --spark-delay: -0.45s;
+}
+
+.monster-dex__energy-rise span:nth-child(8) {
+  --spark-left: 52%;
+  --spark-bottom: 78%;
+  --spark-size: 7px;
+  --spark-height: 42px;
+  --spark-rotate: 8deg;
+  --spark-delay: -1.7s;
 }
 
 .monster-dex__character-img {
@@ -3563,40 +3615,72 @@ a {
   0%,
   100% {
     opacity: 0.72;
-    scale: 0.96;
+    scale: 0.94;
+    filter: drop-shadow(0 0 14px rgba(255, 206, 83, 0.48));
   }
 
   50% {
     opacity: 1;
-    scale: 1.04;
+    scale: 1.06;
+    filter: drop-shadow(0 0 30px rgba(255, 220, 112, 0.88));
   }
 }
 
-@keyframes monsterEnergyFlow {
-  from {
-    background-position: 0 26px, 0 42px, 0 8px, 0 34px, 0 16px;
+@keyframes monsterEnergyFan {
+  0%,
+  100% {
+    opacity: 0.42;
+    scale: 0.86 0.72;
+    rotate: -3deg;
   }
 
-  to {
-    background-position: 0 -120px, 0 -110px, 0 -132px, 0 -118px, 0 -124px;
+  42% {
+    opacity: 0.88;
+    scale: 1.08 1;
+    rotate: 3deg;
+  }
+}
+
+@keyframes monsterEnergyPopLayer {
+  0%,
+  100% {
+    opacity: 0.36;
+    scale: 0.9;
+    filter: blur(0.8px) drop-shadow(0 0 7px rgba(255, 213, 88, 0.48));
+  }
+
+  28% {
+    opacity: 1;
+    scale: 1.04;
+    filter: blur(0.2px) drop-shadow(0 0 18px rgba(255, 228, 132, 0.94));
+  }
+
+  58% {
+    opacity: 0.56;
+    scale: 0.96;
   }
 }
 
 @keyframes monsterEnergySpark {
   0% {
     opacity: 0;
-    translate: 0 28px;
-    scale: 0.75 0.7;
+    translate: -50% 28px;
+    scale: 0.6 0.7;
   }
 
-  35% {
-    opacity: 0.86;
+  30% {
+    opacity: 0.96;
+    scale: 1.18 1.35;
+  }
+
+  52% {
+    opacity: 0.72;
   }
 
   100% {
     opacity: 0;
-    translate: 0 -54px;
-    scale: 1.15 1.25;
+    translate: calc(-50% + var(--spark-drift, 0px)) -96px;
+    scale: 0.25 1.6;
   }
 }
 
