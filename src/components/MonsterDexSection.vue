@@ -142,9 +142,9 @@ function selectMonster(monster, event) {
     { scale: 1.35, opacity: 1 },
     { scale: 1, opacity: 0.68, duration: 0.9, ease: "power2.out" }
   );
-  gsap.fromTo(root.querySelector(".monster-dex__magic-ring"),
-    { scale: 1.18, filter: "drop-shadow(0 0 30px rgba(255, 214, 102, 0.95))" },
-    { scale: 1, filter: "drop-shadow(0 0 18px rgba(255, 214, 102, 0.62))", duration: 0.9, ease: "power2.out" }
+  gsap.fromTo(root.querySelector(".monster-dex__energy-rise"),
+    { scale: 1.12, opacity: 1, filter: "drop-shadow(0 0 28px rgba(255, 220, 118, 0.92))" },
+    { scale: 1, opacity: 0.9, filter: "drop-shadow(0 0 16px rgba(255, 206, 83, 0.58))", duration: 0.9, ease: "power2.out" }
   );
   gsap.fromTo(event?.currentTarget?.querySelector("span"),
     { scale: 1.45, opacity: 0.95, filter: "blur(5px) brightness(1.35)" },
@@ -378,7 +378,12 @@ onBeforeUnmount(() => {
 
       <div class="monster-dex__character">
         <div class="monster-dex__character-glow" aria-hidden="true" />
-        <div class="monster-dex__magic-ring" aria-hidden="true" />
+        <div class="monster-dex__energy-rise" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
         <span class="monster-dex__talisman-glow" aria-hidden="true" />
         <img class="monster-dex__talisman monster-dex__talisman--front" :src="talismanCardUrl" alt="" aria-hidden="true" loading="lazy" />
         <img class="monster-dex__character-img" :src="selectedMonster.image" :alt="selectedMonster.name" loading="lazy" />
