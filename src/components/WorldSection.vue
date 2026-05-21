@@ -91,6 +91,9 @@ onBeforeUnmount(() => {
     <img class="world-section__bg" :src="bgSkyUrl" alt="" aria-hidden="true" loading="lazy" />
     <div class="world-section__shade" aria-hidden="true" />
     <div class="world-section__tower-aura" aria-hidden="true" />
+    <span class="world-section__tower-ribbon world-section__tower-ribbon--one" aria-hidden="true" />
+    <span class="world-section__tower-ribbon world-section__tower-ribbon--two" aria-hidden="true" />
+    <span class="world-section__tower-ribbon world-section__tower-ribbon--three" aria-hidden="true" />
     <span class="world-section__spark world-section__spark--one" aria-hidden="true" />
     <span class="world-section__spark world-section__spark--two" aria-hidden="true" />
     <span class="world-section__spark world-section__spark--three" aria-hidden="true" />

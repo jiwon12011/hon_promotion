@@ -629,6 +629,7 @@ a {
 .world-section__shade,
 .world-section__tower-aura,
 .world-section__spark,
+.world-section__tower-ribbon,
 .world-section__tower,
 .world-section__right-tree,
 .world-section__island,
@@ -701,6 +702,83 @@ a {
   filter: blur(0.4px) drop-shadow(0 0 12px rgba(255, 220, 126, 0.7));
   opacity: 0.72;
   animation: towerSparkleBlink 2.4s ease-in-out infinite;
+}
+
+.world-section__tower-ribbon {
+  z-index: 4;
+  left: 42.6%;
+  width: min(31vw, 560px);
+  height: min(9.5vw, 158px);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: rgba(255, 238, 166, 0.92);
+  border-right-color: rgba(255, 183, 54, 0.38);
+  background:
+    radial-gradient(circle at 24% 44%, rgba(255, 255, 230, 0.95) 0 3px, transparent 5px),
+    linear-gradient(90deg, transparent 0%, rgba(255, 232, 151, 0.58) 40%, rgba(255, 183, 54, 0.2) 52%, transparent 72%);
+  box-shadow:
+    0 -2px 12px rgba(255, 224, 128, 0.55),
+    0 0 28px rgba(255, 178, 52, 0.28);
+  filter: blur(0.35px) drop-shadow(0 0 8px rgba(255, 230, 142, 0.66));
+  mix-blend-mode: screen;
+  opacity: 0.82;
+  pointer-events: none;
+  translate: -50% 0;
+  transform: rotate(-10deg) skewX(-7deg);
+  transform-origin: 50% 50%;
+  animation: towerRibbonSweep 2.35s ease-in-out infinite;
+}
+
+.world-section__tower-ribbon::before,
+.world-section__tower-ribbon::after {
+  position: absolute;
+  border-radius: 999px;
+  content: "";
+  pointer-events: none;
+}
+
+.world-section__tower-ribbon::before {
+  left: 8%;
+  top: 28%;
+  width: 42%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255, 251, 212, 0.95), rgba(255, 188, 64, 0.3), transparent);
+  filter: blur(1.5px);
+}
+
+.world-section__tower-ribbon::after {
+  left: 18%;
+  top: 18%;
+  width: 9px;
+  height: 9px;
+  background: #fff2b2;
+  box-shadow:
+    0 0 10px rgba(255, 238, 166, 0.95),
+    0 0 24px rgba(255, 177, 55, 0.7);
+}
+
+.world-section__tower-ribbon--one {
+  top: 27vh;
+  animation-delay: -0.25s;
+}
+
+.world-section__tower-ribbon--two {
+  top: 45vh;
+  width: min(36vw, 650px);
+  height: min(10vw, 176px);
+  transform: rotate(8deg) skewX(6deg);
+  animation-delay: -1.05s;
+  animation-duration: 2.85s;
+}
+
+.world-section__tower-ribbon--three {
+  top: 62vh;
+  width: min(34vw, 610px);
+  height: min(8.8vw, 152px);
+  transform: rotate(-4deg) skewX(-9deg);
+  opacity: 0.72;
+  animation-delay: -1.7s;
+  animation-duration: 3.1s;
 }
 
 .world-section__spark {
@@ -872,7 +950,7 @@ a {
   font-size: clamp(64px, 5.6vw, 110px);
   font-weight: 700;
   line-height: 0.88;
-  letter-spacing: 0;
+  letter-spacing: 0.015em;
   white-space: nowrap;
   text-shadow:
     0 3px 0 rgba(67, 36, 14, 0.3),
@@ -880,11 +958,12 @@ a {
 }
 
 .world-section__description {
-  margin: clamp(16px, 2.1vh, 26px) 0 0;
+  margin: clamp(22px, 2.8vh, 34px) 0 0;
   color: #eed18e;
   font-size: clamp(20px, 1.42vw, 28px);
   font-weight: 800;
-  line-height: 1.28;
+  line-height: 1.38;
+  letter-spacing: 0.01em;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.58);
 }
 
@@ -892,7 +971,7 @@ a {
   position: relative;
   width: min(430px, 100%);
   height: 22px;
-  margin: 5px 0 9px;
+  margin: 11px 0 18px;
   background:
     radial-gradient(circle, rgba(255, 222, 143, 0.95) 0 3px, transparent 4px) center / 22px 22px no-repeat,
     linear-gradient(90deg, rgba(227, 177, 93, 0), rgba(227, 177, 93, 0.86) 42%, transparent 42% 58%, rgba(227, 177, 93, 0.86) 58%, rgba(227, 177, 93, 0)) center / 100% 1px no-repeat;
@@ -924,6 +1003,7 @@ a {
   display: block;
   width: min(640px, 108%);
   height: auto;
+  margin-top: clamp(8px, 1.1vh, 18px);
   margin-left: clamp(-64px, -3.35vw, -28px);
   filter:
     drop-shadow(0 18px 34px rgba(0, 0, 0, 0.28))
@@ -3676,6 +3756,28 @@ a {
   68% {
     opacity: 0.86;
     transform: scale(1.04);
+  }
+}
+
+@keyframes towerRibbonSweep {
+  0%,
+  100% {
+    opacity: 0.26;
+    scale: 0.9;
+    filter: blur(1px) drop-shadow(0 0 5px rgba(255, 222, 128, 0.38));
+    background-position: -90px 0, -130px 0;
+  }
+
+  36% {
+    opacity: 1;
+    scale: 1.05;
+    filter: blur(0.2px) drop-shadow(0 0 16px rgba(255, 235, 166, 0.86));
+  }
+
+  64% {
+    opacity: 0.7;
+    scale: 0.99;
+    background-position: 130px 0, 190px 0;
   }
 }
 
