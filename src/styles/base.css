@@ -2169,7 +2169,6 @@ a {
   overflow: visible;
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at 50% 86%, rgba(255, 232, 143, 0.34) 0%, rgba(255, 183, 47, 0.16) 28%, transparent 58%),
     radial-gradient(circle at 36% 48%, rgba(255, 234, 145, 0.22), transparent 19%),
     radial-gradient(circle at 72% 40%, rgba(255, 200, 76, 0.18), transparent 20%);
   filter: drop-shadow(0 0 20px rgba(255, 206, 83, 0.66));
@@ -2179,26 +2178,9 @@ a {
   animation: monsterEnergyBreath 2.35s ease-in-out infinite;
 }
 
-.monster-dex__energy-rise::before,
 .monster-dex__energy-rise::after {
   position: absolute;
   content: "";
-}
-
-.monster-dex__energy-rise::before {
-  left: 50%;
-  bottom: 5%;
-  width: 118%;
-  height: 52%;
-  border-radius: 46% 46% 40% 40%;
-  background:
-    repeating-conic-gradient(from -18deg at 50% 78%, rgba(255, 240, 172, 0) 0deg 10deg, rgba(255, 230, 132, 0.52) 12deg 15deg, transparent 18deg 30deg),
-    radial-gradient(ellipse at 50% 86%, rgba(255, 245, 190, 0.58) 0%, rgba(255, 202, 69, 0.2) 32%, transparent 72%);
-  filter: blur(1.2px);
-  opacity: 0.74;
-  translate: -50% 0;
-  transform: rotateX(58deg);
-  animation: monsterEnergyFan 2.6s ease-in-out infinite;
 }
 
 .monster-dex__energy-rise::after {
