@@ -2,7 +2,6 @@
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import bgUrl from "@/assets/images/section4-bg-forest.png";
-import logoUrl from "@/assets/images/logo-cut.png";
 import talismanCardUrl from "@/assets/images/section4-talisman-card.png";
 import iconScrollUrl from "@/assets/images/section4-icon-scroll.png";
 import iconFlameUrl from "@/assets/images/section4-icon-flame.png";
@@ -26,14 +25,14 @@ const features = [
 ];
 
 const monsters = [
-  { id: 1, name: "떠돌이 귀", image: monsterOneUrl, x: 19, y: 38, size: 148, spriteScale: 1.05, aura: "rgba(181, 255, 96, 0.34)" },
-  { id: 2, name: "어린승승", image: monsterTwoUrl, x: 39, y: 28, size: 142, spriteScale: 1.08, aura: "rgba(255, 170, 210, 0.36)" },
-  { id: 3, name: "전갈신", image: monsterThreeUrl, x: 59, y: 38, size: 150, spriteScale: 1.08, aura: "rgba(170, 108, 255, 0.34)" },
-  { id: 4, name: "강시", image: monsterFourUrl, x: 79, y: 28, size: 142, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.28)" },
-  { id: 5, name: "화염귀", image: monsterFiveUrl, x: 19, y: 66, size: 150, spriteScale: 1.08, aura: "rgba(255, 104, 42, 0.42)", fire: true },
-  { id: 6, name: "혼불", image: monsterSixUrl, x: 39, y: 56, size: 148, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.34)" },
-  { id: 7, name: "야차", image: monsterSevenUrl, x: 59, y: 66, size: 154, spriteScale: 1.06, aura: "rgba(255, 181, 69, 0.34)" },
-  { id: 8, name: "구미호", image: monsterEightUrl, x: 79, y: 56, size: 154, spriteScale: 1.04, aura: "rgba(255, 225, 160, 0.38)" }
+  { id: 1, name: "떠돌이 귀", image: monsterOneUrl, x: 19, y: 39, size: 164, spriteScale: 1.05, aura: "rgba(181, 255, 96, 0.4)" },
+  { id: 2, name: "어린승승", image: monsterTwoUrl, x: 39, y: 29, size: 158, spriteScale: 1.08, aura: "rgba(255, 170, 210, 0.42)" },
+  { id: 3, name: "전갈신", image: monsterThreeUrl, x: 59, y: 39, size: 166, spriteScale: 1.08, aura: "rgba(170, 108, 255, 0.4)" },
+  { id: 4, name: "강시", image: monsterFourUrl, x: 79, y: 29, size: 158, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.34)" },
+  { id: 5, name: "화염귀", image: monsterFiveUrl, x: 19, y: 67, size: 166, spriteScale: 1.08, aura: "rgba(255, 104, 42, 0.48)", fire: true },
+  { id: 6, name: "혼불", image: monsterSixUrl, x: 39, y: 57, size: 164, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.4)" },
+  { id: 7, name: "야차", image: monsterSevenUrl, x: 59, y: 67, size: 170, spriteScale: 1.06, aura: "rgba(255, 181, 69, 0.4)" },
+  { id: 8, name: "구미호", image: monsterEightUrl, x: 79, y: 57, size: 170, spriteScale: 1.04, aura: "rgba(255, 225, 160, 0.44)" }
 ];
 
 const floatingMonsters = monsters;
@@ -324,7 +323,7 @@ onMounted(() => {
     .fromTo(root.querySelectorAll(".monster-dex__feature"), { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.09, duration: 0.45, ease: "back.out(1.55)" }, 0.75)
     .fromTo(root.querySelector(".monster-dex__character"), { scale: 0.64, y: 54, opacity: 0 }, { scale: 1, y: 0, opacity: 1, duration: 0.88, ease: "elastic.out(1, 0.52)" }, 0.95)
     .fromTo(root.querySelector(".monster-dex__talisman--front"), { y: 36, opacity: 0, rotate: -18 }, { y: 0, opacity: 1, rotate: -8, duration: 0.7 }, 1.05)
-    .fromTo(root.querySelector(".monster-dex__logo"), { y: -24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.54 }, 1.1)
+    .fromTo(root.querySelector(".monster-dex__sigil"), { y: -24, opacity: 0, scale: 0.78 }, { y: 0, opacity: 1, scale: 1, duration: 0.62, ease: "back.out(1.6)" }, 1.1)
     .fromTo(root.querySelectorAll(".monster-dex__spirit"), { y: 64, scale: 0.72, opacity: 0 }, { y: 0, scale: 1, opacity: 1, stagger: { each: 0.12, from: "random" }, duration: 0.78, ease: "back.out(1.2)" }, 1.3)
     .fromTo(root.querySelector(".monster-dex__bottom"), { y: 82, opacity: 0 }, { y: 0, opacity: 1, duration: 0.58 }, 2)
     .add(() => {
@@ -359,7 +358,10 @@ onBeforeUnmount(() => {
     <div class="monster-dex__shade" aria-hidden="true" />
     <div class="monster-dex__mist" aria-hidden="true" />
     <div class="monster-dex__effects" aria-hidden="true" />
-    <img class="monster-dex__logo" :src="logoUrl" alt="귀혼M SoulSaverOnline" loading="lazy" />
+    <div class="monster-dex__sigil" aria-hidden="true">
+      <span />
+      <i />
+    </div>
 
     <div class="monster-dex__left">
       <div class="monster-dex__index" aria-hidden="true">

@@ -590,7 +590,7 @@ onBeforeUnmount(() => {
       <div class="job-section__title-group">
         <h2 id="job-title" class="job-section__title">직업 소개</h2>
         <p class="job-section__copy">당신의 혼을 깨울 직업을 선택하세요.</p>
-        <p class="job-section__subcopy">다섯 가지 전투 스타일과 주요 스킬을 확인하고, 나에게 맞는 영혼의 길을 찾아보세요.</p>
+        <p class="job-section__subcopy">다섯 가지 전투 스타일과 주요 스킬을 확인하고,<br />나에게 맞는 영혼의 길을 찾아보세요.</p>
       </div>
 
       <div class="job-section__info" :style="{ '--job-color': activeJob.color }">
