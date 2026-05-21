@@ -336,55 +336,31 @@ function hoverMainCharacter() {
   const root = sectionRef.value;
   const character = root?.querySelector(".job-section__main-character");
   const weaponGlow = root?.querySelector(".job-section__weapon-glow");
-  if (!root || !character || !weaponGlow) return;
+  const platform = root?.querySelector(".job-section__platform");
+  if (!root || !character || !weaponGlow || !platform) return;
 
   idleTween?.pause();
 
   gsap.to(character, {
-    y: -8,
     scale: 1.018,
-    filter: `drop-shadow(0 30px 32px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 24px ${activeJob.value.color}) brightness(1.05)`,
-    duration: 0.28,
+    filter: `drop-shadow(0 30px 32px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 30px ${activeJob.value.color}) brightness(1.08) saturate(1.08)`,
+    duration: 0.24,
     ease: "power2.out",
     overwrite: "auto"
   });
   gsap.to(weaponGlow, {
-    opacity: 0.78,
-    scale: 1.06,
-    filter: "blur(18px)",
-    duration: 0.28,
+    opacity: 0.9,
+    scale: 1.1,
+    filter: "blur(20px)",
+    duration: 0.24,
     ease: "power2.out",
     overwrite: "auto"
   });
-}
-
-function moveMainCharacter(event) {
-  if (isSwitching.value) return;
-
-  const root = sectionRef.value;
-  const character = root?.querySelector(".job-section__main-character");
-  const weaponGlow = root?.querySelector(".job-section__weapon-glow");
-  if (!character || !weaponGlow) return;
-
-  const rect = character.getBoundingClientRect();
-  const clamp = (value) => Math.max(-1, Math.min(1, value));
-  const dx = clamp((event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2));
-  const dy = clamp((event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2));
-
-  gsap.to(character, {
-    x: dx * 10,
-    y: -8 + dy * 5,
-    rotate: dx * 1.15,
-    scale: 1.024,
-    duration: 0.28,
-    ease: "power2.out",
-    overwrite: "auto"
-  });
-  gsap.to(weaponGlow, {
-    x: dx * 9,
-    y: dy * 5,
-    opacity: 0.82,
-    duration: 0.3,
+  gsap.to(platform, {
+    opacity: 1,
+    scale: 1.08,
+    filter: `blur(1px) drop-shadow(0 0 24px ${activeJob.value.color})`,
+    duration: 0.24,
     ease: "power2.out",
     overwrite: "auto"
   });
@@ -418,7 +394,8 @@ function leaveMainCharacter() {
   const root = sectionRef.value;
   const character = root?.querySelector(".job-section__main-character");
   const weaponGlow = root?.querySelector(".job-section__weapon-glow");
-  if (!character || !weaponGlow) return;
+  const platform = root?.querySelector(".job-section__platform");
+  if (!character || !weaponGlow || !platform) return;
 
   gsap.to(character, {
     y: 0,
@@ -436,6 +413,14 @@ function leaveMainCharacter() {
     opacity: 0.58,
     scale: 1,
     filter: "blur(15px)",
+    duration: 0.3,
+    ease: "power2.out",
+    overwrite: "auto"
+  });
+  gsap.to(platform, {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(2px) drop-shadow(0 20px 22px rgba(0, 0, 0, 0.35))",
     duration: 0.3,
     ease: "power2.out",
     overwrite: "auto"
@@ -621,13 +606,17 @@ onBeforeUnmount(() => {
     <div
       class="job-section__showcase"
       :style="{ '--job-color': activeJob.color }"
-      @mouseenter="hoverMainCharacter"
-      @mousemove="moveMainCharacter"
-      @mouseleave="leaveMainCharacter"
-      @click="clickMainCharacter"
     >
       <div class="job-section__platform" aria-hidden="true" />
-      <img class="job-section__main-character" :src="activeJob.mainImage" :alt="`${activeJob.name} 대표 캐릭터`" loading="lazy" />
+      <img
+        class="job-section__main-character"
+        :src="activeJob.mainImage"
+        :alt="`${activeJob.name} 대표 캐릭터`"
+        loading="lazy"
+        @mouseenter="hoverMainCharacter"
+        @mouseleave="leaveMainCharacter"
+        @click="clickMainCharacter"
+      />
       <div class="job-section__weapon-glow" aria-hidden="true" />
     </div>
 
