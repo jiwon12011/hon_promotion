@@ -2675,7 +2675,7 @@ a {
 
 .monster-dex__actions .monster-dex__go-button {
   position: relative;
-  width: clamp(310px, 27vw, 500px);
+  width: clamp(280px, 23.5vw, 430px);
   aspect-ratio: 3.84 / 1;
   min-width: 0;
   min-height: 0;
@@ -2690,19 +2690,17 @@ a {
 }
 
 .monster-dex__actions .monster-dex__go-button::before {
-  left: 8%;
-  top: 22%;
+  left: 50%;
+  top: 50%;
   z-index: -1;
-  width: 84%;
-  height: 62%;
+  width: 98%;
+  height: 72%;
   border: 0;
   border-radius: 999px;
-  background:
-    radial-gradient(ellipse at 18% 50%, rgba(255, 224, 124, 0.32), transparent 42%),
-    radial-gradient(ellipse at 62% 48%, rgba(255, 187, 55, 0.28), transparent 64%);
-  filter: blur(18px);
-  opacity: 0.62;
-  transform: scale(0.96);
+  background: radial-gradient(ellipse at center, rgba(255, 220, 112, 0.58), rgba(255, 178, 45, 0.28) 36%, transparent 72%);
+  filter: blur(22px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.82);
   transition: opacity 220ms ease, transform 220ms ease, filter 220ms ease;
 }
 
@@ -2752,9 +2750,9 @@ a {
 }
 
 .monster-dex__actions .monster-dex__go-button:hover::before {
-  opacity: 1;
-  filter: blur(22px);
-  transform: scale(1.06);
+  opacity: 0.82;
+  filter: blur(26px);
+  transform: translate(-50%, -50%) scale(1.08);
 }
 
 .monster-dex__actions .monster-dex__go-button:hover .monster-dex__go-shine {
