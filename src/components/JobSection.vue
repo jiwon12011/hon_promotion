@@ -598,7 +598,6 @@ onBeforeUnmount(() => {
           @click="playSkillEffect($event, skill, index)"
         >
           <img :src="skill.image" :alt="skill.name" loading="lazy" />
-          <span>{{ skill.name }}</span>
         </button>
       </div>
     </div>
