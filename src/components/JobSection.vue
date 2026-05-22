@@ -132,6 +132,16 @@ let idleTween;
 let skillPulseTween;
 let observer;
 
+function preloadJobImages() {
+  jobs.forEach((job) => {
+    [job.mainImage, job.cardImage, ...job.skills.map((skill) => skill.image)].forEach((src) => {
+      const image = new Image();
+      image.decoding = "async";
+      image.src = src;
+    });
+  });
+}
+
 function getCharacterEntrance(job) {
   const filter = `blur(18px) brightness(1.45) drop-shadow(0 0 48px ${job.color})`;
   const presets = {
@@ -491,13 +501,13 @@ async function changeJob(jobKey) {
 function hoverCard(event, job) {
   if (job.key === activeJobKey.value) return;
   const card = event.currentTarget;
-  gsap.to(card, { x: -12, scale: 1.012, duration: 0.28, ease: "power2.out", overwrite: "auto" });
+  gsap.to(card, { x: 0, scale: 1.012, filter: "brightness(1.08)", duration: 0.24, ease: "power2.out", overwrite: "auto" });
 }
 
 function leaveCard(event, job) {
   if (job.key === activeJobKey.value) return;
   const card = event.currentTarget;
-  gsap.to(card, { x: 0, scale: 1, duration: 0.28, ease: "power2.out", overwrite: "auto" });
+  gsap.to(card, { x: 0, scale: 1, filter: "brightness(1)", duration: 0.24, ease: "power2.out", overwrite: "auto" });
 }
 
 function playIntro() {
@@ -509,6 +519,8 @@ onMounted(() => {
   const root = sectionRef.value;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!root) return;
+
+  preloadJobImages();
 
   introTimeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
   introTimeline

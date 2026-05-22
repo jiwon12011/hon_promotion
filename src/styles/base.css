@@ -1618,7 +1618,7 @@ a {
   position: absolute;
   z-index: 8;
   left: clamp(54px, 6.2vw, 106px);
-  bottom: clamp(18px, 3.1vh, 36px);
+  bottom: clamp(36px, 5vh, 64px);
   width: min(600px, 42vw);
   color: #f5d998;
 }
@@ -1826,7 +1826,7 @@ a {
   filter: brightness(1.08);
   box-shadow: none;
   scale: 1.018;
-  translate: -6px 0;
+  translate: 0 0;
 }
 
 .job-card.is-active::after {
@@ -2007,6 +2007,7 @@ a {
 .monster-dex__bg,
 .monster-dex__shade,
 .monster-dex__mist,
+.monster-dex__leaf-layer,
 .monster-dex__effects,
 .monster-dex__left,
 .monster-dex__codex,
@@ -2076,6 +2077,31 @@ a {
   filter: blur(12px);
   opacity: 0.74;
   animation: monsterDexLightSweep 12s ease-in-out infinite;
+}
+
+.monster-dex__leaf-layer {
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.monster-dex__leaf-layer span {
+  position: absolute;
+  left: var(--leaf-x);
+  top: var(--leaf-y);
+  width: var(--leaf-size);
+  height: calc(var(--leaf-size) * 0.52);
+  border-radius: 100% 0 100% 0;
+  background:
+    linear-gradient(135deg, rgba(244, 209, 125, 0.84), rgba(109, 143, 67, 0.54) 56%, rgba(55, 79, 34, 0.18));
+  filter:
+    blur(0.1px)
+    drop-shadow(0 0 7px rgba(238, 183, 82, 0.28));
+  opacity: 0;
+  transform: rotate(22deg);
+  animation: monsterDexLeafFall var(--leaf-duration) linear infinite;
+  animation-delay: var(--leaf-delay);
 }
 
 .monster-dex__effects {
@@ -3873,6 +3899,28 @@ a {
   50% {
     translate: 34px -18px;
     opacity: 0.9;
+  }
+}
+
+@keyframes monsterDexLeafFall {
+  0% {
+    translate: 0 -16vh;
+    rotate: -24deg;
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 0.42;
+  }
+
+  78% {
+    opacity: 0.32;
+  }
+
+  100% {
+    translate: var(--leaf-drift) 112vh;
+    rotate: 380deg;
+    opacity: 0;
   }
 }
 

@@ -356,6 +356,20 @@ onBeforeUnmount(() => {
     <img class="monster-dex__bg" :src="bgUrl" alt="" aria-hidden="true" loading="eager" />
     <div class="monster-dex__shade" aria-hidden="true" />
     <div class="monster-dex__mist" aria-hidden="true" />
+    <div class="monster-dex__leaf-layer" aria-hidden="true">
+      <span
+        v-for="index in 12"
+        :key="index"
+        :style="{
+          '--leaf-x': `${52 + ((index * 11) % 43)}%`,
+          '--leaf-y': `${-10 - (index % 5) * 7}%`,
+          '--leaf-size': `${10 + (index % 4) * 3}px`,
+          '--leaf-delay': `${index * -0.72}s`,
+          '--leaf-duration': `${12 + (index % 5) * 1.4}s`,
+          '--leaf-drift': `${index % 2 === 0 ? 80 : -64}px`
+        }"
+      />
+    </div>
     <div class="monster-dex__effects" aria-hidden="true" />
 
     <div class="monster-dex__left">
