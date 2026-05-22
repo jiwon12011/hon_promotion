@@ -100,6 +100,9 @@ onBeforeUnmount(() => {
     <span class="world-section__spark world-section__spark--four" aria-hidden="true" />
 
     <img class="world-section__tower" :src="towerUrl" alt="" aria-hidden="true" loading="lazy" />
+    <span class="world-section__tower-streak world-section__tower-streak--one" aria-hidden="true" />
+    <span class="world-section__tower-streak world-section__tower-streak--two" aria-hidden="true" />
+    <span class="world-section__tower-streak world-section__tower-streak--three" aria-hidden="true" />
     <img class="world-section__right-tree" :src="rightTreeUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--one" :src="islandOneUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--two" :src="islandTwoUrl" alt="" aria-hidden="true" loading="lazy" />
