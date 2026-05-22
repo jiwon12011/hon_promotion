@@ -308,7 +308,7 @@ onBeforeUnmount(() => {
       @ended="nextTrack"
     />
 
-    <img class="ost-section__bg" :src="bgUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="ost-section__bg" :src="bgUrl" alt="" aria-hidden="true" loading="eager" />
     <div class="ost-section__shade" aria-hidden="true" />
     <div class="ost-section__particles" aria-hidden="true">
       <span
@@ -349,7 +349,7 @@ onBeforeUnmount(() => {
     <div class="ost-section__turntable">
       <div class="ost-section__disc">
         <div class="ost-section__disc-spin">
-          <img class="ost-section__cd" :src="cdUrl" alt="" aria-hidden="true" loading="lazy" />
+          <img class="ost-section__cd" :src="cdUrl" alt="" aria-hidden="true" loading="eager" />
           <div
             class="ost-section__cd-label"
             :style="{ backgroundImage: `url(${activeTrack.thumbnail})` }"
@@ -365,7 +365,7 @@ onBeforeUnmount(() => {
           <span>{{ isPlaying ? "Ⅱ" : "▶" }}</span>
         </button>
       </div>
-      <img class="ost-section__tonearm" :src="tonearmUrl" alt="" aria-hidden="true" loading="lazy" />
+      <img class="ost-section__tonearm" :src="tonearmUrl" alt="" aria-hidden="true" loading="eager" />
     </div>
 
     <div class="ost-section__playlist" aria-label="추천 테마">

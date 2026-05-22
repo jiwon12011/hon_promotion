@@ -550,7 +550,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section ref="sectionRef" class="section job-section" data-section="jobs" aria-labelledby="job-title">
-    <img class="job-section__bg" :src="bgUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="job-section__bg" :src="bgUrl" alt="" aria-hidden="true" loading="eager" />
     <div class="job-section__shade" aria-hidden="true" />
     <div class="job-section__effects" aria-hidden="true" />
     <div class="job-section__ambient" aria-hidden="true">
@@ -611,7 +611,7 @@ onBeforeUnmount(() => {
         class="job-section__main-character"
         :src="activeJob.mainImage"
         :alt="`${activeJob.name} 대표 캐릭터`"
-        loading="lazy"
+        loading="eager"
         @mouseenter="hoverMainCharacter"
         @mouseleave="leaveMainCharacter"
         @click="clickMainCharacter"

@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section ref="sectionRef" class="section world-section" data-section="preorder" aria-labelledby="world-title">
-    <img class="world-section__bg" :src="bgSkyUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__bg" :src="bgSkyUrl" alt="" aria-hidden="true" loading="eager" fetchpriority="high" />
     <div class="world-section__shade" aria-hidden="true" />
     <div class="world-section__tower-aura" aria-hidden="true" />
     <span class="world-section__tower-ribbon world-section__tower-ribbon--one" aria-hidden="true" />
@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
     <span class="world-section__spark world-section__spark--three" aria-hidden="true" />
     <span class="world-section__spark world-section__spark--four" aria-hidden="true" />
 
-    <img class="world-section__tower" :src="towerUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__tower" :src="towerUrl" alt="" aria-hidden="true" loading="eager" fetchpriority="high" />
     <span class="world-section__tower-streak world-section__tower-streak--one" aria-hidden="true" />
     <span class="world-section__tower-streak world-section__tower-streak--two" aria-hidden="true" />
     <span class="world-section__tower-streak world-section__tower-streak--three" aria-hidden="true" />
@@ -128,12 +128,12 @@ onBeforeUnmount(() => {
         class="world-section__trial-scroll"
         :src="trialScrollUrl"
         alt="50층까지 도전! 풍성한 보상! 팀을 구성하라!"
-        loading="lazy"
+        loading="eager"
       />
     </div>
 
     <button class="world-section__trial-button" type="button" aria-label="탑 도전하기">
-      <img :src="trialButtonUrl" alt="" aria-hidden="true" loading="lazy" />
+      <img :src="trialButtonUrl" alt="" aria-hidden="true" loading="eager" />
     </button>
 
     <div class="world-section__reward-strip">
@@ -151,8 +151,8 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <img class="world-section__character world-section__character--green" :src="characterGreenUrl" alt="" aria-hidden="true" loading="lazy" />
-    <img class="world-section__character world-section__character--pink" :src="characterPinkUrl" alt="" aria-hidden="true" loading="lazy" />
-    <img class="world-section__character world-section__character--purple" :src="characterPurpleUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__character world-section__character--green" :src="characterGreenUrl" alt="" aria-hidden="true" loading="eager" />
+    <img class="world-section__character world-section__character--pink" :src="characterPinkUrl" alt="" aria-hidden="true" loading="eager" />
+    <img class="world-section__character world-section__character--purple" :src="characterPurpleUrl" alt="" aria-hidden="true" loading="eager" />
   </section>
 </template>
