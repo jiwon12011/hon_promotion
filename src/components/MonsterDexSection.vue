@@ -391,6 +391,12 @@ onBeforeUnmount(() => {
         <span class="monster-dex__talisman-glow" aria-hidden="true" />
         <img class="monster-dex__talisman monster-dex__talisman--front" :src="talismanCardUrl" alt="" aria-hidden="true" loading="lazy" />
         <img class="monster-dex__character-img" :src="selectedMonster.image" :alt="selectedMonster.name" loading="lazy" />
+        <div class="monster-dex__energy-front" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
       </div>
     </div>
 
