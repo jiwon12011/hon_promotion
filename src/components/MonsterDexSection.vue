@@ -353,7 +353,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section ref="sectionRef" class="section monster-dex" data-section="monster-dex" aria-labelledby="monster-dex-title">
-    <img class="monster-dex__bg" :src="bgUrl" alt="" aria-hidden="true" loading="eager" />
+    <img class="monster-dex__bg" :src="bgUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
     <div class="monster-dex__shade" aria-hidden="true" />
     <div class="monster-dex__mist" aria-hidden="true" />
     <div class="monster-dex__leaf-layer" aria-hidden="true">
@@ -403,8 +403,8 @@ onBeforeUnmount(() => {
           <span />
         </div>
         <span class="monster-dex__talisman-glow" aria-hidden="true" />
-        <img class="monster-dex__talisman monster-dex__talisman--front" :src="talismanCardUrl" alt="" aria-hidden="true" loading="eager" />
-        <img class="monster-dex__character-img" :src="selectedMonster.image" :alt="selectedMonster.name" loading="eager" />
+        <img class="monster-dex__talisman monster-dex__talisman--front" :src="talismanCardUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
+        <img class="monster-dex__character-img" :src="selectedMonster.image" :alt="selectedMonster.name" loading="lazy" decoding="async" fetchpriority="low" />
         <div class="monster-dex__energy-front" aria-hidden="true">
           <span />
           <span />
@@ -445,7 +445,7 @@ onBeforeUnmount(() => {
           @click="clickBookButton"
         >
           <span class="monster-dex__go-crop">
-            <img :src="bookGoButtonUrl" alt="도감 정보 바로가기" loading="eager" />
+            <img :src="bookGoButtonUrl" alt="도감 정보 바로가기" loading="lazy" decoding="async" fetchpriority="low" />
             <span class="monster-dex__go-shine" aria-hidden="true" />
           </span>
         </button>

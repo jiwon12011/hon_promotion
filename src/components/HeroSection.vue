@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import logoUrl from "@/assets/images/logo-cut.png";
 import appleLogoUrl from "@/assets/images/apple-logo.png";
 import playstoreIconUrl from "@/assets/images/playstore-icon.png";
+import heroPosterUrl from "@/assets/images/hero-poster.jpg";
 import heroVideoUrl from "@/assets/videos/hero.mp4";
 
 const sectionRef = ref(null);
@@ -77,9 +78,9 @@ onMounted(() => {
     removePointerMove = () => window.removeEventListener("pointermove", handlePointerMove);
   }
 
-  timeline.play(0);
   videoRef.value?.load?.();
   videoRef.value?.play?.().catch(() => {});
+  timeline.play(0);
 });
 
 onBeforeUnmount(() => {
@@ -99,6 +100,8 @@ onBeforeUnmount(() => {
       loop
       playsinline
       preload="auto"
+      :poster="heroPosterUrl"
+      fetchpriority="high"
     />
     <div class="hero-section__shade" aria-hidden="true" />
     <div class="hero-section__particle-layer" aria-hidden="true">

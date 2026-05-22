@@ -131,6 +131,9 @@ let introTimeline;
 let idleTween;
 let skillPulseTween;
 let observer;
+let preloadHandle;
+let preloadHandleType;
+let hasPreloadedJobImages = false;
 
 function preloadJobImages() {
   jobs.forEach((job) => {
@@ -140,6 +143,24 @@ function preloadJobImages() {
       image.src = src;
     });
   });
+}
+
+function scheduleJobImagePreload() {
+  if (hasPreloadedJobImages) return;
+  hasPreloadedJobImages = true;
+
+  const run = () => {
+    preloadHandle = undefined;
+    preloadJobImages();
+  };
+
+  if ("requestIdleCallback" in window) {
+    preloadHandleType = "idle";
+    preloadHandle = window.requestIdleCallback(run, { timeout: 1600 });
+  } else {
+    preloadHandleType = "timer";
+    preloadHandle = window.setTimeout(run, 800);
+  }
 }
 
 function getCharacterEntrance(job) {
@@ -520,8 +541,6 @@ onMounted(() => {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!root) return;
 
-  preloadJobImages();
-
   introTimeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
   introTimeline
     .fromTo(root.querySelector(".job-section__bg"), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.1 })
@@ -547,7 +566,10 @@ onMounted(() => {
   }
 
   observer = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) playIntro();
+    if (entry.isIntersecting) {
+      scheduleJobImagePreload();
+      playIntro();
+    }
   }, { threshold: 0.52 });
   observer.observe(root);
 });
@@ -557,12 +579,19 @@ onBeforeUnmount(() => {
   introTimeline?.kill();
   idleTween?.kill();
   skillPulseTween?.kill();
+  if (preloadHandle) {
+    if (preloadHandleType === "idle" && "cancelIdleCallback" in window) {
+      window.cancelIdleCallback(preloadHandle);
+    } else {
+      window.clearTimeout(preloadHandle);
+    }
+  }
 });
 </script>
 
 <template>
   <section ref="sectionRef" class="section job-section" data-section="jobs" aria-labelledby="job-title">
-    <img class="job-section__bg" :src="bgUrl" alt="" aria-hidden="true" loading="eager" />
+    <img class="job-section__bg" :src="bgUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
     <div class="job-section__shade" aria-hidden="true" />
     <div class="job-section__effects" aria-hidden="true" />
     <div class="job-section__ambient" aria-hidden="true">
@@ -623,7 +652,9 @@ onBeforeUnmount(() => {
         class="job-section__main-character"
         :src="activeJob.mainImage"
         :alt="`${activeJob.name} 대표 캐릭터`"
-        loading="eager"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
         @mouseenter="hoverMainCharacter"
         @mouseleave="leaveMainCharacter"
         @click="clickMainCharacter"
