@@ -637,6 +637,7 @@ a {
 }
 
 .world-section {
+  --world-tower-left: 42.6%;
   isolation: isolate;
   background: #111;
 }
@@ -675,7 +676,7 @@ a {
 
 .world-section__tower-aura {
   z-index: 1;
-  left: 42.6%;
+  left: var(--world-tower-left);
   bottom: 0;
   width: min(50vw, 920px);
   height: 100%;
@@ -723,7 +724,7 @@ a {
 
 .world-section__tower-ribbon {
   z-index: 1;
-  left: 42.6%;
+  left: var(--world-tower-left);
   width: min(28vw, 520px);
   height: min(7.4vw, 132px);
   border-radius: 50%;
@@ -800,7 +801,7 @@ a {
 
 .world-section__tower-streak {
   z-index: 5;
-  left: 42.6%;
+  left: var(--world-tower-left);
   width: min(25vw, 460px);
   height: min(5.4vw, 98px);
   border-radius: 50%;
@@ -896,7 +897,7 @@ a {
 .world-section__tower {
   z-index: 2;
   bottom: 0;
-  left: 42.6%;
+  left: var(--world-tower-left);
   height: min(101dvh, 1040px);
   width: auto;
   filter:

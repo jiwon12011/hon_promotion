@@ -41,7 +41,7 @@ onMounted(() => {
   timeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
   timeline
     .fromTo(section.querySelector(".world-section__bg"), { scale: 1.08, filter: "saturate(0.85) brightness(0.72)" }, { scale: 1, filter: "saturate(1.08) brightness(1)", duration: 1.65, ease: "power2.out" })
-    .fromTo(section.querySelector(".world-section__tower"), { y: "28vh", scale: 0.78, opacity: 0, filter: "brightness(1.45) blur(5px)" }, { y: 0, scale: 1, opacity: 1, filter: "brightness(1) blur(0px)", duration: 1.2, ease: "back.out(1.25)" }, 0.12)
+    .fromTo(section.querySelector(".world-section__tower"), { opacity: 0, filter: "brightness(1.45) blur(5px)" }, { opacity: 1, filter: "brightness(1) blur(0px)", duration: 1.05, ease: "power2.out" }, 0.12)
     .fromTo(section.querySelector(".world-section__right-tree"), { x: 60, y: -24, opacity: 0, rotate: 2 }, { x: 0, y: 0, opacity: 1, rotate: 0, duration: 1.05, ease: "power3.out" }, 0.22)
     .fromTo(section.querySelector(".world-section__tower-aura"), { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "sine.out" }, 0.22)
     .fromTo(section.querySelectorAll(".world-section__island"), { y: -28, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.82, stagger: 0.13, ease: "back.out(1.6)" }, 0.34)
