@@ -245,7 +245,7 @@ onMounted(() => {
     .fromTo(root.querySelector(".ost-section__bg"), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.45 })
     .fromTo(root.querySelector(".ost-section__title"), { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.82 }, 0.35)
     .fromTo(root.querySelectorAll(".ost-section__menu-button"), { x: -28, opacity: 0 }, { x: 0, opacity: 1, stagger: 0.08, duration: 0.42 }, 0.65)
-    .fromTo(root.querySelector(".ost-section__turntable"), { x: -90, y: 26, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.92 }, 0.72)
+    .fromTo(root.querySelector(".ost-section__turntable"), { x: -90, y: 56, opacity: 0 }, { x: 0, y: 30, opacity: 1, duration: 0.92 }, 0.72)
     .fromTo(root.querySelector(".ost-section__tonearm"), { x: 18, rotate: -52, opacity: 0 }, { x: -12, rotate: toneArmRestRotation, opacity: 1, duration: 0.78, ease: "back.out(1.6)" }, 1)
     .fromTo(root.querySelectorAll(".ost-section__track"), { y: 45, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.55 }, 1.05)
     .fromTo(root.querySelectorAll(".ost-section__light"), { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, stagger: 0.02, duration: 0.45 }, 1.2);
