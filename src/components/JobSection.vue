@@ -522,7 +522,7 @@ async function changeJob(jobKey) {
 function hoverCard(event, job) {
   if (job.key === activeJobKey.value) return;
   const card = event.currentTarget;
-  gsap.to(card, { x: 0, scale: 1.012, filter: "brightness(1.08)", duration: 0.24, ease: "power2.out", overwrite: "auto" });
+  gsap.to(card, { x: 0, scale: 1, filter: "brightness(1.08)", duration: 0.24, ease: "power2.out", overwrite: "auto" });
 }
 
 function leaveCard(event, job) {
