@@ -1433,13 +1433,13 @@ a {
 }
 
 .world-section__character--green {
-  left: 39%;
+  left: 36%;
   bottom: clamp(12px, 2.5vh, 30px);
   translate: -50% 0;
 }
 
 .world-section__character--pink {
-  left: 52%;
+  left: 50%;
   bottom: clamp(16px, 2.8vh, 36px);
   height: min(37dvh, 375px);
   translate: -50% 0;
@@ -1447,7 +1447,7 @@ a {
 }
 
 .world-section__character--purple {
-  left: 63.5%;
+  left: 62%;
   bottom: clamp(12px, 2.5vh, 30px);
   translate: -50% 0;
   animation-delay: -2s;
