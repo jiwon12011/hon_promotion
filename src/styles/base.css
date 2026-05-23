@@ -1790,10 +1790,10 @@ a {
   z-index: 10;
   bottom: 0;
   left: 50%;
-  width: min(66vw, 1060px);
+  width: 80%;
   max-height: 72vh;
   object-fit: contain;
-  translate: -50% 0;
+  translate: -75% 0;
   transform: none;
   transform-origin: center bottom;
   filter:
@@ -1899,7 +1899,7 @@ a {
 
 .job-card--yeoksa,
 .job-card--sasu {
-  --card-image-scale: 1;
+  --card-image-scale: 0.965;
 }
 
 .job-card--yeoksa .job-card__image,
@@ -3750,7 +3750,7 @@ a {
   }
 
   .job-section__main-character {
-    width: min(63vw, 910px);
+    width: 80%;
     max-height: 67vh;
   }
 
@@ -4454,6 +4454,7 @@ a {
     width: min(92vw, 430px);
     max-height: 50vh;
     bottom: 2vh;
+    translate: -50% 0;
   }
 
   .job-section__platform,
