@@ -134,14 +134,42 @@ let observer;
 let preloadHandle;
 let preloadHandleType;
 let hasPreloadedJobImages = false;
+const imagePreloadCache = new Map();
+
+function preloadImage(src, priority = "auto") {
+  if (!src) return Promise.resolve();
+  if (imagePreloadCache.has(src)) return imagePreloadCache.get(src);
+
+  const image = new Image();
+  image.decoding = "async";
+  if ("fetchPriority" in image) {
+    image.fetchPriority = priority;
+  }
+
+  const promise = new Promise((resolve) => {
+    image.onload = () => {
+      if (typeof image.decode === "function") {
+        image.decode().catch(() => undefined).finally(resolve);
+        return;
+      }
+      resolve();
+    };
+    image.onerror = () => resolve();
+  });
+  image.src = src;
+  imagePreloadCache.set(src, promise);
+  return promise;
+}
+
+function preloadJobMainImages(priority = "high") {
+  jobs.forEach((job) => {
+    preloadImage(job.mainImage, priority);
+  });
+}
 
 function preloadJobImages() {
   jobs.forEach((job) => {
-    [job.mainImage, job.cardImage, ...job.skills.map((skill) => skill.image)].forEach((src) => {
-      const image = new Image();
-      image.decoding = "async";
-      image.src = src;
-    });
+    [job.cardImage, ...job.skills.map((skill) => skill.image)].forEach((src) => preloadImage(src, "low"));
   });
 }
 
@@ -171,19 +199,19 @@ function getCharacterEntrance(job) {
       to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.66, ease: "back.out(1.18)" }
     },
     geomgaek: {
-      from: { scale: 1.08, opacity: 0, x: -68, y: 10, rotate: -7, filter },
+      from: { scale: 1.08, opacity: 0, x: 0, y: 10, rotate: -7, filter },
       to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.54, ease: "power3.out" }
     },
     musa: {
-      from: { scale: 0.88, opacity: 0, x: 10, y: 46, rotate: 5, filter: `blur(20px) brightness(1.9) drop-shadow(0 0 58px ${job.color})` },
+      from: { scale: 0.88, opacity: 0, x: 0, y: 46, rotate: 5, filter: `blur(20px) brightness(1.9) drop-shadow(0 0 58px ${job.color})` },
       to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.7, ease: "back.out(1.38)" }
     },
     yeoksa: {
-      from: { scale: 1.05, opacity: 0, x: 26, y: -34, rotate: 3, filter: `blur(16px) brightness(1.7) drop-shadow(0 0 54px ${job.color})` },
+      from: { scale: 1.05, opacity: 0, x: 0, y: -34, rotate: 3, filter: `blur(16px) brightness(1.7) drop-shadow(0 0 54px ${job.color})` },
       to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.64, ease: "power2.out" }
     },
     sasu: {
-      from: { scale: 0.94, opacity: 0, x: 74, y: 14, rotate: 4, filter },
+      from: { scale: 0.94, opacity: 0, x: 0, y: 14, rotate: 4, filter },
       to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.56, ease: "power3.out" }
     }
   };
@@ -497,8 +525,14 @@ async function changeJob(jobKey) {
   await nextTick();
   createBurst(nextJob);
 
+  const mainCharacter = root.querySelector(".job-section__main-character");
+  if (mainCharacter) {
+    gsap.killTweensOf(mainCharacter);
+    gsap.set(mainCharacter, { x: 0, y: 0, rotate: 0, scale: 1 });
+  }
+
   const characterEntrance = getCharacterEntrance(nextJob);
-  gsap.fromTo(root.querySelector(".job-section__main-character"),
+  gsap.fromTo(mainCharacter,
     characterEntrance.from,
     {
       ...characterEntrance.to,
@@ -521,6 +555,7 @@ async function changeJob(jobKey) {
 
 function hoverCard(event, job) {
   if (job.key === activeJobKey.value) return;
+  preloadImage(job.mainImage, "high");
   const card = event.currentTarget;
   gsap.to(card, { x: 0, scale: 1, filter: "brightness(1.08)", duration: 0.24, ease: "power2.out", overwrite: "auto" });
 }
@@ -540,6 +575,13 @@ onMounted(() => {
   const root = sectionRef.value;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!root) return;
+
+  const preloadMainCharacters = () => preloadJobMainImages("high");
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(preloadMainCharacters, { timeout: 900 });
+  } else {
+    window.setTimeout(preloadMainCharacters, 350);
+  }
 
   introTimeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
   introTimeline
@@ -567,6 +609,7 @@ onMounted(() => {
 
   observer = new IntersectionObserver(([entry]) => {
     if (entry.isIntersecting) {
+      preloadJobMainImages("high");
       scheduleJobImagePreload();
       playIntro();
     }
