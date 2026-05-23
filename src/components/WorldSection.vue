@@ -100,6 +100,8 @@ onBeforeUnmount(() => {
     <span class="world-section__spark world-section__spark--four" aria-hidden="true" />
 
     <img class="world-section__tower" :src="towerUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
+    <span class="world-section__tower-streak world-section__tower-streak--top-a" aria-hidden="true" />
+    <span class="world-section__tower-streak world-section__tower-streak--top-b" aria-hidden="true" />
     <span class="world-section__tower-streak world-section__tower-streak--one" aria-hidden="true" />
     <span class="world-section__tower-streak world-section__tower-streak--two" aria-hidden="true" />
     <span class="world-section__tower-streak world-section__tower-streak--three" aria-hidden="true" />
