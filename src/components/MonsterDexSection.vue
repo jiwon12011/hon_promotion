@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import bgUrl from "@/assets/images/section4-bg-forest.png";
 import talismanCardUrl from "@/assets/images/section4-talisman-card.png";
@@ -25,14 +25,14 @@ const features = [
 ];
 
 const monsters = [
-  { id: 1, name: "떠돌이 귀", image: monsterOneUrl, x: 19, y: 39, size: 188, spriteScale: 1.05, aura: "rgba(181, 255, 96, 0.4)" },
-  { id: 2, name: "어린승승", image: monsterTwoUrl, x: 39, y: 29, size: 182, spriteScale: 1.08, aura: "rgba(255, 170, 210, 0.42)" },
-  { id: 3, name: "전갈신", image: monsterThreeUrl, x: 59, y: 39, size: 190, spriteScale: 1.08, aura: "rgba(170, 108, 255, 0.4)" },
-  { id: 4, name: "강시", image: monsterFourUrl, x: 79, y: 29, size: 182, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.34)" },
-  { id: 5, name: "화염귀", image: monsterFiveUrl, x: 19, y: 67, size: 190, spriteScale: 1.08, aura: "rgba(255, 104, 42, 0.48)", fire: true },
-  { id: 6, name: "혼불", image: monsterSixUrl, x: 39, y: 57, size: 188, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.4)" },
-  { id: 7, name: "야차", image: monsterSevenUrl, x: 59, y: 67, size: 194, spriteScale: 1.06, aura: "rgba(255, 181, 69, 0.4)" },
-  { id: 8, name: "구미호", image: monsterEightUrl, x: 79, y: 57, size: 194, spriteScale: 1.04, aura: "rgba(255, 225, 160, 0.44)" }
+  { id: 1, name: "떠돌이 귀", message: "뀨? 나랑 도감 채울래!", image: monsterOneUrl, x: 19, y: 39, size: 188, spriteScale: 1.05, aura: "rgba(181, 255, 96, 0.4)" },
+  { id: 2, name: "어린승승", message: "메에... 무섭지 않아!", image: monsterTwoUrl, x: 39, y: 29, size: 182, spriteScale: 1.08, aura: "rgba(255, 170, 210, 0.42)" },
+  { id: 3, name: "전갈신", message: "크륵, 독침 조심해.", image: monsterThreeUrl, x: 59, y: 39, size: 190, spriteScale: 1.08, aura: "rgba(170, 108, 255, 0.4)" },
+  { id: 4, name: "강시", message: "덜그럭... 따라오지 마!", image: monsterFourUrl, x: 79, y: 29, size: 182, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.34)" },
+  { id: 5, name: "화염귀", message: "크하하! 활활 타오른다!", image: monsterFiveUrl, x: 19, y: 67, size: 190, spriteScale: 1.08, aura: "rgba(255, 104, 42, 0.48)", fire: true },
+  { id: 6, name: "혼불", message: "후우우... 밤길을 밝힐게.", image: monsterSixUrl, x: 39, y: 57, size: 188, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.4)" },
+  { id: 7, name: "야차", message: "크왕! 내 힘을 봐라!", image: monsterSevenUrl, x: 59, y: 67, size: 194, spriteScale: 1.06, aura: "rgba(255, 181, 69, 0.4)" },
+  { id: 8, name: "구미호", message: "후후, 홀리지 않게 조심해.", image: monsterEightUrl, x: 79, y: 57, size: 194, spriteScale: 1.04, aura: "rgba(255, 225, 160, 0.44)" }
 ];
 
 const floatingMonsters = monsters;
@@ -116,7 +116,10 @@ function createSpiritTrail(target, monster) {
   }
 }
 
-function selectMonster(monster, event) {
+async function selectMonster(monster, event) {
+  const root = sectionRef.value;
+  const speech = root?.querySelector(".monster-dex__speech");
+
   if (selectedId.value === monster.id) {
     const currentTarget = event?.currentTarget;
     createBurst(currentTarget, 12);
@@ -124,11 +127,14 @@ function selectMonster(monster, event) {
       { scale: 1.2, opacity: 0.95, filter: "blur(5px)" },
       { scale: 1, opacity: 0.5, filter: "blur(4px)", duration: 0.55, ease: "power2.out" }
     );
+    if (speech) {
+      gsap.fromTo(speech, { y: 8, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.36, ease: "back.out(1.5)" });
+    }
     return;
   }
 
   selectedId.value = monster.id;
-  const root = sectionRef.value;
+  await nextTick();
   const character = root?.querySelector(".monster-dex__character-img");
   const glow = root?.querySelector(".monster-dex__character-glow");
   if (!root || !character || !glow) return;
@@ -152,6 +158,12 @@ function selectMonster(monster, event) {
   );
   createBurst(event?.currentTarget, 24);
   createSpiritTrail(event?.currentTarget, monster);
+  if (speech) {
+    gsap.fromTo(speech,
+      { y: 12, opacity: 0, scale: 0.9, filter: "blur(5px)" },
+      { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.48, ease: "back.out(1.55)" }
+    );
+  }
 }
 
 function clickBookButton(event) {
@@ -405,6 +417,10 @@ onBeforeUnmount(() => {
         <span class="monster-dex__talisman-glow" aria-hidden="true" />
         <img class="monster-dex__talisman monster-dex__talisman--front" :src="talismanCardUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
         <img class="monster-dex__character-img" :src="selectedMonster.image" :alt="selectedMonster.name" loading="lazy" decoding="async" fetchpriority="low" />
+        <div class="monster-dex__speech" :style="{ '--monster-aura': selectedMonster.aura }" aria-live="polite">
+          <strong>{{ selectedMonster.name }}</strong>
+          <span>{{ selectedMonster.message }}</span>
+        </div>
         <div class="monster-dex__energy-front" aria-hidden="true">
           <span />
           <span />

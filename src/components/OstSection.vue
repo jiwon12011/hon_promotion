@@ -7,17 +7,18 @@ import tonearmUrl from "@/assets/images/section5-tonearm.png";
 import thumbOneUrl from "@/assets/images/section5-thumb-1.png";
 import thumbTwoUrl from "@/assets/images/section5-thumb-2.png";
 import thumbThreeUrl from "@/assets/images/section5-thumb-3.png";
-import thumbFourUrl from "@/assets/images/section5-thumb-4.png";
+import peaceVillageThumbUrl from "@/assets/images/section5-thumb-peaceful-village.png";
 import thumbFiveUrl from "@/assets/images/section5-thumb-5.png";
 
 const publicBase = process.env.NODE_ENV === "production" ? "/hon_promotion" : "";
 const ostAudioUrl = `${publicBase}/assets/videos/section5-ost-audio.m4a`;
+const peaceVillageStartTime = 29 * 60 + 17;
 
 const tracks = [
   { title: "귀혼의 전설", subtitle: "달빛 아래 깨어난 첫 여정", startTime: 0, thumbnail: thumbOneUrl },
   { title: "선선의 길", subtitle: "푸른 밤을 건너는 발걸음", startTime: 92, thumbnail: thumbTwoUrl },
   { title: "전투의 서막", subtitle: "붉은 협곡에 울리는 결의", startTime: 184, thumbnail: thumbThreeUrl },
-  { title: "평화로운 마을", subtitle: "등불 사이로 흐르는 기억", startTime: 276, thumbnail: thumbFourUrl },
+  { title: "평화로운 마을", subtitle: "등불 사이로 흐르는 기억", startTime: peaceVillageStartTime, thumbnail: peaceVillageThumbUrl },
   { title: "운명의 소용돌이", subtitle: "보랏빛 균열 너머의 선율", startTime: 368, thumbnail: thumbFiveUrl }
 ];
 
@@ -159,7 +160,8 @@ function selectTrack(index, autoplay = true) {
   if (!video || !nextTrack) return;
 
   activeIndex.value = index;
-  video.currentTime = Math.min(nextTrack.startTime, Math.max(video.duration - 1, 0) || nextTrack.startTime);
+  const maxSeekTime = Number.isFinite(video.duration) && video.duration > 0 ? Math.max(video.duration - 1, 0) : nextTrack.startTime;
+  video.currentTime = Math.min(nextTrack.startTime, maxSeekTime);
   currentTime.value = video.currentTime;
   moveToneArm(index, autoplay);
 

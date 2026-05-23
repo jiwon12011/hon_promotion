@@ -1765,7 +1765,7 @@ a {
 
 .job-section__showcase {
   z-index: 7;
-  left: 25.8%;
+  left: 22%;
   bottom: 13vh;
   width: min(64vw, 1040px);
   height: 72vh;
@@ -1790,10 +1790,10 @@ a {
   z-index: 10;
   bottom: 0;
   left: 50%;
-  width: 80%;
+  width: 78%;
   max-height: 72vh;
   object-fit: contain;
-  translate: -54% 0;
+  translate: -64% 0;
   transform: none;
   transform-origin: center bottom;
   filter:
@@ -2497,6 +2497,59 @@ a {
   filter:
     drop-shadow(0 18px 22px rgba(0, 0, 0, 0.42))
     drop-shadow(0 0 16px rgba(255, 203, 91, 0.32));
+}
+
+.monster-dex__speech {
+  position: absolute;
+  z-index: 6;
+  left: 63%;
+  top: 20%;
+  min-width: 178px;
+  max-width: 250px;
+  padding: 12px 18px 13px;
+  border: 1px solid rgba(255, 220, 139, 0.7);
+  border-radius: 18px 18px 18px 6px;
+  background:
+    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--monster-aura) 42%, rgba(255, 230, 145, 0.24)), transparent 55%),
+    linear-gradient(135deg, rgba(42, 24, 10, 0.88), rgba(10, 6, 3, 0.72));
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.34),
+    inset 0 0 24px rgba(255, 214, 128, 0.12),
+    0 0 24px color-mix(in srgb, var(--monster-aura) 46%, transparent);
+  color: #ffe6ae;
+  text-align: left;
+  pointer-events: none;
+  transform-origin: left bottom;
+}
+
+.monster-dex__speech::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  bottom: 13px;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, rgba(42, 24, 10, 0.88), rgba(16, 9, 5, 0.78));
+  border-left: 1px solid rgba(255, 220, 139, 0.62);
+  border-bottom: 1px solid rgba(255, 220, 139, 0.62);
+  rotate: 45deg;
+}
+
+.monster-dex__speech strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: clamp(12px, 0.86vw, 15px);
+  color: color-mix(in srgb, var(--monster-aura) 42%, #fff1bc);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--monster-aura) 70%, transparent);
+}
+
+.monster-dex__speech span {
+  display: block;
+  font-size: clamp(15px, 1vw, 19px);
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.72);
 }
 
 .monster-dex__talisman,
@@ -3743,15 +3796,16 @@ a {
 
 @media (min-width: 1200px) and (max-width: 1599px) {
   .job-section__showcase {
-    left: 14%;
+    left: 10%;
     bottom: 17vh;
     width: min(61vw, 900px);
     height: 67vh;
   }
 
   .job-section__main-character {
-    width: 80%;
+    width: 78%;
     max-height: 67vh;
+    translate: -62% 0;
   }
 
   .job-section__platform {
