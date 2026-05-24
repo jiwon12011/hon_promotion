@@ -25,14 +25,14 @@ const features = [
 ];
 
 const monsters = [
-  { id: 1, name: "떠돌이 귀", message: "뀨? 나랑 도감 채울래!", image: monsterOneUrl, x: 19, y: 39, size: 188, spriteScale: 1.05, aura: "rgba(181, 255, 96, 0.4)" },
-  { id: 2, name: "어린승승", message: "메에... 무섭지 않아!", image: monsterTwoUrl, x: 39, y: 29, size: 182, spriteScale: 1.08, aura: "rgba(255, 170, 210, 0.42)" },
-  { id: 3, name: "전갈신", message: "크륵, 독침 조심해.", image: monsterThreeUrl, x: 59, y: 39, size: 190, spriteScale: 1.08, aura: "rgba(170, 108, 255, 0.4)" },
-  { id: 4, name: "강시", message: "덜그럭... 따라오지 마!", image: monsterFourUrl, x: 79, y: 29, size: 182, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.34)" },
-  { id: 5, name: "화염귀", message: "크하하! 활활 타오른다!", image: monsterFiveUrl, x: 19, y: 67, size: 190, spriteScale: 1.08, aura: "rgba(255, 104, 42, 0.48)", fire: true },
-  { id: 6, name: "혼불", message: "후우우... 밤길을 밝힐게.", image: monsterSixUrl, x: 39, y: 57, size: 188, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.4)" },
-  { id: 7, name: "야차", message: "크왕! 내 힘을 봐라!", image: monsterSevenUrl, x: 59, y: 67, size: 194, spriteScale: 1.06, aura: "rgba(255, 181, 69, 0.4)" },
-  { id: 8, name: "구미호", message: "후후, 홀리지 않게 조심해.", image: monsterEightUrl, x: 79, y: 57, size: 194, spriteScale: 1.04, aura: "rgba(255, 225, 160, 0.44)" }
+  { id: 1, name: "네코", message: "뀨우! 나랑 같이 놀래?", image: monsterOneUrl, x: 19, y: 39, size: 188, spriteScale: 1.05, aura: "rgba(181, 255, 96, 0.4)" },
+  { id: 2, name: "깨부리", message: "키히힛, 불꽃 조심해!", image: monsterTwoUrl, x: 39, y: 29, size: 190, spriteScale: 1.08, aura: "rgba(255, 104, 42, 0.48)", fire: true },
+  { id: 3, name: "어린숭숭", message: "메에... 나 무섭지 않지?", image: monsterThreeUrl, x: 59, y: 39, size: 184, spriteScale: 1.08, aura: "rgba(255, 170, 210, 0.42)" },
+  { id: 4, name: "산고", message: "보글보글... 푸른 불씨야.", image: monsterFourUrl, x: 79, y: 29, size: 190, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.4)" },
+  { id: 5, name: "도깨비", message: "크왕! 한 판 붙어볼까?", image: monsterFiveUrl, x: 19, y: 67, size: 194, spriteScale: 1.06, aura: "rgba(255, 181, 69, 0.4)" },
+  { id: 6, name: "전갈신", message: "크륵, 독침은 조심해.", image: monsterSixUrl, x: 39, y: 57, size: 190, spriteScale: 1.08, aura: "rgba(170, 108, 255, 0.4)" },
+  { id: 7, name: "구미호", message: "후후, 홀리면 안 돼.", image: monsterSevenUrl, x: 59, y: 67, size: 194, spriteScale: 1.04, aura: "rgba(255, 225, 160, 0.44)" },
+  { id: 8, name: "강시", message: "덜그럭... 밤길을 따라간다.", image: monsterEightUrl, x: 79, y: 57, size: 184, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.34)" }
 ];
 
 const floatingMonsters = monsters;
@@ -118,10 +118,10 @@ function createSpiritTrail(target, monster) {
 
 async function selectMonster(monster, event) {
   const root = sectionRef.value;
-  const speech = root?.querySelector(".monster-dex__speech");
 
   if (selectedId.value === monster.id) {
     const currentTarget = event?.currentTarget;
+    const speech = root?.querySelector(".monster-dex__speech");
     createBurst(currentTarget, 12);
     gsap.fromTo(currentTarget?.querySelector("span"),
       { scale: 1.2, opacity: 0.95, filter: "blur(5px)" },
@@ -137,6 +137,7 @@ async function selectMonster(monster, event) {
   await nextTick();
   const character = root?.querySelector(".monster-dex__character-img");
   const glow = root?.querySelector(".monster-dex__character-glow");
+  const speech = root?.querySelector(".monster-dex__speech");
   if (!root || !character || !glow) return;
 
   glow.style.setProperty("--monster-aura", monster.aura);
@@ -417,7 +418,7 @@ onBeforeUnmount(() => {
         <span class="monster-dex__talisman-glow" aria-hidden="true" />
         <img class="monster-dex__talisman monster-dex__talisman--front" :src="talismanCardUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
         <img class="monster-dex__character-img" :src="selectedMonster.image" :alt="selectedMonster.name" loading="lazy" decoding="async" fetchpriority="low" />
-        <div class="monster-dex__speech" :style="{ '--monster-aura': selectedMonster.aura }" aria-live="polite">
+        <div :key="selectedMonster.id" class="monster-dex__speech" :style="{ '--monster-aura': selectedMonster.aura }" aria-live="polite">
           <strong>{{ selectedMonster.name }}</strong>
           <span>{{ selectedMonster.message }}</span>
         </div>
