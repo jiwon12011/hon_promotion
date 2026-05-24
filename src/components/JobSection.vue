@@ -195,24 +195,24 @@ function getCharacterEntrance(job) {
   const filter = `blur(18px) brightness(1.45) drop-shadow(0 0 48px ${job.color})`;
   const presets = {
     dosa: {
-      from: { scale: 0.9, opacity: 0, x: -20, y: 20, rotate: -3, filter },
-      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.66, ease: "back.out(1.18)" }
+      from: { scale: 0.9, opacity: 0, x: 0, y: 0, rotate: 0, filter },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.62, ease: "back.out(1.18)" }
     },
     geomgaek: {
-      from: { scale: 1.08, opacity: 0, x: 0, y: 10, rotate: -7, filter },
-      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.54, ease: "power3.out" }
+      from: { scale: 1.04, opacity: 0, x: 0, y: 0, rotate: 0, filter },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }
     },
     musa: {
-      from: { scale: 0.88, opacity: 0, x: 0, y: 46, rotate: 5, filter: `blur(20px) brightness(1.9) drop-shadow(0 0 58px ${job.color})` },
-      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.7, ease: "back.out(1.38)" }
+      from: { scale: 0.9, opacity: 0, x: 0, y: 0, rotate: 0, filter: `blur(20px) brightness(1.9) drop-shadow(0 0 58px ${job.color})` },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.64, ease: "back.out(1.32)" }
     },
     yeoksa: {
-      from: { scale: 1.05, opacity: 0, x: 0, y: -34, rotate: 3, filter: `blur(16px) brightness(1.7) drop-shadow(0 0 54px ${job.color})` },
-      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.64, ease: "power2.out" }
+      from: { scale: 1.04, opacity: 0, x: 0, y: 0, rotate: 0, filter: `blur(16px) brightness(1.7) drop-shadow(0 0 54px ${job.color})` },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.58, ease: "power2.out" }
     },
     sasu: {
-      from: { scale: 0.94, opacity: 0, x: 0, y: 14, rotate: 4, filter },
-      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.56, ease: "power3.out" }
+      from: { scale: 0.94, opacity: 0, x: 0, y: 0, rotate: 0, filter },
+      to: { scale: 1, opacity: 1, x: 0, y: 0, rotate: 0, filter: "blur(0px)", duration: 0.52, ease: "power3.out" }
     }
   };
 
@@ -499,6 +499,7 @@ async function changeJob(jobKey) {
 
   skillPulseTween?.pause();
   idleTween?.pause();
+  const imageReady = preloadImage(nextJob.mainImage, "high");
 
   await new Promise((resolve) => {
     gsap.timeline({ onComplete: resolve })
@@ -520,6 +521,7 @@ async function changeJob(jobKey) {
         ease: "power2.in"
       }, 0.03);
   });
+  await imageReady;
 
   activeJobKey.value = jobKey;
   await nextTick();
@@ -528,7 +530,7 @@ async function changeJob(jobKey) {
   const mainCharacter = root.querySelector(".job-section__main-character");
   if (mainCharacter) {
     gsap.killTweensOf(mainCharacter);
-    gsap.set(mainCharacter, { x: 0, y: 0, rotate: 0, scale: 1 });
+    gsap.set(mainCharacter, { x: 0, y: 0, rotate: 0, scale: 1, opacity: 0, clearProps: "transform" });
   }
 
   const characterEntrance = getCharacterEntrance(nextJob);
