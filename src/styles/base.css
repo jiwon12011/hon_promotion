@@ -4910,11 +4910,7 @@ a {
   }
 
   .monster-dex__spirits {
-    width: 100%;
-  }
-
-  .monster-dex__spirit {
-    scale: 0.55;
+    display: none;
   }
 
   /* 하단 이름 탭 */
@@ -4925,7 +4921,7 @@ a {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 73px;
+    bottom: 0;
     z-index: 14;
     background: rgba(4, 2, 10, 0.72);
     border-top: 1px solid rgba(255, 200, 100, 0.15);
@@ -4958,8 +4954,7 @@ a {
   }
 
   .monster-dex__bottom {
-    left: 10px;
-    right: 10px;
+    display: none;
   }
 
   /* ── OST ── */
