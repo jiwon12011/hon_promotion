@@ -4763,18 +4763,18 @@ a {
   /* 캐릭터 세로 중앙 배치 */
   .job-section__showcase {
     left: 50%;
-    top: 50%;
+    top: 44%;
     bottom: auto;
     width: 100vw;
-    height: 62vh;
+    height: 70vh;
     translate: -50% -50%;
   }
 
   .job-section__main-character {
     left: 50%;
-    width: min(80%, 300px);
+    width: min(90%, 340px);
     translate: -50% 0;
-    max-height: 62vh;
+    max-height: 70vh;
   }
 
   /* 하단 텍스트 직업 변경 탭 */
@@ -4881,7 +4881,7 @@ a {
   }
 
   .monster-dex__spirit {
-    scale: 0.68;
+    scale: 0.55;
   }
 
   .monster-dex__bottom {
