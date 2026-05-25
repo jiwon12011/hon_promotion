@@ -30,8 +30,20 @@ const sectionRef = ref(null);
 let timeline;
 let observer;
 
-function playIntro() {
+function waitForImages(section) {
+  const pending = Array.from(section.querySelectorAll("img")).filter(img => !img.complete);
+  if (!pending.length) return Promise.resolve();
+  return Promise.all(
+    pending.map(img => new Promise(resolve => {
+      img.addEventListener("load", resolve, { once: true });
+      img.addEventListener("error", resolve, { once: true });
+    }))
+  );
+}
+
+async function playIntro() {
   if (!timeline) return;
+  await waitForImages(sectionRef.value);
   timeline.restart();
 }
 
@@ -98,6 +110,11 @@ onBeforeUnmount(() => {
     <span class="world-section__spark world-section__spark--two" aria-hidden="true" />
     <span class="world-section__spark world-section__spark--three" aria-hidden="true" />
     <span class="world-section__spark world-section__spark--four" aria-hidden="true" />
+    <span class="world-section__spark world-section__spark--five" aria-hidden="true" />
+    <span class="world-section__spark world-section__spark--six" aria-hidden="true" />
+    <span class="world-section__spark world-section__spark--seven" aria-hidden="true" />
+    <span class="world-section__glow-orb world-section__glow-orb--a" aria-hidden="true" />
+    <span class="world-section__glow-orb world-section__glow-orb--b" aria-hidden="true" />
 
     <img class="world-section__tower" :src="towerUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
     <span class="world-section__tower-streak world-section__tower-streak--top-a" aria-hidden="true" />
@@ -112,6 +129,8 @@ onBeforeUnmount(() => {
     <img class="world-section__island world-section__island--four" :src="islandTwoUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--five" :src="islandOneUrl" alt="" aria-hidden="true" loading="lazy" />
     <img class="world-section__island world-section__island--six" :src="islandThreeUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__island world-section__island--seven" :src="islandTwoUrl" alt="" aria-hidden="true" loading="lazy" />
+    <img class="world-section__island world-section__island--eight" :src="islandOneUrl" alt="" aria-hidden="true" loading="lazy" />
 
     <div class="world-section__index" aria-hidden="true">
       <strong>02</strong>
