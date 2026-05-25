@@ -4741,30 +4741,13 @@ a {
   }
 
   .world-section__reward-strip {
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .world-section__reward-strip::-webkit-scrollbar {
     display: none;
-  }
-
-  .world-section__rewards {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-  }
-
-  .reward-card {
-    flex: 0 0 60px;
-    font-size: 10px;
   }
 
   /* ── 직업 소개 ── */
   .job-section__subcopy,
   .job-section__info,
-  .job-section__skills,
-  .job-section__cards {
+  .job-section__skills {
     display: none;
   }
 
@@ -4777,19 +4760,85 @@ a {
     white-space: normal;
   }
 
+  /* 캐릭터 세로 중앙 배치 */
   .job-section__showcase {
     left: 50%;
-    bottom: 0;
+    top: 50%;
+    bottom: auto;
     width: 100vw;
-    height: 72vh;
-    translate: -50% 0;
+    height: 62vh;
+    translate: -50% -50%;
   }
 
   .job-section__main-character {
     left: 50%;
     width: min(80%, 300px);
     translate: -50% 0;
-    max-height: 72vh;
+    max-height: 62vh;
+  }
+
+  /* 하단 텍스트 직업 변경 탭 */
+  .job-section__cards {
+    display: flex;
+    flex-direction: row;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    grid-template-rows: none;
+    gap: 0;
+    z-index: 12;
+  }
+
+  .job-card {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    contain: none;
+    overflow: visible;
+    padding: 10px 4px 12px;
+    background: rgba(8, 5, 3, 0.62);
+    border-top: 2px solid rgba(255, 200, 100, 0.18);
+    text-align: center;
+    backdrop-filter: blur(6px);
+  }
+
+  .job-card.is-active {
+    background: rgba(8, 5, 3, 0.82);
+    border-top-color: var(--job-color);
+  }
+
+  .job-card::after {
+    display: none;
+  }
+
+  .job-card__image {
+    display: none;
+  }
+
+  .job-card__text {
+    position: static;
+    transform: none;
+    top: auto;
+    left: auto;
+    width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+
+  .job-card__text strong {
+    font-size: 12px;
+    color: rgba(241, 213, 155, 0.7);
+  }
+
+  .job-card.is-active .job-card__text strong {
+    color: var(--job-color);
+  }
+
+  .job-card__text span {
+    display: none;
   }
 
   /* ── 요괴 도감 ── */
@@ -4829,6 +4878,10 @@ a {
 
   .monster-dex__spirits {
     width: 100%;
+  }
+
+  .monster-dex__spirit {
+    scale: 0.68;
   }
 
   .monster-dex__bottom {
