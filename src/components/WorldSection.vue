@@ -33,12 +33,13 @@ let observer;
 function waitForImages(section) {
   const pending = Array.from(section.querySelectorAll("img")).filter(img => !img.complete);
   if (!pending.length) return Promise.resolve();
-  return Promise.all(
+  const loaded = Promise.all(
     pending.map(img => new Promise(resolve => {
       img.addEventListener("load", resolve, { once: true });
       img.addEventListener("error", resolve, { once: true });
     }))
   );
+  return Promise.race([loaded, new Promise(resolve => setTimeout(resolve, 2000))]);
 }
 
 async function playIntro() {
