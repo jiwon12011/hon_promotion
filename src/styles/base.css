@@ -4753,28 +4753,23 @@ a {
   }
 
   /* ── 직업 소개 ── */
+  .job-section__cards {
+    display: none;
+  }
+
   .job-section__showcase {
-    left: 0;
-    bottom: 16vh;
-    width: 60vw;
-    height: 52vh;
+    left: 50%;
+    bottom: 10vh;
+    width: 90vw;
+    height: 60vh;
+    translate: -50% 0;
   }
 
   .job-section__main-character {
     left: 50%;
-    width: min(98%, 260px);
+    width: min(98%, 320px);
     translate: -50% 0;
-    max-height: 52vh;
-  }
-
-  .job-section__cards {
-    right: 6px;
-    bottom: 16vh;
-    width: 37vw;
-  }
-
-  .job-card {
-    min-height: 52px;
+    max-height: 60vh;
   }
 
   /* ── 요괴 도감 ── */
