@@ -4876,13 +4876,14 @@ a {
     display: none;
   }
 
-  /* 중앙 캐릭터 — 모바일에서도 표시, 중앙 배치 */
+  /* 중앙 캐릭터 — 모바일에서도 표시, 탭 바로 위 배치 */
   .monster-dex__character {
     position: absolute;
     left: 50%;
-    top: 44%;
-    translate: -50% -50%;
-    width: min(68vw, 260px);
+    bottom: 78px;
+    top: auto;
+    translate: -50% 0;
+    width: min(86vw, 320px);
     height: auto;
     pointer-events: none;
   }
