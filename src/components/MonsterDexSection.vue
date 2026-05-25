@@ -135,10 +135,13 @@ async function selectMonster(monster, event) {
 
   selectedId.value = monster.id;
   await nextTick();
+  const wrapper = root?.querySelector(".monster-dex__character");
   const character = root?.querySelector(".monster-dex__character-img");
   const glow = root?.querySelector(".monster-dex__character-glow");
   const speech = root?.querySelector(".monster-dex__speech");
   if (!root || !character || !glow) return;
+
+  if (wrapper) gsap.set(wrapper, { opacity: 1, scale: 1, y: 0 });
 
   glow.style.setProperty("--monster-aura", monster.aura);
   gsap.fromTo(character,
