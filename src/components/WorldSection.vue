@@ -155,9 +155,9 @@ onBeforeUnmount(() => {
       />
     </div>
 
-    <button class="world-section__trial-button" type="button" aria-label="탑 도전하기">
+    <a class="world-section__trial-button" href="https://game.naver.com/lounge/ghostsoulm/board/detail/7630457" target="_blank" rel="noopener noreferrer" aria-label="탑 도전하기">
       <img :src="trialButtonUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
-    </button>
+    </a>
 
     <div class="world-section__reward-strip">
       <p>주요 보상</p>

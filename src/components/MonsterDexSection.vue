@@ -178,7 +178,8 @@ function clickBookButton(event) {
   );
   gsap.fromTo(target.querySelector(".monster-dex__go-shine"),
     { x: "-120%", opacity: 0.1 },
-    { x: "120%", opacity: 0, duration: 0.72, ease: "power2.out" }
+    { x: "120%", opacity: 0, duration: 0.72, ease: "power2.out",
+      onComplete: () => window.open("https://hon.hangame.com/info/game_guide/", "_blank", "noopener,noreferrer") }
   );
 }
 
