@@ -454,6 +454,18 @@ onBeforeUnmount(() => {
       </button>
     </div>
 
+    <div class="monster-dex__name-tabs" aria-label="요괴 선택">
+      <button
+        v-for="monster in monsters"
+        :key="monster.id"
+        class="monster-dex__name-tab"
+        :class="{ 'is-selected': selectedId === monster.id }"
+        :style="{ '--monster-aura': monster.aura }"
+        type="button"
+        @click="selectMonster(monster, $event)"
+      >{{ monster.name }}</button>
+    </div>
+
     <div class="monster-dex__bottom">
       <div class="monster-dex__actions">
         <button

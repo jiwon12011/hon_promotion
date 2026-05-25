@@ -2194,6 +2194,10 @@ a {
   position: absolute;
 }
 
+.monster-dex__name-tabs {
+  display: none;
+}
+
 .monster-dex__bg {
   inset: 0;
   z-index: 0;
@@ -4842,10 +4846,6 @@ a {
   }
 
   /* ── 요괴 도감 ── */
-  .monster-dex__character {
-    display: none;
-  }
-
   .monster-dex__left {
     left: 0;
     top: 0;
@@ -4876,12 +4876,85 @@ a {
     display: none;
   }
 
+  /* 중앙 캐릭터 — 모바일에서도 표시, 중앙 배치 */
+  .monster-dex__character {
+    position: absolute;
+    left: 50%;
+    top: 44%;
+    translate: -50% -50%;
+    width: min(68vw, 260px);
+    height: auto;
+    pointer-events: none;
+  }
+
+  .monster-dex__energy-rise,
+  .monster-dex__energy-front,
+  .monster-dex__talisman-glow,
+  .monster-dex__talisman {
+    display: none;
+  }
+
+  .monster-dex__character-glow {
+    width: 180px;
+    height: 180px;
+  }
+
+  .monster-dex__speech {
+    bottom: auto;
+    top: 8px;
+    left: 50%;
+    translate: -50% 0;
+    width: max-content;
+    max-width: min(72vw, 220px);
+    white-space: pre-line;
+  }
+
   .monster-dex__spirits {
     width: 100%;
   }
 
   .monster-dex__spirit {
     scale: 0.55;
+  }
+
+  /* 하단 이름 탭 */
+  .monster-dex__name-tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 73px;
+    z-index: 14;
+    background: rgba(4, 2, 10, 0.72);
+    border-top: 1px solid rgba(255, 200, 100, 0.15);
+    backdrop-filter: blur(6px);
+  }
+
+  .monster-dex__name-tab {
+    flex: 1 0 25%;
+    padding: 8px 2px;
+    font-size: 11px;
+    font-family: inherit;
+    color: rgba(241, 213, 155, 0.6);
+    background: transparent;
+    border: none;
+    border-right: 1px solid rgba(255, 200, 100, 0.08);
+    cursor: pointer;
+    text-align: center;
+    letter-spacing: 0.03em;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .monster-dex__name-tab:last-child {
+    border-right: none;
+  }
+
+  .monster-dex__name-tab.is-selected {
+    color: color-mix(in srgb, var(--monster-aura) 90%, #fff 10%);
+    background: rgba(255, 200, 100, 0.06);
+    font-weight: 700;
   }
 
   .monster-dex__bottom {
