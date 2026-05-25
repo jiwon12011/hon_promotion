@@ -28,11 +28,11 @@ const monsters = [
   { id: 1, name: "네코", message: "뀨우! 나랑 같이 놀래?", image: monsterOneUrl, x: 19, y: 39, size: 188, spriteScale: 1.05, aura: "rgba(181, 255, 96, 0.4)" },
   { id: 2, name: "깨부리", message: "키히힛, 불꽃 조심해!", image: monsterTwoUrl, x: 39, y: 29, size: 190, spriteScale: 1.08, aura: "rgba(255, 104, 42, 0.48)", fire: true },
   { id: 3, name: "어린숭숭", message: "메에... 나 무섭지 않지?", image: monsterThreeUrl, x: 59, y: 39, size: 184, spriteScale: 1.08, aura: "rgba(255, 170, 210, 0.42)" },
-  { id: 4, name: "산고", message: "보글보글... 푸른 불씨야.", image: monsterFourUrl, x: 79, y: 29, size: 190, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.4)" },
+  { id: 4, name: "산고", message: "보글보글...\n푸른 불씨야.", image: monsterFourUrl, x: 79, y: 29, size: 190, spriteScale: 1.08, aura: "rgba(85, 210, 255, 0.4)" },
   { id: 5, name: "도깨비", message: "크왕! 한 판 붙어볼까?", image: monsterFiveUrl, x: 19, y: 67, size: 194, spriteScale: 1.06, aura: "rgba(255, 181, 69, 0.4)" },
   { id: 6, name: "전갈신", message: "크륵, 독침은 조심해.", image: monsterSixUrl, x: 39, y: 57, size: 190, spriteScale: 1.08, aura: "rgba(170, 108, 255, 0.4)" },
   { id: 7, name: "구미호", message: "후후, 홀리면 안 돼.", image: monsterSevenUrl, x: 59, y: 67, size: 194, spriteScale: 1.04, aura: "rgba(255, 225, 160, 0.44)" },
-  { id: 8, name: "강시", message: "덜그럭... 밤길을 따라간다.", image: monsterEightUrl, x: 79, y: 57, size: 184, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.34)" }
+  { id: 8, name: "강시", message: "덜그럭...\n밤길을 따라간다.", image: monsterEightUrl, x: 79, y: 57, size: 184, spriteScale: 1.05, aura: "rgba(96, 184, 255, 0.34)" }
 ];
 
 const floatingMonsters = monsters;

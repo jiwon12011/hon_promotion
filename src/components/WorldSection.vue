@@ -58,7 +58,7 @@ onMounted(() => {
     .fromTo(section.querySelector(".world-section__tower-aura"), { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "sine.out" }, 0.22)
     .fromTo(section.querySelectorAll(".world-section__island"), { y: -28, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.82, stagger: 0.13, ease: "back.out(1.6)" }, 0.34)
     .fromTo(section.querySelector(".world-section__index"), { x: -28, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55 }, 0.42)
-    .fromTo(section.querySelector(".world-section__heading"), { x: -52, opacity: 0, clipPath: "inset(0 100% 0 0)" }, { x: 0, opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "expo.out" }, 0.58)
+    .fromTo(section.querySelector(".world-section__heading"), { x: -52, opacity: 0, clipPath: "inset(0 100% 0 0)" }, { x: 0, opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "expo.out", onComplete() { gsap.set(section.querySelector(".world-section__heading"), { clearProps: "clipPath" }); } }, 0.58)
     .fromTo(section.querySelector(".world-section__description"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.88)
     .fromTo(section.querySelector(".world-section__divider"), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.45, transformOrigin: "center" }, 0.98)
     .fromTo(section.querySelector(".world-section__trial-scroll"), {
