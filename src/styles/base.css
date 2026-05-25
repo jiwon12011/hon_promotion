@@ -4767,18 +4767,18 @@ a {
   /* 캐릭터 세로 중앙 배치 */
   .job-section__showcase {
     left: 50%;
-    top: 44%;
+    top: 36%;
     bottom: auto;
     width: 100vw;
-    height: 70vh;
+    height: 78vh;
     translate: -50% -50%;
   }
 
   .job-section__main-character {
     left: 50%;
-    width: min(90%, 340px);
+    width: min(100%, 400px);
     translate: -50% 0;
-    max-height: 70vh;
+    max-height: 78vh;
   }
 
   /* 하단 텍스트 직업 변경 탭 */
