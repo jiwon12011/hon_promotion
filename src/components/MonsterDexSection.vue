@@ -1,21 +1,21 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
-import bgUrl from "@/assets/images/section4-bg-forest.png";
-import talismanCardUrl from "@/assets/images/section4-talisman-card.png";
-import iconScrollUrl from "@/assets/images/section4-icon-scroll.png";
-import iconFlameUrl from "@/assets/images/section4-icon-flame.png";
-import iconBookUrl from "@/assets/images/section4-icon-book.png";
-import iconUpgradeUrl from "@/assets/images/section4-icon-upgrade.png";
-import bookGoButtonUrl from "@/assets/images/book_gobtn.png";
-import monsterOneUrl from "@/assets/images/section4-monster-1.png";
-import monsterTwoUrl from "@/assets/images/section4-monster-2.png";
-import monsterThreeUrl from "@/assets/images/section4-monster-3.png";
-import monsterFourUrl from "@/assets/images/section4-monster-4.png";
-import monsterFiveUrl from "@/assets/images/section4-monster-5.png";
-import monsterSixUrl from "@/assets/images/section4-monster-6.png";
-import monsterSevenUrl from "@/assets/images/section4-monster-7.png";
-import monsterEightUrl from "@/assets/images/section4-monster-8.png";
+import bgUrl from "@/assets/images/section4-bg-forest.webp";
+import talismanCardUrl from "@/assets/images/section4-talisman-card.webp";
+import iconScrollUrl from "@/assets/images/section4-icon-scroll.webp";
+import iconFlameUrl from "@/assets/images/section4-icon-flame.webp";
+import iconBookUrl from "@/assets/images/section4-icon-book.webp";
+import iconUpgradeUrl from "@/assets/images/section4-icon-upgrade.webp";
+import bookGoButtonUrl from "@/assets/images/book_gobtn.webp";
+import monsterOneUrl from "@/assets/images/section4-monster-1.webp";
+import monsterTwoUrl from "@/assets/images/section4-monster-2.webp";
+import monsterThreeUrl from "@/assets/images/section4-monster-3.webp";
+import monsterFourUrl from "@/assets/images/section4-monster-4.webp";
+import monsterFiveUrl from "@/assets/images/section4-monster-5.webp";
+import monsterSixUrl from "@/assets/images/section4-monster-6.webp";
+import monsterSevenUrl from "@/assets/images/section4-monster-7.webp";
+import monsterEightUrl from "@/assets/images/section4-monster-8.webp";
 
 const features = [
   { label: "봉인된 귀 수집", icon: iconScrollUrl },

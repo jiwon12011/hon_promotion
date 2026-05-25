@@ -1,10 +1,10 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
-import logoUrl from "@/assets/images/logo-cut.png";
-import appleLogoUrl from "@/assets/images/apple-logo.png";
-import playstoreIconUrl from "@/assets/images/playstore-icon.png";
-import heroPosterUrl from "@/assets/images/hero-poster.jpg";
+import logoUrl from "@/assets/images/logo-cut.webp";
+import appleLogoUrl from "@/assets/images/apple-logo.webp";
+import playstoreIconUrl from "@/assets/images/playstore-icon.webp";
+import heroPosterUrl from "@/assets/images/hero-poster.webp";
 import heroVideoUrl from "@/assets/videos/hero.mp4";
 import trailerUrl from "@/assets/videos/tailer.mp4";
 

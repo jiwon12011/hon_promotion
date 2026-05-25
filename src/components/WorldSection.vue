@@ -1,22 +1,22 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
-import bgSkyUrl from "@/assets/images/section2-bg-sky.png";
-import towerUrl from "@/assets/images/section2-tower-cut.png";
-import islandOneUrl from "@/assets/images/section2-island-1.png";
-import islandTwoUrl from "@/assets/images/section2-island-2.png";
-import islandThreeUrl from "@/assets/images/section2-island-3.png";
-import characterGreenUrl from "@/assets/images/section2-character-green-cut.png";
-import characterPinkUrl from "@/assets/images/section2-character-pink-cut.png";
-import characterPurpleUrl from "@/assets/images/section2-character-purple-cut.png";
-import rightTreeUrl from "@/assets/images/section2-right-tree.png";
-import trialButtonUrl from "@/assets/images/section2-trial-button.png";
-import trialScrollUrl from "@/assets/images/section2-trial-scroll.png";
-import rewardCoinsUrl from "@/assets/images/section2-reward-coins.png";
-import rewardChestUrl from "@/assets/images/section2-reward-chest-red.png";
-import rewardCrystalUrl from "@/assets/images/section2-reward-crystal.png";
-import rewardKeyUrl from "@/assets/images/section2-reward-key.png";
-import rewardOrbUrl from "@/assets/images/section2-reward-chest-gold.png";
+import bgSkyUrl from "@/assets/images/section2-bg-sky.webp";
+import towerUrl from "@/assets/images/section2-tower-cut.webp";
+import islandOneUrl from "@/assets/images/section2-island-1.webp";
+import islandTwoUrl from "@/assets/images/section2-island-2.webp";
+import islandThreeUrl from "@/assets/images/section2-island-3.webp";
+import characterGreenUrl from "@/assets/images/section2-character-green-cut.webp";
+import characterPinkUrl from "@/assets/images/section2-character-pink-cut.webp";
+import characterPurpleUrl from "@/assets/images/section2-character-purple-cut.webp";
+import rightTreeUrl from "@/assets/images/section2-right-tree.webp";
+import trialButtonUrl from "@/assets/images/section2-trial-button.webp";
+import trialScrollUrl from "@/assets/images/section2-trial-scroll.webp";
+import rewardCoinsUrl from "@/assets/images/section2-reward-coins.webp";
+import rewardChestUrl from "@/assets/images/section2-reward-chest-red.webp";
+import rewardCrystalUrl from "@/assets/images/section2-reward-crystal.webp";
+import rewardKeyUrl from "@/assets/images/section2-reward-key.webp";
+import rewardOrbUrl from "@/assets/images/section2-reward-chest-gold.webp";
 
 const rewards = [
   { image: rewardCoinsUrl, label: "금전", description: "탑 정복에 필요한 성장 재화", color: "#f2c45b" },

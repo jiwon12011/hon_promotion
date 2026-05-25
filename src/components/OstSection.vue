@@ -1,14 +1,14 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
-import bgUrl from "@/assets/images/section5-bg-ost.png";
-import cdUrl from "@/assets/images/section5-cd-centered.png";
-import tonearmUrl from "@/assets/images/section5-tonearm.png";
-import thumbOneUrl from "@/assets/images/section5-thumb-1.png";
-import thumbTwoUrl from "@/assets/images/section5-thumb-2.png";
-import thumbThreeUrl from "@/assets/images/section5-thumb-3.png";
-import peaceVillageThumbUrl from "@/assets/images/section5-thumb-peaceful-village.png";
-import thumbFiveUrl from "@/assets/images/section5-thumb-5.png";
+import bgUrl from "@/assets/images/section5-bg-ost.webp";
+import cdUrl from "@/assets/images/section5-cd-centered.webp";
+import tonearmUrl from "@/assets/images/section5-tonearm.webp";
+import thumbOneUrl from "@/assets/images/section5-thumb-1.webp";
+import thumbTwoUrl from "@/assets/images/section5-thumb-2.webp";
+import thumbThreeUrl from "@/assets/images/section5-thumb-3.webp";
+import peaceVillageThumbUrl from "@/assets/images/section5-thumb-peaceful-village.webp";
+import thumbFiveUrl from "@/assets/images/section5-thumb-5.webp";
 
 const publicBase = process.env.NODE_ENV === "production" ? "/hon_promotion" : "";
 const ostAudioUrl = `${publicBase}/assets/videos/section5-ost-audio.m4a`;
