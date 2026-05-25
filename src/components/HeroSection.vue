@@ -1,17 +1,36 @@
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import logoUrl from "@/assets/images/logo-cut.png";
 import appleLogoUrl from "@/assets/images/apple-logo.png";
 import playstoreIconUrl from "@/assets/images/playstore-icon.png";
 import heroPosterUrl from "@/assets/images/hero-poster.jpg";
 import heroVideoUrl from "@/assets/videos/hero.mp4";
+import trailerUrl from "@/assets/videos/tailer.mp4";
 
 const sectionRef = ref(null);
 const videoRef = ref(null);
+const trailerRef = ref(null);
+const showTrailer = ref(false);
 let timeline;
 let animationContext;
 let removePointerMove;
+
+async function openTrailer() {
+  showTrailer.value = true;
+  await nextTick();
+  trailerRef.value?.play();
+}
+
+function closeTrailer() {
+  trailerRef.value?.pause();
+  if (trailerRef.value) trailerRef.value.currentTime = 0;
+  showTrailer.value = false;
+}
+
+function handleKeydown(e) {
+  if (e.key === "Escape" && showTrailer.value) closeTrailer();
+}
 
 const copyLines = [
   ["혼", "이", " ", "깨", "어", "나", "는", " ", "순", "간", ","],
@@ -81,11 +100,14 @@ onMounted(() => {
   videoRef.value?.load?.();
   videoRef.value?.play?.().catch(() => {});
   timeline.play(0);
+
+  window.addEventListener("keydown", handleKeydown);
 });
 
 onBeforeUnmount(() => {
   removePointerMove?.();
   animationContext?.revert();
+  window.removeEventListener("keydown", handleKeydown);
 });
 </script>
 
@@ -142,20 +164,36 @@ onBeforeUnmount(() => {
       <p class="hero-section__subcopy">무협의 세계에서 펼쳐지는 귀혼M의 새로운 이야기</p>
 
       <div class="hero-section__actions" aria-label="스토어와 영상 보기">
-        <a class="store-link" href="#" aria-label="Google Play에서 귀혼M 보기">
+        <a class="store-link" href="https://play.google.com/store/apps/details?id=com.mgame.ghostsoulm&hl=ko" target="_blank" rel="noopener noreferrer" aria-label="Google Play에서 귀혼M 보기">
           <img :src="playstoreIconUrl" alt="" />
           <span><small>GET IT ON</small>Google Play</span>
         </a>
-        <a class="store-link" href="#" aria-label="App Store에서 귀혼M 보기">
+        <a class="store-link" href="https://apps.apple.com/kr/app/%EA%B7%80%ED%98%BCm/id6468974256" target="_blank" rel="noopener noreferrer" aria-label="App Store에서 귀혼M 보기">
           <img :src="appleLogoUrl" alt="" />
           <span><small>Download on the</small>App Store</span>
         </a>
       </div>
 
-      <button class="trailer-button" type="button">
+      <button class="trailer-button" type="button" @click="openTrailer">
         <span class="trailer-button__icon" aria-hidden="true" />
         트레일러 보기
       </button>
     </div>
   </section>
+
+  <Teleport to="body">
+    <Transition name="trailer-modal">
+      <div v-if="showTrailer" class="trailer-modal" @click.self="closeTrailer" role="dialog" aria-modal="true" aria-label="트레일러">
+        <button class="trailer-modal__close" type="button" @click="closeTrailer" aria-label="닫기" />
+        <video
+          ref="trailerRef"
+          class="trailer-modal__video"
+          :src="trailerUrl"
+          controls
+          playsinline
+          preload="none"
+        />
+      </div>
+    </Transition>
+  </Teleport>
 </template>

@@ -599,6 +599,69 @@ a {
   transform: translate(-40%, -50%);
 }
 
+.trailer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.trailer-modal__video {
+  width: min(90vw, 1280px);
+  max-height: 90vh;
+  border-radius: 8px;
+  outline: none;
+}
+
+.trailer-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.trailer-modal__close::before,
+.trailer-modal__close::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  content: "";
+}
+
+.trailer-modal__close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.trailer-modal__close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.trailer-modal__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.trailer-modal-enter-active,
+.trailer-modal-leave-active {
+  transition: opacity 200ms ease;
+}
+
+.trailer-modal-enter-from,
+.trailer-modal-leave-to {
+  opacity: 0;
+}
+
 @keyframes heroParticleFall {
   0% {
     opacity: 0;
