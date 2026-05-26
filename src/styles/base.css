@@ -463,7 +463,7 @@ a {
   max-width: min(620px, 100%);
   margin: clamp(6px, 0.8vh, 12px) auto 0;
   padding: 0;
-  color: #ffe6a6;
+  color: #eed18e;
   font-size: clamp(16px, 1.25vw, 22px);
   font-weight: 900;
   line-height: 1.5;
@@ -473,11 +473,12 @@ a {
   background: none;
   box-shadow: none;
   backdrop-filter: none;
-  background: linear-gradient(180deg, #fff8cf 0%, #ffd978 38%, #d79b37 72%, #fff0b4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.38);
+  -webkit-text-fill-color: currentColor;
+  text-shadow:
+    0 1px 0 rgba(83, 48, 18, 0.72),
+    0 2px 4px rgba(0, 0, 0, 0.64),
+    0 0 10px rgba(255, 230, 158, 0.32),
+    0 0 1px rgba(255, 245, 204, 0.88);
   opacity: 0;
 }
 
