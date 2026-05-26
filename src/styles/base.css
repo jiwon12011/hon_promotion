@@ -3964,6 +3964,11 @@ a {
   .has-wide-summary > .job-section__summary-wide {
     display: block;
   }
+
+  .monster-dex__character-img {
+    bottom: 0;
+    left: 59%;
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1599px) {
