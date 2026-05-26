@@ -481,6 +481,16 @@ a {
   opacity: 0;
 }
 
+.hero-section__subcopy::before {
+  position: absolute;
+  z-index: -1;
+  inset: -8px -28px -10px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.32) 48%, rgba(0, 0, 0, 0) 78%);
+  content: "";
+  pointer-events: none;
+}
+
 .hero-section__actions {
   position: relative;
   z-index: 1;
