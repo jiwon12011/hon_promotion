@@ -594,7 +594,7 @@ onMounted(() => {
     .fromTo(root.querySelector(".job-section__bg"), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.1 })
     .fromTo(root.querySelector(".job-section__index"), { y: -34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.2)
     .fromTo(root.querySelector(".job-section__title"), { clipPath: "inset(0 100% 0 0)", opacity: 0 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.76, ease: "expo.out" }, 0.38)
-    .fromTo(root.querySelectorAll(".job-section__copy, .job-section__subcopy"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.46, stagger: 0.08 }, 0.72)
+    .fromTo(root.querySelector(".job-section__copy"), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.46 }, 0.72)
     .fromTo(root.querySelector(".job-section__main-character"), { y: 42, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.86, ease: "back.out(1.18)" }, 0.58)
     .fromTo(root.querySelector(".job-section__info"), { x: -34, opacity: 0 }, { x: 0, opacity: 1, duration: 0.52 }, 0.88)
     .fromTo(root.querySelectorAll(".job-card"), { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.62, stagger: 0.1 }, 0.78)
@@ -665,7 +665,6 @@ onBeforeUnmount(() => {
       <div class="job-section__title-group">
         <h2 id="job-title" class="job-section__title">직업 소개</h2>
         <p class="job-section__copy">당신의 혼을 깨울 직업을 선택하세요.</p>
-        <p class="job-section__subcopy">다섯 가지 전투 스타일과 주요 스킬을 확인하고,<br />나에게 맞는 영혼의 길을 찾아보세요.</p>
       </div>
 
       <div class="job-section__info" :style="{ '--job-color': activeJob.color }">
