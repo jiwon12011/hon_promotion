@@ -15,11 +15,11 @@ const ostAudioUrl = `${publicBase}/assets/videos/section5-ost-audio.m4a`;
 const peaceVillageStartTime = 29 * 60 + 17;
 
 const tracks = [
-  { title: "귀혼의 전설", subtitle: "달빛 아래 깨어난 첫 여정", startTime: 0, thumbnail: thumbOneUrl },
-  { title: "선선의 길", subtitle: "푸른 밤을 건너는 발걸음", startTime: 92, thumbnail: thumbTwoUrl },
-  { title: "전투의 서막", subtitle: "붉은 협곡에 울리는 결의", startTime: 184, thumbnail: thumbThreeUrl },
-  { title: "평화로운 마을", subtitle: "등불 사이로 흐르는 기억", startTime: peaceVillageStartTime, thumbnail: peaceVillageThumbUrl },
-  { title: "운명의 소용돌이", subtitle: "보랏빛 균열 너머의 선율", startTime: 368, thumbnail: thumbFiveUrl }
+  { title: "귀혼의 전설", subtitle: "달빛 아래 깨어난 첫 여정", startTime: 0, thumbnail: thumbOneUrl, effect: "spark" },
+  { title: "선선의 길", subtitle: "푸른 밤을 건너는 발걸음", startTime: 92, thumbnail: thumbTwoUrl, effect: "leaf" },
+  { title: "전투의 서막", subtitle: "붉은 협곡에 울리는 결의", startTime: 184, thumbnail: thumbThreeUrl, effect: "ember" },
+  { title: "평화로운 마을", subtitle: "등불 사이로 흐르는 기억", startTime: peaceVillageStartTime, thumbnail: peaceVillageThumbUrl, effect: "lantern" },
+  { title: "운명의 소용돌이", subtitle: "보랏빛 균열 너머의 선율", startTime: 368, thumbnail: thumbFiveUrl, effect: "rift" }
 ];
 
 const moods = [
@@ -82,8 +82,10 @@ const hasInteracted = ref(false);
 const currentTime = ref(0);
 const duration = ref(0);
 const particles = Array.from({ length: 24 }, (_, index) => index);
+const effectParticles = Array.from({ length: 30 }, (_, index) => index);
 
 const activeTrack = computed(() => tracks[activeIndex.value]);
+const activeEffect = computed(() => activeTrack.value.effect ?? "spark");
 const activeMoodVars = computed(() => moods[activeMoodIndex.value]?.vars ?? moods[0].vars);
 
 let introTimeline;
@@ -299,7 +301,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section ref="sectionRef" class="section ost-section" data-section="ost" aria-labelledby="ost-title" :style="activeMoodVars">
+  <section
+    ref="sectionRef"
+    class="section ost-section"
+    :class="`ost-section--${activeEffect}`"
+    data-section="ost"
+    aria-labelledby="ost-title"
+    :style="activeMoodVars"
+  >
     <audio
       ref="videoRef"
       class="ost-section__video"
@@ -321,6 +330,22 @@ onBeforeUnmount(() => {
           '--light-left': `${8 + ((particle * 37) % 84)}%`,
           '--light-top': `${10 + ((particle * 19) % 76)}%`,
           '--light-size': `${3 + (particle % 5)}px`
+        }"
+      />
+    </div>
+    <div :key="activeEffect" class="ost-section__track-effects" aria-hidden="true">
+      <span
+        v-for="particle in effectParticles"
+        :key="particle"
+        class="ost-section__effect-particle"
+        :style="{
+          '--effect-left': `${10 + ((particle * 29) % 84)}%`,
+          '--effect-top': `${8 + ((particle * 17) % 76)}%`,
+          '--effect-size': `${7 + (particle % 6) * 2}px`,
+          '--effect-delay': `${(particle % 10) * -0.42}s`,
+          '--effect-duration': `${5.6 + (particle % 7) * 0.54}s`,
+          '--effect-drift': `${particle % 2 === 0 ? 92 + (particle % 5) * 18 : -78 - (particle % 4) * 18}px`,
+          '--effect-rotate': `${particle % 2 === 0 ? 1 : -1}`
         }"
       />
     </div>

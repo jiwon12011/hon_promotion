@@ -3434,6 +3434,7 @@ a {
 .ost-section__bg,
 .ost-section__shade,
 .ost-section__particles,
+.ost-section__track-effects,
 .ost-section__menu,
 .ost-section__title,
 .ost-section__turntable,
@@ -3470,6 +3471,10 @@ a {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+}
+
+.ost-section__track-effects {
+  display: none;
 }
 
 .ost-section__light {
@@ -3969,6 +3974,87 @@ a {
     bottom: 0;
     left: 59%;
   }
+
+  .ost-section__particles {
+    opacity: 1;
+  }
+
+  .ost-section__track-effects {
+    inset: 0;
+    z-index: -1;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  .ost-section__track-effects::before {
+    position: absolute;
+    inset: 8% 8% 12% 36%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, var(--ost-tint-strong, rgba(255, 211, 119, 0.24)), transparent 62%);
+    filter: blur(26px);
+    opacity: 0.44;
+    content: "";
+    animation: ostAmbientGlow 7.2s ease-in-out infinite;
+  }
+
+  .ost-section__effect-particle {
+    position: absolute;
+    left: var(--effect-left);
+    top: var(--effect-top);
+    width: var(--effect-size);
+    height: var(--effect-size);
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .ost-section--spark .ost-section__effect-particle {
+    border-radius: 50%;
+    background: rgba(255, 239, 172, 0.95);
+    box-shadow: 0 0 10px rgba(255, 230, 146, 0.92), 0 0 22px rgba(105, 199, 255, 0.28);
+    animation: ostSparkFloat var(--effect-duration) ease-in-out infinite;
+    animation-delay: var(--effect-delay);
+  }
+
+  .ost-section--leaf .ost-section__effect-particle {
+    width: calc(var(--effect-size) * 1.9);
+    height: var(--effect-size);
+    border-radius: 85% 0 85% 0;
+    background: linear-gradient(135deg, rgba(255, 217, 105, 0.88), rgba(104, 185, 91, 0.58));
+    filter: drop-shadow(0 0 7px rgba(255, 229, 142, 0.28));
+    animation: ostLeafDrift var(--effect-duration) linear infinite;
+    animation-delay: var(--effect-delay);
+  }
+
+  .ost-section--ember .ost-section__effect-particle {
+    border-radius: 50% 0 50% 50%;
+    background: linear-gradient(135deg, rgba(255, 245, 169, 0.96), rgba(255, 79, 35, 0.78));
+    box-shadow: 0 0 13px rgba(255, 92, 40, 0.8), 0 0 28px rgba(255, 41, 25, 0.3);
+    animation: ostEmberRise var(--effect-duration) ease-out infinite;
+    animation-delay: var(--effect-delay);
+  }
+
+  .ost-section--lantern .ost-section__effect-particle {
+    width: calc(var(--effect-size) * 1.2);
+    height: calc(var(--effect-size) * 1.55);
+    border-radius: 52% 52% 45% 45%;
+    background: radial-gradient(circle at 50% 42%, rgba(255, 253, 200, 0.98), rgba(255, 181, 74, 0.72) 62%, rgba(255, 117, 42, 0.08));
+    box-shadow: 0 0 12px rgba(255, 203, 98, 0.78), 0 0 30px rgba(255, 148, 52, 0.28);
+    animation: ostLanternSway var(--effect-duration) ease-in-out infinite;
+    animation-delay: var(--effect-delay);
+  }
+
+  .ost-section--rift .ost-section__effect-particle {
+    width: calc(var(--effect-size) * 0.42);
+    height: calc(var(--effect-size) * 4.2);
+    border-radius: 999px;
+    background: linear-gradient(180deg, transparent, rgba(255, 220, 255, 0.95), rgba(147, 83, 255, 0.72), transparent);
+    box-shadow: 0 0 12px rgba(195, 118, 255, 0.86), 0 0 28px rgba(89, 184, 255, 0.28);
+    animation: ostRiftFall var(--effect-duration) ease-in-out infinite;
+    animation-delay: var(--effect-delay);
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1599px) {
@@ -4018,6 +4104,111 @@ a {
   to {
     opacity: 0.9;
     scale: 1.08;
+  }
+}
+
+@keyframes ostAmbientGlow {
+  0%,
+  100% {
+    opacity: 0.28;
+    scale: 0.94;
+  }
+
+  50% {
+    opacity: 0.58;
+    scale: 1.08;
+  }
+}
+
+@keyframes ostSparkFloat {
+  0%,
+  100% {
+    opacity: 0.18;
+    translate: 0 0;
+    scale: 0.58;
+  }
+
+  45% {
+    opacity: 0.92;
+    translate: calc(var(--effect-drift) * 0.18) -42px;
+    scale: 1.18;
+  }
+
+  72% {
+    opacity: 0.38;
+  }
+}
+
+@keyframes ostLeafDrift {
+  0% {
+    opacity: 0;
+    translate: 0 -12vh;
+    rotate: 0deg;
+  }
+
+  16% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 0;
+    translate: var(--effect-drift) 112vh;
+    rotate: calc(var(--effect-rotate) * 420deg);
+  }
+}
+
+@keyframes ostEmberRise {
+  0% {
+    opacity: 0;
+    translate: 0 44vh;
+    scale: 0.5;
+  }
+
+  18% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+    translate: calc(var(--effect-drift) * 0.5) -32vh;
+    scale: 0.16;
+    rotate: calc(var(--effect-rotate) * 220deg);
+  }
+}
+
+@keyframes ostLanternSway {
+  0%,
+  100% {
+    opacity: 0.18;
+    translate: 0 0;
+    rotate: -5deg;
+    scale: 0.76;
+  }
+
+  46% {
+    opacity: 0.86;
+    translate: calc(var(--effect-drift) * 0.12) -34px;
+    rotate: 5deg;
+    scale: 1.08;
+  }
+}
+
+@keyframes ostRiftFall {
+  0% {
+    opacity: 0;
+    translate: 0 -24vh;
+    scale: 0.7 0.62;
+  }
+
+  28% {
+    opacity: 0.9;
+    scale: 1 1.16;
+  }
+
+  100% {
+    opacity: 0;
+    translate: calc(var(--effect-drift) * 0.24) 88vh;
+    scale: 0.4 1.62;
   }
 }
 
