@@ -3946,6 +3946,7 @@ a {
 
 @media (min-width: 1600px) {
   .job-section__main-character {
+    bottom: 25px;
     translate: -64% 0;
   }
 
@@ -3975,7 +3976,7 @@ a {
   }
 
   .ost-section__turntable {
-    left: clamp(180px, 15vw, 290px);
+    left: clamp(162px, 13.8vw, 265px);
   }
 
   .ost-section__playlist {
