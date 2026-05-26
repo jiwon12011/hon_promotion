@@ -4011,6 +4011,8 @@ a {
   }
 
   .ost-section--spark .ost-section__effect-particle {
+    width: calc(var(--effect-size) * 0.68);
+    height: calc(var(--effect-size) * 0.68);
     border-radius: 50%;
     background: rgba(255, 239, 172, 0.95);
     box-shadow: 0 0 10px rgba(255, 230, 146, 0.92), 0 0 22px rgba(105, 199, 255, 0.28);
@@ -4026,6 +4028,10 @@ a {
     filter: drop-shadow(0 0 7px rgba(255, 229, 142, 0.28));
     animation: ostLeafDrift var(--effect-duration) linear infinite;
     animation-delay: var(--effect-delay);
+  }
+
+  .ost-section--leaf .ost-section__effect-particle:nth-child(3n) {
+    display: none;
   }
 
   .ost-section--ember .ost-section__effect-particle {
