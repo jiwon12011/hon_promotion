@@ -60,6 +60,7 @@ const jobs = [
     key: "geomgaek",
     name: "검객",
     summary: "빠른 속도와 치명적인 검술로 제압하는 근접형",
+    wideSummary: ["빠른 속도와 치명적인", "검술로 제압하는 근접형"],
     description: "그림자처럼 파고들어 한순간에 승부를 가르는 쾌검",
     color: "#a46cff",
     mainImage: geomgaekMainUrl,
@@ -76,6 +77,7 @@ const jobs = [
     key: "musa",
     name: "무사",
     summary: "강인한 체력과 강력한 공격력을 가진 전사",
+    wideSummary: ["강인한 체력과 강력한", "공격력을 가진 전사"],
     description: "불꽃처럼 밀어붙이는 호쾌한 정면 돌파형 직업",
     color: "#f2782d",
     mainImage: musaMainUrl,
@@ -92,6 +94,7 @@ const jobs = [
     key: "yeoksa",
     name: "역사",
     summary: "다양한 법문과 지력으로 아군을 돕는 서포터",
+    wideSummary: ["다양한 법문과 지력으로", "아군을 돕는 서포터"],
     description: "차가운 기운과 법술로 전장의 흐름을 조율하는 조력자",
     color: "#4aa6ff",
     mainImage: yeoksaMainUrl,
@@ -108,6 +111,7 @@ const jobs = [
     key: "sasu",
     name: "사수",
     summary: "원거리에서 적을 제압하는 정확한 활의 명수",
+    wideSummary: ["원거리에서 적을 제압하는", "정확한 활의 명수"],
     description: "바람을 읽고 빈틈을 꿰뚫는 날카로운 원거리 딜러",
     color: "#e9b83d",
     mainImage: sasuMainUrl,
@@ -668,7 +672,12 @@ onBeforeUnmount(() => {
         <img :src="symbolUrl" alt="" aria-hidden="true" />
         <div>
           <h3>{{ activeJob.name }}</h3>
-          <p>{{ activeJob.summary }}</p>
+          <p :class="{ 'has-wide-summary': activeJob.wideSummary }">
+            <span class="job-section__summary-default">{{ activeJob.summary }}</span>
+            <span v-if="activeJob.wideSummary" class="job-section__summary-wide">
+              <span v-for="line in activeJob.wideSummary" :key="line">{{ line }}</span>
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -722,7 +731,12 @@ onBeforeUnmount(() => {
         <img class="job-card__image" :src="job.cardImage" alt="" aria-hidden="true" loading="lazy" />
         <div class="job-card__text">
           <strong>{{ job.name }}</strong>
-          <span>{{ job.summary }}</span>
+          <span :class="{ 'has-wide-summary': job.wideSummary }">
+            <span class="job-card__summary-default">{{ job.summary }}</span>
+            <span v-if="job.wideSummary" class="job-card__summary-wide">
+              <span v-for="line in job.wideSummary" :key="line">{{ line }}</span>
+            </span>
+          </span>
         </div>
       </button>
     </aside>
