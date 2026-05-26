@@ -475,10 +475,9 @@ a {
   backdrop-filter: none;
   -webkit-text-fill-color: currentColor;
   text-shadow:
-    0 1px 0 rgba(83, 48, 18, 0.72),
-    0 2px 4px rgba(0, 0, 0, 0.64),
-    0 0 10px rgba(255, 230, 158, 0.32),
-    0 0 1px rgba(255, 245, 204, 0.88);
+    0 1px 0 rgba(70, 39, 12, 0.82),
+    0 2px 4px rgba(0, 0, 0, 0.78),
+    0 0 8px rgba(255, 223, 144, 0.38);
   opacity: 0;
 }
 
