@@ -1933,10 +1933,10 @@ a {
   background:
     radial-gradient(ellipse at 50% 58%, color-mix(in srgb, var(--job-color) 26%, transparent), transparent 62%),
     radial-gradient(ellipse at 50% 78%, rgba(255, 227, 139, 0.12), transparent 48%);
-  filter: blur(2px);
+  filter: blur(3px);
   mix-blend-mode: screen;
-  opacity: 0.88;
-  animation: jobCharacterAuraBreath 3.8s ease-in-out infinite;
+  opacity: 0.64;
+  animation: jobCharacterAuraBreath 4.8s ease-in-out infinite;
 }
 
 .job-section__character-particle {
@@ -4278,13 +4278,13 @@ a {
 @keyframes jobCharacterAuraBreath {
   0%,
   100% {
-    opacity: 0.54;
-    scale: 0.96;
+    opacity: 0.32;
+    scale: 0.99;
   }
 
   50% {
-    opacity: 0.92;
-    scale: 1.06;
+    opacity: 0.58;
+    scale: 1.025;
   }
 }
 

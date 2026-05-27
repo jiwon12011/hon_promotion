@@ -137,6 +137,7 @@ let skillPulseTween;
 let observer;
 let preloadHandle;
 let preloadHandleType;
+let shouldReduceMotion = false;
 let hasPreloadedJobImages = false;
 const imagePreloadCache = new Map();
 const characterParticles = Array.from({ length: 14 }, (_, index) => index);
@@ -430,6 +431,24 @@ function hoverMainCharacter() {
   });
 }
 
+function startCharacterIdle() {
+  if (shouldReduceMotion) return;
+
+  const character = sectionRef.value?.querySelector(".job-section__main-character");
+  if (!character) return;
+
+  idleTween?.kill();
+  gsap.set(character, { y: 0, scale: 1, rotate: 0 });
+  idleTween = gsap.to(character, {
+    y: -1.6,
+    scale: 1.0018,
+    duration: 4.8,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+}
+
 function clickMainCharacter() {
   if (isSwitching.value) return;
 
@@ -469,7 +488,7 @@ function leaveMainCharacter() {
     ease: "power2.out",
     clearProps: "filter,scale,rotate,x,y",
     overwrite: "auto",
-    onComplete: () => idleTween?.restart(true)
+    onComplete: startCharacterIdle
   });
   gsap.to(weaponGlow, {
     x: 0,
@@ -503,7 +522,8 @@ async function changeJob(jobKey) {
   }
 
   skillPulseTween?.pause();
-  idleTween?.pause();
+  idleTween?.kill();
+  idleTween = undefined;
   const imageReady = preloadImage(nextJob.mainImage, "high");
 
   await new Promise((resolve) => {
@@ -543,9 +563,7 @@ async function changeJob(jobKey) {
     characterEntrance.from,
     {
       ...characterEntrance.to,
-      onComplete: () => {
-        idleTween?.restart(true);
-      }
+      onComplete: startCharacterIdle
     }
   );
   gsap.fromTo(root.querySelector(".job-section__info"), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, delay: 0.16 });
@@ -580,7 +598,7 @@ function playIntro() {
 
 onMounted(() => {
   const root = sectionRef.value;
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  shouldReduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!root) return;
 
   const preloadMainCharacters = () => preloadJobMainImages("high");
@@ -602,16 +620,8 @@ onMounted(() => {
     .fromTo(root.querySelectorAll(".job-section__skill"), { scale: 0.82, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.34, stagger: 0.06, ease: "power2.out" }, 1.16)
     .fromTo(root.querySelectorAll(".job-section__leaf"), { y: -40, opacity: 0 }, { y: "110vh", opacity: 0.7, duration: 5.8, stagger: 0.12, ease: "none" }, 0.1);
 
-  if (!prefersReducedMotion) {
-    idleTween = gsap.to(root.querySelector(".job-section__main-character"), {
-      y: -5,
-      scale: 1.006,
-      duration: 3.4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
-
+  if (!shouldReduceMotion) {
+    startCharacterIdle();
     skillPulseTween = gsap.to(root.querySelectorAll(".job-section__skill"), { scale: 1, duration: 0.01, paused: true });
   }
 
