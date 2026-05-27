@@ -139,6 +139,7 @@ let preloadHandle;
 let preloadHandleType;
 let hasPreloadedJobImages = false;
 const imagePreloadCache = new Map();
+const characterParticles = Array.from({ length: 14 }, (_, index) => index);
 
 function preloadImage(src, priority = "auto") {
   if (!src) return Promise.resolve();
@@ -603,8 +604,9 @@ onMounted(() => {
 
   if (!prefersReducedMotion) {
     idleTween = gsap.to(root.querySelector(".job-section__main-character"), {
-      y: -0.25,
-      duration: 4.2,
+      y: -5,
+      scale: 1.006,
+      duration: 3.4,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"
@@ -698,9 +700,25 @@ onBeforeUnmount(() => {
 
     <div
       class="job-section__showcase"
+      :class="`job-section__showcase--${activeJob.key}`"
       :style="{ '--job-color': activeJob.color }"
     >
       <div class="job-section__platform" aria-hidden="true" />
+      <div class="job-section__character-aura" aria-hidden="true">
+        <span
+          v-for="particle in characterParticles"
+          :key="particle"
+          class="job-section__character-particle"
+          :style="{
+            '--particle-left': `${18 + ((particle * 23) % 66)}%`,
+            '--particle-top': `${18 + ((particle * 17) % 62)}%`,
+            '--particle-size': `${5 + (particle % 5) * 2}px`,
+            '--particle-delay': `${(particle % 7) * -0.48}s`,
+            '--particle-duration': `${4.8 + (particle % 5) * 0.55}s`,
+            '--particle-drift': `${particle % 2 === 0 ? 34 + (particle % 4) * 8 : -30 - (particle % 4) * 8}px`
+          }"
+        />
+      </div>
       <img
         class="job-section__main-character"
         :src="activeJob.mainImage"
