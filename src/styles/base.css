@@ -2012,9 +2012,12 @@ a {
 }
 
 .job-section__main-character {
-  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 100%;
   object-fit: contain;
   transform: none;
   transform-origin: center bottom;
