@@ -593,6 +593,8 @@ function leaveCard(event, job) {
 
 function playIntro() {
   if (!introTimeline) return;
+  idleTween?.kill();
+  idleTween = undefined;
   introTimeline.restart();
 }
 
@@ -608,7 +610,11 @@ onMounted(() => {
     window.setTimeout(preloadMainCharacters, 350);
   }
 
-  introTimeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+  introTimeline = gsap.timeline({
+    paused: true,
+    defaults: { ease: "power3.out" },
+    onComplete: startCharacterIdle
+  });
   introTimeline
     .fromTo(root.querySelector(".job-section__bg"), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.1 })
     .fromTo(root.querySelector(".job-section__index"), { y: -34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.48 }, 0.2)
@@ -621,7 +627,6 @@ onMounted(() => {
     .fromTo(root.querySelectorAll(".job-section__leaf"), { y: -40, opacity: 0 }, { y: "110vh", opacity: 0.7, duration: 5.8, stagger: 0.12, ease: "none" }, 0.1);
 
   if (!shouldReduceMotion) {
-    startCharacterIdle();
     skillPulseTween = gsap.to(root.querySelectorAll(".job-section__skill"), { scale: 1, duration: 0.01, paused: true });
   }
 
