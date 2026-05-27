@@ -734,17 +734,19 @@ onBeforeUnmount(() => {
           }"
         />
       </div>
-      <img
-        class="job-section__main-character"
-        :src="activeJob.mainImage"
-        :alt="`${activeJob.name} 대표 캐릭터`"
-        loading="lazy"
-        decoding="async"
-        fetchpriority="low"
-        @mouseenter="hoverMainCharacter"
-        @mouseleave="leaveMainCharacter"
-        @click="clickMainCharacter"
-      />
+      <div class="job-section__main-character-idle">
+        <img
+          class="job-section__main-character"
+          :src="activeJob.mainImage"
+          :alt="`${activeJob.name} 대표 캐릭터`"
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
+          @mouseenter="hoverMainCharacter"
+          @mouseleave="leaveMainCharacter"
+          @click="clickMainCharacter"
+        />
+      </div>
       <div class="job-section__weapon-glow" aria-hidden="true" />
     </div>
 
