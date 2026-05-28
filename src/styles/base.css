@@ -5291,6 +5291,19 @@ a {
     font-size: clamp(50px, 15vw, 72px);
   }
 
+  .world-section__trial-scroll {
+    width: min(330px, 88vw);
+    margin: clamp(250px, 36vh, 330px) auto 0;
+  }
+
+  .world-section__trial-button {
+    right: auto;
+    bottom: clamp(24px, 4vh, 36px);
+    left: 50%;
+    width: min(270px, 72vw);
+    transform: translateX(-50%);
+  }
+
   .world-section__reward-strip {
     display: none;
   }
@@ -5346,11 +5359,11 @@ a {
   .job-card {
     flex: 1;
     height: auto;
-    min-height: 0;
+    min-height: 48px;
     aspect-ratio: auto;
     contain: none;
     overflow: visible;
-    padding: 10px 4px 12px;
+    padding: 13px 4px;
     background: rgba(8, 5, 3, 0.62);
     border-top: 2px solid rgba(255, 200, 100, 0.18);
     text-align: center;
@@ -5381,7 +5394,8 @@ a {
   }
 
   .job-card__text strong {
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 1.15;
     color: rgba(241, 213, 155, 0.7);
   }
 
@@ -5430,9 +5444,9 @@ a {
   .monster-dex__character {
     position: absolute;
     left: 50%;
-    bottom: 78px;
-    top: auto;
-    translate: -50% 0;
+    top: 48%;
+    bottom: auto;
+    translate: -50% -50%;
     width: min(86vw, 320px);
     height: auto;
     pointer-events: none;
@@ -5481,8 +5495,10 @@ a {
 
   .monster-dex__name-tab {
     flex: 1 0 25%;
-    padding: 8px 2px;
-    font-size: 11px;
+    min-height: 48px;
+    padding: 13px 4px;
+    font-size: 13px;
+    line-height: 1.15;
     font-family: inherit;
     color: rgba(241, 213, 155, 0.6);
     background: transparent;
@@ -5527,36 +5543,24 @@ a {
   }
 
   .ost-section__menu {
-    top: 26vh;
-    left: 50%;
-    translate: -50% 0;
-    display: flex;
-    flex-direction: row;
-    gap: 6px;
-  }
-
-  .ost-section__menu-button {
-    width: 54px;
-    height: 54px;
-    grid-template-rows: 30px 14px;
-    row-gap: 2px;
+    display: none;
   }
 
   .ost-section__turntable {
     left: 50%;
-    top: auto;
-    bottom: 180px;
-    translate: -50% 0;
+    top: 50%;
+    bottom: auto;
+    translate: -50% -50%;
     transform: translateY(0);
-    width: min(210px, 54vw);
+    width: min(235px, 60vw);
   }
 
   .ost-section__disc {
-    width: min(210px, 54vw);
+    width: min(235px, 60vw);
   }
 
   .ost-section__tonearm {
-    width: 90px;
+    width: 102px;
   }
 
   .ost-section__progress {
@@ -5568,12 +5572,13 @@ a {
     right: 0;
     bottom: 0;
     width: 100%;
-    padding: 10px 14px 16px;
+    min-height: 162px;
+    padding: 14px 14px 20px;
   }
 
   .ost-section__playlist p {
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin-bottom: 10px;
   }
 
   .ost-section__tracks {
@@ -5590,13 +5595,13 @@ a {
   }
 
   .ost-section__track {
-    flex: 0 0 min(116px, 30vw);
+    flex: 0 0 min(132px, 34vw);
     scroll-snap-align: start;
     transform: none !important;
   }
 
   .ost-section__track strong {
-    font-size: 11px;
-    padding: 5px 5px 0;
+    font-size: 12px;
+    padding: 7px 6px 0;
   }
 }
