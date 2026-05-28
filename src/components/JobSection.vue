@@ -288,6 +288,7 @@ function playSkillEffect(event, skill, index) {
   const parentRect = container.getBoundingClientRect();
   const x = rect.left - parentRect.left + rect.width * 0.5;
   const y = rect.top - parentRect.top + rect.height * 0.36;
+  const effectType = index % 5;
 
   gsap.fromTo(target,
     { scale: 0.94, rotate: index % 2 === 0 ? -3 : 3 },
@@ -295,7 +296,7 @@ function playSkillEffect(event, skill, index) {
   );
 
   const ring = document.createElement("span");
-  ring.className = `job-section__skill-flash job-section__skill-flash--${index % 5}`;
+  ring.className = `job-section__skill-flash job-section__skill-flash--${effectType}`;
   ring.style.left = `${x}px`;
   ring.style.top = `${y}px`;
   ring.style.borderColor = color;
@@ -303,37 +304,60 @@ function playSkillEffect(event, skill, index) {
   container.appendChild(ring);
 
   gsap.fromTo(ring,
-    { width: 70, height: 70, opacity: 0.9, rotate: 0 },
+    { width: 100, height: 100, opacity: 0.92, rotate: effectType * -12 },
     {
-      width: 420 + index * 38,
-      height: 420 + index * 38,
+      width: 560 + index * 54,
+      height: 560 + index * 54,
       opacity: 0,
-      rotate: index % 2 === 0 ? 90 : -90,
-      duration: 0.96,
+      rotate: effectType % 2 === 0 ? 130 : -130,
+      duration: 1.08,
       ease: "power2.out",
       onComplete: () => ring.remove()
     }
   );
 
-  const particleCount = 12 + index * 3;
+  gsap.timeline()
+    .to(character, {
+      y: -7,
+      scale: 1.022,
+      filter: `drop-shadow(0 25px 26px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 10px ${color}) brightness(1.06) saturate(1.06)`,
+      duration: 0.14,
+      ease: "power2.out",
+      overwrite: "auto"
+    })
+    .to(character, {
+      y: 0,
+      scale: 1,
+      duration: 0.42,
+      ease: "elastic.out(1, 0.58)",
+      overwrite: "auto",
+      clearProps: "filter,scale,y"
+    });
+
+  const particleCount = 16 + index * 4;
   for (let i = 0; i < particleCount; i += 1) {
     const particle = document.createElement("span");
-    particle.className = `job-section__skill-particle job-section__skill-particle--${index % 5}`;
+    particle.className = `job-section__skill-particle job-section__skill-particle--${effectType}`;
     particle.style.left = `${x}px`;
     particle.style.top = `${y}px`;
     particle.style.background = color;
     particle.style.setProperty("--job-color", color);
     container.appendChild(particle);
 
-    const angle = (Math.PI * 2 * i) / particleCount + index * 0.25;
-    const distance = 210 + Math.random() * (150 + index * 26);
+    const spread = Math.random() - 0.5;
+    let angle = (Math.PI * 2 * i) / particleCount + effectType * 0.28;
+    if (effectType === 1) angle = (i % 2 === 0 ? 0 : Math.PI) + spread * 0.58;
+    if (effectType === 2) angle = -Math.PI / 2 + spread * 1.5;
+    if (effectType === 3) angle += i * 0.32;
+    if (effectType === 4) angle = (Math.PI / 4) * (i % 8) + spread * 0.2;
+    const distance = 310 + Math.random() * (230 + index * 34) + (effectType === 3 ? i * 5 : 0);
     gsap.to(particle, {
       x: Math.cos(angle) * distance,
-      y: Math.sin(angle) * distance - 46 - index * 7,
-      rotate: (index % 2 === 0 ? 1 : -1) * (180 + Math.random() * 280),
+      y: Math.sin(angle) * distance - 58 - index * 8,
+      rotate: (effectType % 2 === 0 ? 1 : -1) * (220 + Math.random() * 360),
       opacity: 0,
-      scale: 0.48 + Math.random() * 0.8,
-      duration: 0.84 + Math.random() * 0.5,
+      scale: 0.56 + Math.random() * 0.92,
+      duration: 0.96 + Math.random() * 0.58,
       ease: "power2.out",
       onComplete: () => particle.remove()
     });
@@ -402,14 +426,13 @@ function hoverMainCharacter() {
   const root = sectionRef.value;
   const character = root?.querySelector(".job-section__main-character");
   const weaponGlow = root?.querySelector(".job-section__weapon-glow");
-  const platform = root?.querySelector(".job-section__platform");
-  if (!root || !character || !weaponGlow || !platform) return;
+  if (!root || !character || !weaponGlow) return;
 
   idleTween?.pause();
 
   gsap.to(character, {
     scale: 1.008,
-    filter: `drop-shadow(0 24px 26px rgba(0, 0, 0, 0.44)) drop-shadow(0 0 12px ${activeJob.value.color}) brightness(1.035) saturate(1.035)`,
+    filter: `drop-shadow(0 24px 26px rgba(0, 0, 0, 0.44)) drop-shadow(0 0 10px ${activeJob.value.color}) brightness(1.03) saturate(1.03)`,
     duration: 0.24,
     ease: "power2.out",
     overwrite: "auto"
@@ -418,14 +441,6 @@ function hoverMainCharacter() {
     opacity: 0.68,
     scale: 1.035,
     filter: "blur(16px)",
-    duration: 0.24,
-    ease: "power2.out",
-    overwrite: "auto"
-  });
-  gsap.to(platform, {
-    opacity: 1,
-    scale: 1.025,
-    filter: `blur(1px) drop-shadow(0 0 12px ${activeJob.value.color})`,
     duration: 0.24,
     ease: "power2.out",
     overwrite: "auto"
