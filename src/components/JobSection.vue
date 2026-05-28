@@ -289,6 +289,7 @@ function playSkillEffect(event, skill, index) {
   const x = rect.left - parentRect.left + rect.width * 0.5;
   const y = rect.top - parentRect.top + rect.height * 0.36;
   const effectType = index % 5;
+  const ringSize = effectType === 4 ? 820 + index * 72 : 560 + index * 54;
 
   gsap.fromTo(target,
     { scale: 0.94, rotate: index % 2 === 0 ? -3 : 3 },
@@ -306,8 +307,8 @@ function playSkillEffect(event, skill, index) {
   gsap.fromTo(ring,
     { width: 100, height: 100, opacity: 0.92, rotate: effectType * -12 },
     {
-      width: 560 + index * 54,
-      height: 560 + index * 54,
+      width: ringSize,
+      height: ringSize,
       opacity: 0,
       rotate: effectType % 2 === 0 ? 130 : -130,
       duration: 1.08,
@@ -316,22 +317,29 @@ function playSkillEffect(event, skill, index) {
     }
   );
 
+  const characterCastMotions = [
+    { x: 0, y: -8, scale: 1.018, rotate: -0.6, duration: 0.15, ease: "power2.out" },
+    { x: -10, y: -2, scale: 1.012, rotate: -1.8, duration: 0.13, ease: "power2.out" },
+    { x: 0, y: -14, scale: 1.026, rotate: 0, duration: 0.16, ease: "back.out(1.4)" },
+    { x: 8, y: -5, scale: 1.016, rotate: 2.2, duration: 0.14, ease: "power2.out" },
+    { x: 0, y: -4, scale: 0.986, rotate: 0.8, duration: 0.12, ease: "power2.in" }
+  ];
+  const castMotion = characterCastMotions[effectType];
   gsap.timeline()
     .to(character, {
-      y: -7,
-      scale: 1.022,
+      ...castMotion,
       filter: `drop-shadow(0 25px 26px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 10px ${color}) brightness(1.06) saturate(1.06)`,
-      duration: 0.14,
-      ease: "power2.out",
       overwrite: "auto"
     })
     .to(character, {
+      x: 0,
       y: 0,
       scale: 1,
-      duration: 0.42,
-      ease: "elastic.out(1, 0.58)",
+      rotate: 0,
+      duration: effectType === 4 ? 0.5 : 0.42,
+      ease: effectType === 4 ? "back.out(1.8)" : "elastic.out(1, 0.58)",
       overwrite: "auto",
-      clearProps: "filter,scale,y"
+      clearProps: "filter,scale,x,y,rotate"
     });
 
   const particleCount = 16 + index * 4;
@@ -349,8 +357,10 @@ function playSkillEffect(event, skill, index) {
     if (effectType === 1) angle = (i % 2 === 0 ? 0 : Math.PI) + spread * 0.58;
     if (effectType === 2) angle = -Math.PI / 2 + spread * 1.5;
     if (effectType === 3) angle += i * 0.32;
-    if (effectType === 4) angle = (Math.PI / 4) * (i % 8) + spread * 0.2;
-    const distance = 310 + Math.random() * (230 + index * 34) + (effectType === 3 ? i * 5 : 0);
+    if (effectType === 4) angle = (Math.PI / 4) * (i % 8) + spread * 0.16;
+    const distance = effectType === 4
+      ? 520 + Math.random() * 320
+      : 310 + Math.random() * (230 + index * 34) + (effectType === 3 ? i * 5 : 0);
     gsap.to(particle, {
       x: Math.cos(angle) * distance,
       y: Math.sin(angle) * distance - 58 - index * 8,
