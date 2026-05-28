@@ -1593,6 +1593,7 @@ a {
 .job-section__showcase,
 .job-section__platform,
 .job-section__character-aura,
+.job-section__character-skill-effects,
 .job-section__main-character-idle,
 .job-section__weapon-glow {
   position: absolute;
@@ -1950,6 +1951,13 @@ a {
   background: var(--job-color);
   pointer-events: none;
   will-change: transform, opacity;
+}
+
+.job-section__character-skill-effects {
+  z-index: 4;
+  inset: 0;
+  overflow: visible;
+  mix-blend-mode: screen;
 }
 
 .job-section__showcase--dosa .job-section__character-particle {

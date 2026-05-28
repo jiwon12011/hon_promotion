@@ -278,15 +278,16 @@ function createBurst(job) {
 
 function playSkillEffect(event, skill, index) {
   const root = sectionRef.value;
-  const container = root?.querySelector(".job-section__effects");
+  const container = root?.querySelector(".job-section__character-skill-effects");
+  const character = root?.querySelector(".job-section__main-character");
   const target = event.currentTarget;
-  if (!root || !container || !target) return;
+  if (!root || !container || !character || !target) return;
 
   const color = activeJob.value.color;
-  const rect = target.getBoundingClientRect();
-  const parentRect = root.getBoundingClientRect();
-  const x = rect.left - parentRect.left + rect.width * 0.5;
-  const y = rect.top - parentRect.top + rect.height * 0.38;
+  const rect = character.getBoundingClientRect();
+  const parentRect = container.getBoundingClientRect();
+  const x = rect.left - parentRect.left + rect.width * 0.55;
+  const y = rect.top - parentRect.top + rect.height * 0.5;
 
   gsap.fromTo(target,
     { scale: 0.94, rotate: index % 2 === 0 ? -3 : 3 },
@@ -447,30 +448,6 @@ function startCharacterIdle() {
     yoyo: true,
     ease: "sine.inOut"
   });
-}
-
-function clickMainCharacter() {
-  if (isSwitching.value) return;
-
-  const root = sectionRef.value;
-  const character = root?.querySelector(".job-section__main-character");
-  if (!character) return;
-
-  createCharacterHoverEffect(activeJob.value);
-  gsap.timeline()
-    .to(character, {
-      scale: 1.065,
-      filter: `drop-shadow(0 34px 36px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 44px ${activeJob.value.color}) brightness(1.14)`,
-      duration: 0.16,
-      ease: "power2.out",
-      overwrite: "auto"
-    })
-    .to(character, {
-      scale: 1.024,
-      duration: 0.34,
-      ease: "elastic.out(1, 0.55)",
-      overwrite: "auto"
-    });
 }
 
 function leaveMainCharacter() {
@@ -734,6 +711,7 @@ onBeforeUnmount(() => {
           }"
         />
       </div>
+      <div class="job-section__character-skill-effects" aria-hidden="true" />
       <div class="job-section__main-character-idle">
         <img
           class="job-section__main-character"
@@ -744,7 +722,6 @@ onBeforeUnmount(() => {
           fetchpriority="low"
           @mouseenter="hoverMainCharacter"
           @mouseleave="leaveMainCharacter"
-          @click="clickMainCharacter"
         />
       </div>
       <div class="job-section__weapon-glow" aria-hidden="true" />
