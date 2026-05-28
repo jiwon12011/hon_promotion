@@ -5293,7 +5293,7 @@ a {
 
   .world-section__trial-scroll {
     width: min(330px, 88vw);
-    margin: clamp(250px, 36vh, 330px) auto 0;
+    margin: clamp(210px, 31vh, 290px) auto 0;
   }
 
   .world-section__trial-button {
@@ -5444,7 +5444,7 @@ a {
   .monster-dex__character {
     position: absolute;
     left: 50%;
-    top: 48%;
+    top: 52%;
     bottom: auto;
     translate: -50% -50%;
     width: min(86vw, 320px);
@@ -5547,7 +5547,7 @@ a {
   }
 
   .ost-section__turntable {
-    left: 50%;
+    left: 46%;
     top: 50%;
     bottom: auto;
     translate: -50% -50%;
