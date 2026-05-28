@@ -286,8 +286,8 @@ function playSkillEffect(event, skill, index) {
   const color = activeJob.value.color;
   const rect = character.getBoundingClientRect();
   const parentRect = container.getBoundingClientRect();
-  const x = rect.left - parentRect.left + rect.width * 0.55;
-  const y = rect.top - parentRect.top + rect.height * 0.5;
+  const x = rect.left - parentRect.left + rect.width * 0.5;
+  const y = rect.top - parentRect.top + rect.height * 0.36;
 
   gsap.fromTo(target,
     { scale: 0.94, rotate: index % 2 === 0 ? -3 : 3 },
@@ -303,13 +303,13 @@ function playSkillEffect(event, skill, index) {
   container.appendChild(ring);
 
   gsap.fromTo(ring,
-    { width: 18, height: 18, opacity: 0.92, rotate: 0 },
+    { width: 40, height: 40, opacity: 0.92, rotate: 0 },
     {
-      width: 120 + index * 10,
-      height: 120 + index * 10,
+      width: 260 + index * 24,
+      height: 260 + index * 24,
       opacity: 0,
       rotate: index % 2 === 0 ? 90 : -90,
-      duration: 0.72,
+      duration: 0.82,
       ease: "power2.out",
       onComplete: () => ring.remove()
     }
@@ -326,14 +326,14 @@ function playSkillEffect(event, skill, index) {
     container.appendChild(particle);
 
     const angle = (Math.PI * 2 * i) / particleCount + index * 0.25;
-    const distance = 42 + Math.random() * (42 + index * 9);
+    const distance = 118 + Math.random() * (92 + index * 18);
     gsap.to(particle, {
       x: Math.cos(angle) * distance,
-      y: Math.sin(angle) * distance - 20 - index * 4,
+      y: Math.sin(angle) * distance - 32 - index * 5,
       rotate: (index % 2 === 0 ? 1 : -1) * (180 + Math.random() * 280),
       opacity: 0,
-      scale: 0.25 + Math.random() * 0.45,
-      duration: 0.55 + Math.random() * 0.35,
+      scale: 0.36 + Math.random() * 0.62,
+      duration: 0.7 + Math.random() * 0.42,
       ease: "power2.out",
       onComplete: () => particle.remove()
     });
