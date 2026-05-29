@@ -36,6 +36,7 @@ const copyLines = [
   ["혼", "이", " ", "깨", "어", "나", "는", " ", "순", "간", ","],
   ["전", "설", "이", " ", "시", "작", "된", "다", "!"]
 ];
+const subcopyChars = Array.from("무협의 세계에서 펼쳐지는 귀혼M의 새로운 이야기");
 
 const particles = Array.from({ length: 18 }, (_, index) => ({
   className: index % 3 === 0 ? "leaf" : "spark",
@@ -66,8 +67,8 @@ onMounted(() => {
       .fromTo(section.querySelector(".hero-section__sunlight"), { scale: 0.82, opacity: 0, rotate: -3 }, { scale: 1, opacity: 1, rotate: 0, duration: 1.45, ease: "sine.out" }, 0.08)
       .fromTo(section.querySelector(".hero-section__logo"), { y: 22, scale: 0.58, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.88, ease: "elastic.out(1, 0.58)" }, 0.72)
       .fromTo(section.querySelectorAll(".copy-char"), { y: 30, opacity: 0, rotateX: -90, transformPerspective: 700 }, { y: 0, opacity: 1, rotateX: 0, duration: 0.6, stagger: 0.03, ease: "back.out(1.7)" }, 0.98)
-      .fromTo(section.querySelector(".hero-section__subcopy"), { y: 24, opacity: 0, filter: "blur(5px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.82, ease: "power2.out" }, 2.34)
-      .fromTo(actionButtons, { y: 52, scale: 0.88, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.92, stagger: 0.16, ease: "elastic.out(1, 0.62)" }, 2.68)
+      .fromTo(section.querySelectorAll(".hero-section__subcopy-char"), { y: 22, opacity: 0, rotateX: -80, transformPerspective: 700 }, { y: 0, opacity: 1, rotateX: 0, duration: 0.5, stagger: 0.018, ease: "back.out(1.55)" }, 2.02)
+      .fromTo(actionButtons, { y: 52, scale: 0.88, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.88, stagger: 0.14, ease: "elastic.out(1, 0.62)" }, 2.46)
       .fromTo(section.querySelector(".hero-section__glint"), { xPercent: -140, opacity: 0 }, { xPercent: 140, opacity: 0.54, duration: 1.05, ease: "power2.inOut" }, 1.08);
 
     if (!prefersReducedMotion) {
@@ -165,7 +166,13 @@ onBeforeUnmount(() => {
         </span>
       </p>
 
-      <p class="hero-section__subcopy">무협의 세계에서 펼쳐지는 귀혼M의 새로운 이야기</p>
+      <p class="hero-section__subcopy" aria-label="무협의 세계에서 펼쳐지는 귀혼M의 새로운 이야기">
+        <span
+          v-for="(char, index) in subcopyChars"
+          :key="`subcopy-${index}`"
+          class="hero-section__subcopy-char"
+        >{{ char === " " ? "\u00A0" : char }}</span>
+      </p>
 
       <div class="hero-section__actions" aria-label="스토어와 영상 보기">
         <a class="store-link" href="https://play.google.com/store/apps/details?id=com.mgame.ghostsoulm&hl=ko" target="_blank" rel="noopener noreferrer" aria-label="Google Play에서 귀혼M 보기">

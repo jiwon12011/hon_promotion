@@ -481,6 +481,12 @@ a {
   opacity: 0;
 }
 
+.hero-section__subcopy-char {
+  display: inline-block;
+  transform-origin: 50% 80%;
+  will-change: transform, opacity;
+}
+
 .hero-section__actions {
   position: relative;
   z-index: 1;
