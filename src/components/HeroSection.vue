@@ -53,6 +53,11 @@ onMounted(() => {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   animationContext = gsap.context(() => {
+    const actionButtons = [
+      ...section.querySelectorAll(".store-link"),
+      section.querySelector(".trailer-button")
+    ].filter(Boolean);
+
     timeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out", force3D: true } });
     timeline
       .fromTo(section.querySelector(".hero-section__video"), { scale: 1.055, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.35, ease: "power2.out" })
@@ -61,9 +66,8 @@ onMounted(() => {
       .fromTo(section.querySelector(".hero-section__sunlight"), { scale: 0.82, opacity: 0, rotate: -3 }, { scale: 1, opacity: 1, rotate: 0, duration: 1.45, ease: "sine.out" }, 0.08)
       .fromTo(section.querySelector(".hero-section__logo"), { y: 22, scale: 0.58, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.88, ease: "elastic.out(1, 0.58)" }, 0.72)
       .fromTo(section.querySelectorAll(".copy-char"), { y: 30, opacity: 0, rotateX: -90, transformPerspective: 700 }, { y: 0, opacity: 1, rotateX: 0, duration: 0.6, stagger: 0.03, ease: "back.out(1.7)" }, 0.98)
-      .fromTo(section.querySelector(".hero-section__subcopy"), { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.58 }, 1.46)
-      .fromTo(section.querySelectorAll(".store-link"), { y: 34, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.62, stagger: 0.1, ease: "back.out(1.45)" }, 1.68)
-      .fromTo(section.querySelector(".trailer-button"), { y: 28, scale: 0.88, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.58, ease: "back.out(1.6)" }, 1.86)
+      .fromTo(section.querySelector(".hero-section__subcopy"), { y: 24, opacity: 0, filter: "blur(5px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.82, ease: "power2.out" }, 2.34)
+      .fromTo(actionButtons, { y: 52, scale: 0.88, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.92, stagger: 0.16, ease: "elastic.out(1, 0.62)" }, 2.68)
       .fromTo(section.querySelector(".hero-section__glint"), { xPercent: -140, opacity: 0 }, { xPercent: 140, opacity: 0.54, duration: 1.05, ease: "power2.inOut" }, 1.08);
 
     if (!prefersReducedMotion) {
