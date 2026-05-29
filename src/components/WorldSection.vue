@@ -50,13 +50,17 @@ async function playIntro() {
 
 onMounted(() => {
   const section = sectionRef.value;
+  const towerGlowElements = section.querySelectorAll(".world-section__tower-aura, .world-section__tower-ribbon, .world-section__tower-streak");
+  const sideCharacters = section.querySelectorAll(".world-section__character--green, .world-section__character--purple");
 
   timeline = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
   timeline
+    .set(towerGlowElements, { autoAlpha: 0 })
     .fromTo(section.querySelector(".world-section__bg"), { scale: 1.08, filter: "saturate(0.85) brightness(0.72)" }, { scale: 1, filter: "saturate(1.08) brightness(1)", duration: 1.65, ease: "power2.out" })
     .fromTo(section.querySelector(".world-section__tower"), { opacity: 0, filter: "brightness(1.45) blur(5px)" }, { opacity: 1, filter: "brightness(1) blur(0px)", duration: 1.05, ease: "power2.out" }, 0.12)
     .fromTo(section.querySelector(".world-section__right-tree"), { x: 60, y: -24, opacity: 0, rotate: 2 }, { x: 0, y: 0, opacity: 1, rotate: 0, duration: 1.05, ease: "power3.out" }, 0.22)
-    .fromTo(section.querySelector(".world-section__tower-aura"), { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "sine.out" }, 0.22)
+    .fromTo(section.querySelector(".world-section__tower-aura"), { scale: 0.55, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2, ease: "sine.out" }, 1.05)
+    .fromTo(section.querySelectorAll(".world-section__tower-ribbon, .world-section__tower-streak"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.42, stagger: 0.04, ease: "sine.out" }, 1.18)
     .fromTo(section.querySelectorAll(".world-section__island"), { y: -28, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.82, stagger: 0.13, ease: "back.out(1.6)" }, 0.34)
     .fromTo(section.querySelector(".world-section__index"), { x: -28, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55 }, 0.42)
     .fromTo(section.querySelector(".world-section__heading"), { x: -52, opacity: 0, clipPath: "inset(0 100% 0 0)" }, { x: 0, opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "expo.out", onComplete() { gsap.set(section.querySelector(".world-section__heading"), { clearProps: "clipPath" }); } }, 0.58)
@@ -80,11 +84,12 @@ onMounted(() => {
       duration: 0.88,
       ease: "expo.out"
     }, 1.08)
-    .fromTo(section.querySelector(".world-section__trial-button"), { y: 22, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.52, ease: "back.out(1.8)" }, 1.42)
     .fromTo(section.querySelector(".world-section__reward-strip"), { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: 0.62 }, 1.48)
     .fromTo(section.querySelectorAll(".reward-card"), { y: 22, scale: 0.62, opacity: 0, rotate: -8 }, { y: 0, scale: 1, opacity: 1, rotate: 0, duration: 0.52, stagger: 0.08, ease: "back.out(2.1)" }, 1.62)
-    .fromTo(section.querySelectorAll(".world-section__character"), { y: 70, x: 34, scale: 0.88, opacity: 0 }, { y: 0, x: 0, scale: 1, opacity: 1, duration: 0.78, stagger: 0.1, ease: "back.out(1.55)" }, 1.72)
-    .fromTo(section.querySelectorAll(".world-section__spark"), { y: 18, scale: 0, opacity: 0 }, { y: -10, scale: 1, opacity: 1, duration: 0.56, stagger: 0.06, ease: "back.out(2)" }, 1.9);
+    .fromTo(section.querySelector(".world-section__character--pink"), { y: 120, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.78, ease: "back.out(1.65)" }, 1.72)
+    .fromTo(sideCharacters, { y: 118, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.76, ease: "back.out(1.55)" }, 1.88)
+    .fromTo(section.querySelectorAll(".world-section__spark"), { y: 18, scale: 0, opacity: 0 }, { y: -10, scale: 1, opacity: 1, duration: 0.56, stagger: 0.06, ease: "back.out(2)" }, 2.04)
+    .fromTo(section.querySelector(".world-section__trial-button"), { y: 36, scale: 0.92, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.58, ease: "back.out(1.85)" }, 2.34);
 
   observer = new IntersectionObserver(([entry]) => {
     if (entry.isIntersecting) playIntro();
