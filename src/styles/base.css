@@ -4077,6 +4077,12 @@ a {
     display: block;
   }
 
+  .world-section__trial-scroll {
+    width: min(560px, 94%);
+    margin-top: clamp(-76px, -4vh, -48px);
+    margin-left: clamp(-48px, -2.5vw, -28px);
+  }
+
   .monster-dex__character-img {
     bottom: 0;
     left: 59%;
