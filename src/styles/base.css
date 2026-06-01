@@ -4079,7 +4079,7 @@ a {
 
   .world-section__trial-scroll {
     width: min(560px, 94%);
-    margin-top: clamp(-55px, -3vh, -32px);
+    margin-top: clamp(-42px, -2.3vh, -22px);
     margin-left: clamp(-48px, -2.5vw, -28px);
   }
 
