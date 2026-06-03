@@ -5,6 +5,8 @@ import MonsterDexSection from "@/components/MonsterDexSection.vue";
 import OstSection from "@/components/OstSection.vue";
 import WorldSection from "@/components/WorldSection.vue";
 import { useFullPage } from "@/composables/useFullPage";
+import { getNotice, logPageVisit, logSectionDwell } from "@/utils/adminStorage";
+import { onMounted, ref, watch } from "vue";
 
 const { currentIndex, goTo } = useFullPage();
 
@@ -15,10 +17,49 @@ const navItems = [
   { id: "monster-dex", label: "요괴도감" },
   { id: "ost", label: "OST" }
 ];
+
+const SECTION_IDS = navItems.map((n) => n.id);
+const MIN_DWELL_MS = 2000;
+
+const notice = ref({ text: "", enabled: false });
+const noticeDismissed = ref(false);
+
+let sectionEnterTime = Date.now();
+
+onMounted(() => {
+  logPageVisit();
+  sectionEnterTime = Date.now();
+  notice.value = getNotice();
+});
+
+watch(currentIndex, (newIdx, oldIdx) => {
+  const durationMs = Date.now() - sectionEnterTime;
+  const sectionId = SECTION_IDS[oldIdx];
+  if (sectionId && durationMs >= MIN_DWELL_MS) {
+    logSectionDwell(sectionId, durationMs);
+  }
+  sectionEnterTime = Date.now();
+});
 </script>
 
 <template>
   <main class="promotion-page" aria-label="귀혼M 프로모션">
+    <Transition name="notice-banner">
+      <div
+        v-if="notice.enabled && notice.text && !noticeDismissed"
+        class="notice-banner"
+        role="status"
+      >
+        <span class="notice-banner__text">{{ notice.text }}</span>
+        <button
+          class="notice-banner__close"
+          type="button"
+          aria-label="공지 닫기"
+          @click="noticeDismissed = true"
+        />
+      </div>
+    </Transition>
+
     <nav class="section-nav" aria-label="섹션 이동">
       <button
         v-for="(item, index) in navItems"

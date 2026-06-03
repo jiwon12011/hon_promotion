@@ -1,5 +1,6 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from "vue";
+import { logPreorderClick } from "@/utils/adminStorage";
 import { gsap } from "gsap";
 import bgSkyUrl from "@/assets/images/section2-bg-sky.webp";
 import towerUrl from "@/assets/images/section2-tower-cut.webp";
@@ -162,7 +163,7 @@ onBeforeUnmount(() => {
       />
     </div>
 
-    <a class="world-section__trial-button" href="https://game.naver.com/lounge/ghostsoulm/board/detail/7630457" target="_blank" rel="noopener noreferrer" aria-label="탑 도전하기">
+    <a class="world-section__trial-button" href="https://game.naver.com/lounge/ghostsoulm/board/detail/7630457" target="_blank" rel="noopener noreferrer" aria-label="탑 도전하기" @click="logPreorderClick">
       <img :src="trialButtonUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
     </a>
 

@@ -19,7 +19,10 @@ module.exports = (_env, argv) => {
   const isProduction = argv.mode === "production";
 
   return {
-    entry: path.resolve(__dirname, "src/main.js"),
+    entry: {
+      main: path.resolve(__dirname, "src/main.js"),
+      admin: path.resolve(__dirname, "src/admin/main.js"),
+    },
     output: {
       filename: "assets/js/[name].[contenthash].js",
       path: path.resolve(__dirname, "dist"),
@@ -52,7 +55,13 @@ module.exports = (_env, argv) => {
     plugins: [
       new VueLoaderPlugin(),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "public/index.html")
+        template: path.resolve(__dirname, "public/index.html"),
+        chunks: ["main"],
+      }),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, "public/admin.html"),
+        filename: "admin.html",
+        chunks: ["admin"],
       }),
       new CopyPublicAssetsPlugin()
     ],
@@ -60,7 +69,11 @@ module.exports = (_env, argv) => {
       host: "127.0.0.1",
       port: 5173,
       hot: true,
-      historyApiFallback: true,
+      historyApiFallback: {
+        rewrites: [
+          { from: /^\/admin(\.html)?$/, to: "/admin.html" },
+        ],
+      },
       static: {
         directory: path.resolve(__dirname, "public")
       }
