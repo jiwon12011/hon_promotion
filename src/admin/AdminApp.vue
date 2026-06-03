@@ -49,6 +49,11 @@ function tryLogin() {
   }
 }
 
+function loginAsDemo() {
+  pin.value = ADMIN_PIN;
+  tryLogin();
+}
+
 function logout() {
   sessionStorage.removeItem(SESSION_KEY);
   isAuthed.value = false;
@@ -147,6 +152,8 @@ onMounted(() => {
         <p v-if="pinError" class="auth-error">PIN이 올바르지 않습니다.</p>
         <button class="auth-btn" type="submit">로그인</button>
       </form>
+      <div class="auth-divider"><span>또는</span></div>
+      <button class="demo-btn" type="button" @click="loginAsDemo">데모로 체험하기</button>
     </div>
   </div>
 
@@ -414,6 +421,42 @@ textarea, input { font: inherit; }
 }
 
 .auth-btn:hover { filter: brightness(1.1); }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 0;
+  color: #3a3e4a;
+  font-size: 12px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  content: "";
+}
+
+.demo-btn {
+  width: 100%;
+  height: 44px;
+  margin-top: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: transparent;
+  color: #7a7e8a;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 150ms, border-color 150ms, background 150ms;
+}
+
+.demo-btn:hover {
+  color: #c8ccd8;
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+}
 
 /* ── LAYOUT ── */
 .admin-layout {
