@@ -43,8 +43,17 @@ function waitForImages(section) {
   return Promise.race([loaded, new Promise(resolve => setTimeout(resolve, 2000))]);
 }
 
+const prefersReducedMotion =
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 async function playIntro() {
   if (!timeline) return;
+  // 모션 최소화 사용자에게는 시네마틱 인트로 대신 최종 상태로 바로 보여준다.
+  if (prefersReducedMotion) {
+    timeline.progress(1);
+    return;
+  }
   await waitForImages(sectionRef.value);
   timeline.restart();
 }

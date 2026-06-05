@@ -46,6 +46,73 @@ let idleTweens = [];
 let dustTimer;
 let fireTimer;
 let handleMouseMove;
+let sealAudioCtx;
+
+// 요괴 성격에 맞춘 봉인 해제 음색 (에셋 없이 Web Audio로 합성) — id별로 다른 소리
+const SEAL_SOUNDS = {
+  1: { vibrate: 12, voices: [ // 네코: 귀여운 두 음 츳츳
+    { type: "sine", from: 880, to: 1320, dur: 0.22, gain: 0.13 },
+    { type: "sine", from: 1320, to: 1720, dur: 0.16, gain: 0.08, delay: 0.11 }
+  ] },
+  2: { vibrate: [10, 24, 10], voices: [ // 깨부리: 불꽃 크래클(하강 톱니)
+    { type: "sawtooth", from: 540, to: 150, dur: 0.2, gain: 0.12 }
+  ] },
+  3: { vibrate: 8, voices: [ // 어린숭숭: 소심하고 부드러운
+    { type: "sine", from: 500, to: 396, dur: 0.42, gain: 0.09 }
+  ] },
+  4: { vibrate: 12, voices: [ // 산고: 물방울 보글
+    { type: "sine", from: 980, to: 520, dur: 0.28, gain: 0.12 },
+    { type: "sine", from: 640, to: 880, dur: 0.14, gain: 0.06, delay: 0.16 }
+  ] },
+  5: { vibrate: [16, 30, 16], voices: [ // 도깨비: 묵직한 펀치
+    { type: "square", from: 210, to: 130, dur: 0.22, gain: 0.13 }
+  ] },
+  6: { vibrate: 14, voices: [ // 전갈신: 날카롭게 치솟는 독침
+    { type: "sawtooth", from: 600, to: 1500, dur: 0.24, gain: 0.1 }
+  ] },
+  7: { vibrate: 10, voices: [ // 구미호: 신비한 배음(완전5도)
+    { type: "triangle", from: 990, to: 1188, dur: 0.5, gain: 0.1 },
+    { type: "triangle", from: 1485, to: 1620, dur: 0.5, gain: 0.05, delay: 0.04 }
+  ] },
+  8: { vibrate: [22, 40, 22], voices: [ // 강시: 공허한 저음 쿵
+    { type: "triangle", from: 150, to: 82, dur: 0.4, gain: 0.13 }
+  ] }
+};
+
+function playSealFeedback(monster) {
+  const config = SEAL_SOUNDS[monster?.id] ?? SEAL_SOUNDS[1];
+
+  if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function") {
+    navigator.vibrate(config.vibrate ?? 14);
+  }
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    if (!sealAudioCtx) sealAudioCtx = new Ctx();
+    if (sealAudioCtx.state === "suspended") sealAudioCtx.resume();
+
+    const ctx = sealAudioCtx;
+    const start = ctx.currentTime;
+    config.voices.forEach((voice) => {
+      const t0 = start + (voice.delay ?? 0);
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = voice.type;
+      osc.frequency.setValueAtTime(voice.from, t0);
+      if (voice.to && voice.to !== voice.from) {
+        osc.frequency.exponentialRampToValueAtTime(voice.to, t0 + voice.dur);
+      }
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(voice.gain, t0 + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + voice.dur);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t0);
+      osc.stop(t0 + voice.dur + 0.03);
+    });
+  } catch {
+    /* 오디오 미지원 환경은 무시 */
+  }
+}
 
 function createBurst(target, count = 18) {
   const root = sectionRef.value;
@@ -134,6 +201,7 @@ async function selectMonster(monster, event) {
   }
 
   selectedId.value = monster.id;
+  playSealFeedback(monster);
   await nextTick();
   const wrapper = root?.querySelector(".monster-dex__character");
   const character = root?.querySelector(".monster-dex__character-img");
@@ -365,6 +433,8 @@ onBeforeUnmount(() => {
   if (dustTimer) window.clearInterval(dustTimer);
   if (fireTimer) window.clearInterval(fireTimer);
   if (handleMouseMove) window.removeEventListener("mousemove", handleMouseMove);
+  sealAudioCtx?.close?.();
+  sealAudioCtx = undefined;
 });
 </script>
 

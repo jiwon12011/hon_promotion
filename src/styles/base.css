@@ -23,6 +23,19 @@
   box-sizing: border-box;
 }
 
+/* 키보드 포커스 표시 — 마우스 클릭에는 안 뜨고 Tab 탐색에만 노출 (WCAG 2.4.7) */
+:focus-visible {
+  outline: 2px solid rgba(255, 211, 122, 0.95);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :focus-visible {
+    transition: outline-offset 120ms ease;
+  }
+}
+
 html {
   min-width: 320px;
   color: #fff;
@@ -157,7 +170,7 @@ a {
   border-radius: 999px;
   background: transparent;
   cursor: pointer;
-  filter: drop-shadow(0 0 8px rgba(255, 211, 122, 0.22));
+  filter: drop-shadow(0 0 8px rgba(255, 211, 122, 0.48));
   transition: transform 180ms ease, filter 180ms ease;
 }
 
@@ -681,7 +694,6 @@ a {
   width: min(90vw, 1280px);
   max-height: 90vh;
   border-radius: 8px;
-  outline: none;
 }
 
 .trailer-modal__close {
@@ -1406,7 +1418,7 @@ a {
 }
 
 .feature-row + .feature-row {
-  padding-top: clamp(8px, 0.8vw, 13px);
+  padding-top: clamp(12px, 1.2vw, 18px);
   border-top: 1px solid rgba(100, 62, 34, 0.18);
 }
 
@@ -1417,7 +1429,7 @@ a {
   height: clamp(50px, 3.25vw, 64px);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 25%, #654025, #2a170e);
-  box-shadow: inset 0 0 0 2px rgba(255, 216, 147, 0.2), 0 8px 12px rgba(67, 37, 17, 0.26);
+  box-shadow: inset 0 0 0 1px rgba(255, 216, 147, 0.45), 0 8px 16px rgba(0, 0, 0, 0.32);
   color: #ffe5b6;
   font-size: 27px;
   animation: featureIconPulse 2.8s ease-in-out infinite;
@@ -1526,7 +1538,7 @@ a {
 }
 
 .world-section__reward-strip p {
-  margin: -35px 0 6px;
+  margin: -18px 0 12px;
   color: #f0d391;
   font-family: "GapyeongHanseokbongBigBrush", serif;
   font-size: clamp(21px, 1.42vw, 29px);
@@ -1537,7 +1549,7 @@ a {
 .world-section__rewards {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 7px;
+  gap: 12px;
 }
 
 .reward-card {
@@ -1653,9 +1665,36 @@ a {
   animation-delay: -2s;
 }
 
+/* 직업 컬러를 부드럽게 보간하기 위해 커스텀 프로퍼티를 색상 타입으로 등록 */
+@property --job-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #65d35f;
+}
+
 .job-section {
   isolation: isolate;
   background: #11100d;
+  transition: --job-color 0.4s ease;
+}
+
+/* A. 활성 직업 컬러가 배경에 은은하게 번지는 ambient 레이어 */
+.job-section__color-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 64% at 72% 58%, var(--job-color) 0%, transparent 62%),
+    radial-gradient(40% 50% at 18% 30%, var(--job-color) 0%, transparent 70%);
+  opacity: 0.16;
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .job-section {
+    transition: none;
+  }
 }
 
 .job-section__bg,
@@ -1830,13 +1869,13 @@ a {
 .job-section__info {
   display: grid;
   grid-template-columns: 58px 1fr;
-  gap: 16px;
+  gap: 20px;
   align-items: center;
   width: min(370px, 100%);
   margin-top: clamp(110px, 13.4vh, 154px);
-  padding: 13px 16px;
-  border-left: 2px solid rgba(241, 200, 117, 0.56);
-  background: linear-gradient(90deg, rgba(15, 13, 10, 0.52), rgba(15, 13, 10, 0.08));
+  padding: 13px 18px;
+  border-left: 3px solid rgba(241, 200, 117, 0.72);
+  background: linear-gradient(90deg, rgba(20, 18, 14, 0.68), rgba(20, 18, 14, 0.12));
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.22));
 }
 
@@ -3591,6 +3630,7 @@ a {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  contain: paint;
   background: #09060a;
   color: #f8dfaa;
 }
@@ -3599,11 +3639,32 @@ a {
   display: none;
 }
 
+/* G. 재생 중 음악에 반응하는 웨이브폼 (하단 가로 띠, 콘텐츠 뒤) */
+.ost-section__wave {
+  position: absolute;
+  right: 4%;
+  bottom: 0;
+  left: 4%;
+  z-index: -1;
+  width: 92%;
+  height: clamp(120px, 18vh, 220px);
+  pointer-events: none;
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ost-section__wave {
+    display: none;
+  }
+}
+
 .ost-section__bg,
 .ost-section__shade,
 .ost-section__particles,
 .ost-section__track-effects,
-.ost-section__menu,
 .ost-section__title,
 .ost-section__turntable,
 .ost-section__playlist {
@@ -3621,7 +3682,7 @@ a {
   z-index: -3;
   object-position: right top;
   filter: saturate(var(--ost-sat, 1.12)) hue-rotate(var(--ost-hue, 0deg)) brightness(var(--ost-bright, 1.1)) contrast(1.04);
-  transition: filter 520ms ease;
+  transition: filter 900ms ease;
 }
 
 .ost-section__shade {
@@ -3632,7 +3693,7 @@ a {
     radial-gradient(ellipse at 58% 52%, var(--ost-tint, rgba(255, 190, 86, 0.18)), transparent 48%),
     linear-gradient(90deg, #030205 0%, #030205 18%, rgba(3, 2, 5, 0.92) 28%, rgba(3, 2, 5, 0.44) 43%, rgba(3, 2, 5, 0.04) 62%, rgba(3, 2, 5, 0.22) 100%),
     linear-gradient(180deg, rgba(3, 2, 5, 0.06) 0%, rgba(3, 2, 5, 0.06) 52%, rgba(3, 2, 5, 0.78) 84%, #030205 100%);
-  transition: background 520ms ease, opacity 300ms ease;
+  transition: background 900ms ease, opacity 300ms ease;
 }
 
 .ost-section__particles {
@@ -3655,73 +3716,6 @@ a {
   background: #ffd783;
   box-shadow: 0 0 14px var(--ost-tint-strong, rgba(255, 185, 76, 0.9)), 0 0 32px var(--ost-tint, rgba(255, 126, 35, 0.42));
   opacity: 0.55;
-}
-
-.ost-section__menu {
-  left: clamp(34px, 4.2vw, 70px);
-  top: clamp(332px, 50vh, 430px);
-  z-index: 5;
-  display: grid;
-  gap: 5px;
-}
-
-.ost-section__menu-button {
-  position: relative;
-  display: grid;
-  grid-template-rows: 50px 16px;
-  place-items: center;
-  row-gap: 5px;
-  width: 62px;
-  height: 72px;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: #d9ae63;
-  font-family: inherit;
-  font-size: 0;
-  font-weight: 800;
-  cursor: pointer;
-  text-shadow: 0 0 18px rgba(255, 190, 85, 0.42);
-}
-
-.ost-section__menu-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50px;
-  height: 50px;
-  border: 1px solid rgba(214, 163, 78, 0.42);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(246, 184, 80, 0.14), rgba(9, 6, 10, 0.22) 72%);
-  box-shadow: inset 0 0 16px rgba(255, 206, 112, 0.08), 0 0 18px rgba(220, 151, 52, 0.12);
-  transform: translateX(-50%);
-}
-
-.ost-section__menu-button i {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  font-style: normal;
-  line-height: 1;
-}
-
-.ost-section__menu-button span {
-  position: relative;
-  font-size: 12px;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.ost-section__menu-button.is-active::before,
-.ost-section__menu-button:hover::before {
-  border-color: rgba(255, 205, 111, 0.95);
-  box-shadow: 0 0 22px rgba(255, 180, 57, 0.34), inset 0 0 18px rgba(255, 215, 120, 0.18);
 }
 
 .ost-section__title {
@@ -3775,18 +3769,49 @@ a {
 }
 
 .ost-section__turntable {
-  left: clamp(132px, 12.7vw, 218px);
+  left: clamp(40px, 6.2vw, 150px);
   top: clamp(310px, 39vh, 398px);
   z-index: 4;
-  width: clamp(315px, 25.5vw, 430px);
+  width: clamp(360px, 28vw, 500px);
   transform: translateY(30px);
 }
 
 .ost-section__disc {
   position: relative;
-  width: clamp(305px, 25vw, 420px);
+  width: clamp(350px, 27vw, 490px);
   aspect-ratio: 1;
   filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.56));
+}
+
+/* LP 표면 빛반사 — 회전하는 하이라이트 띠, 재생 중 더 또렷 */
+.ost-section__disc-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg,
+      rgba(255, 244, 214, 0.32) 20deg,
+      transparent 58deg,
+      transparent 180deg,
+      rgba(255, 232, 180, 0.18) 204deg,
+      transparent 250deg);
+  mix-blend-mode: screen;
+  opacity: 0.28;
+  transition: opacity 0.5s ease;
+  animation: ostDiscSheen 6s linear infinite;
+}
+
+.ost-section__disc.is-playing .ost-section__disc-sheen {
+  opacity: 0.62;
+}
+
+@keyframes ostDiscSheen {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ost-section__disc-spin {
@@ -3900,13 +3925,13 @@ a {
 
 .ost-section__tonearm {
   position: absolute;
-  top: -22px;
-  right: -42px;
+  top: -28px;
+  right: -36px;
   z-index: 3;
-  width: clamp(132px, 10.4vw, 184px);
+  width: clamp(154px, 12.2vw, 220px);
   height: auto;
   filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.54)) drop-shadow(0 0 13px rgba(255, 190, 86, 0.18));
-  transform-origin: 78% 10%;
+  transform-origin: 76% 12%;
   will-change: transform;
 }
 
@@ -4150,14 +4175,6 @@ a {
     left: 59%;
   }
 
-  .ost-section__menu {
-    left: clamp(86px, 6vw, 116px);
-  }
-
-  .ost-section__turntable {
-    left: clamp(162px, 13.8vw, 265px);
-  }
-
   .ost-section__playlist {
     right: clamp(86px, 6vw, 116px);
   }
@@ -4243,8 +4260,8 @@ a {
     width: calc(var(--effect-size) * 0.42);
     height: calc(var(--effect-size) * 4.2);
     border-radius: 999px;
-    background: linear-gradient(180deg, transparent, rgba(255, 220, 255, 0.95), rgba(147, 83, 255, 0.72), transparent);
-    box-shadow: 0 0 12px rgba(195, 118, 255, 0.86), 0 0 28px rgba(89, 184, 255, 0.28);
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 220, 255, 0.68) 28%, rgba(147, 83, 255, 0.48) 55%, transparent 100%);
+    box-shadow: 0 0 12px rgba(195, 118, 255, 0.58), 0 0 28px rgba(89, 184, 255, 0.16);
     animation: ostRiftFall var(--effect-duration) ease-in-out infinite;
     animation-delay: var(--effect-delay);
   }
@@ -4332,8 +4349,8 @@ a {
     width: calc(var(--effect-size) * 0.42);
     height: calc(var(--effect-size) * 4.2);
     border-radius: 999px;
-    background: linear-gradient(180deg, transparent, rgba(255, 220, 255, 0.95), rgba(147, 83, 255, 0.72), transparent);
-    box-shadow: 0 0 12px rgba(195, 118, 255, 0.86), 0 0 28px rgba(89, 184, 255, 0.28);
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 220, 255, 0.68) 28%, rgba(147, 83, 255, 0.48) 55%, transparent 100%);
+    box-shadow: 0 0 12px rgba(195, 118, 255, 0.58), 0 0 28px rgba(89, 184, 255, 0.16);
     animation: ostRiftFall var(--effect-duration) ease-in-out infinite;
     animation-delay: var(--effect-delay);
   }
@@ -5620,25 +5637,21 @@ a {
     display: none;
   }
 
-  .ost-section__menu {
-    display: none;
-  }
-
   .ost-section__turntable {
-    left: 46%;
+    left: 50%;
     top: 50%;
     bottom: auto;
     translate: -50% -50%;
     transform: translateY(0);
-    width: min(235px, 60vw);
+    width: min(270px, 68vw);
   }
 
   .ost-section__disc {
-    width: min(235px, 60vw);
+    width: min(270px, 68vw);
   }
 
   .ost-section__tonearm {
-    width: 102px;
+    width: 120px;
   }
 
   .ost-section__progress {

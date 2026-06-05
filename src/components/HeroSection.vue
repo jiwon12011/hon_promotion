@@ -1,6 +1,7 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
+import { lockFullPage, unlockFullPage } from "@/composables/useFullPage";
 import logoUrl from "@/assets/images/logo-cut.webp";
 import appleLogoUrl from "@/assets/images/apple-logo.webp";
 import playstoreIconUrl from "@/assets/images/playstore-icon.webp";
@@ -11,32 +12,61 @@ import trailerUrl from "@/assets/videos/tailer.mp4";
 const sectionRef = ref(null);
 const videoRef = ref(null);
 const trailerRef = ref(null);
+const modalRef = ref(null);
+const closeButtonRef = ref(null);
 const showTrailer = ref(false);
 let timeline;
 let animationContext;
 let removePointerMove;
+let lastFocusedElement = null;
 
 async function openTrailer() {
+  lastFocusedElement = document.activeElement;
   showTrailer.value = true;
+  lockFullPage(); // 모달 동안 배경 fullpage 스크롤 정지
   await nextTick();
   trailerRef.value?.play();
+  closeButtonRef.value?.focus(); // 포커스를 모달 안으로 이동
 }
 
 function closeTrailer() {
   trailerRef.value?.pause();
   if (trailerRef.value) trailerRef.value.currentTime = 0;
   showTrailer.value = false;
+  unlockFullPage();
+  // 모달을 연 트리거로 포커스 복원
+  lastFocusedElement?.focus?.();
+  lastFocusedElement = null;
+}
+
+function trapFocus(e) {
+  if (e.key !== "Tab" || !modalRef.value) return;
+  const focusables = modalRef.value.querySelectorAll(
+    'button, [href], video, input, [tabindex]:not([tabindex="-1"])'
+  );
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
 }
 
 function handleKeydown(e) {
-  if (e.key === "Escape" && showTrailer.value) closeTrailer();
+  if (!showTrailer.value) return;
+  if (e.key === "Escape") closeTrailer();
+  else if (e.key === "Tab") trapFocus(e);
 }
 
 const copyLines = [
   ["혼", "이", " ", "깨", "어", "나", "는", " ", "순", "간", ","],
   ["전", "설", "이", " ", "시", "작", "된", "다", "!"]
 ];
-const subcopyChars = Array.from("무협의 세계에서 펼쳐지는 귀혼M의 새로운 이야기");
+const subcopyChars = Array.from("千年의 봉인을 풀고, 너의 혼으로 운명을 베어라");
 
 const particles = Array.from({ length: 18 }, (_, index) => ({
   className: index % 3 === 0 ? "leaf" : "spark",
@@ -112,6 +142,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   removePointerMove?.();
   animationContext?.revert();
+  unlockFullPage();
   window.removeEventListener("keydown", handleKeydown);
 });
 </script>
@@ -126,7 +157,7 @@ onBeforeUnmount(() => {
       muted
       loop
       playsinline
-      preload="auto"
+      preload="metadata"
       :poster="heroPosterUrl"
       fetchpriority="high"
     />
@@ -166,7 +197,7 @@ onBeforeUnmount(() => {
         </span>
       </p>
 
-      <p class="hero-section__subcopy" aria-label="무협의 세계에서 펼쳐지는 귀혼M의 새로운 이야기">
+      <p class="hero-section__subcopy" aria-label="천년의 봉인을 풀고, 너의 혼으로 운명을 베어라">
         <span
           v-for="(char, index) in subcopyChars"
           :key="`subcopy-${index}`"
@@ -194,8 +225,8 @@ onBeforeUnmount(() => {
 
   <Teleport to="body">
     <Transition name="trailer-modal">
-      <div v-if="showTrailer" class="trailer-modal" @click.self="closeTrailer" role="dialog" aria-modal="true" aria-label="트레일러">
-        <button class="trailer-modal__close" type="button" @click="closeTrailer" aria-label="닫기" />
+      <div v-if="showTrailer" ref="modalRef" class="trailer-modal" @click.self="closeTrailer" role="dialog" aria-modal="true" aria-label="트레일러">
+        <button ref="closeButtonRef" class="trailer-modal__close" type="button" @click="closeTrailer" aria-label="닫기" />
         <video
           ref="trailerRef"
           class="trailer-modal__video"

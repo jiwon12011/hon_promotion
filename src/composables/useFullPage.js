@@ -7,7 +7,25 @@ gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
 const currentIndex = ref(0);
 const isMoving = ref(false);
+let isLocked = false;
 let sections = [];
+
+// 모달 등 오버레이가 열려 있을 때 fullpage 휠/키/터치 네비를 일시 정지한다.
+export function lockFullPage() {
+  isLocked = true;
+}
+
+export function unlockFullPage() {
+  isLocked = false;
+}
+
+// 폼 컨트롤·버튼·링크 등 포커스된 인터랙티브 요소에 키 입력을 양보한다.
+function isInteractiveTarget(target) {
+  if (!(target instanceof Element)) return false;
+  return Boolean(
+    target.closest("input, textarea, select, button, a, [contenteditable=''], [contenteditable='true']")
+  );
+}
 let navButtons = [];
 let sectionTriggers = [];
 let touchStartY = 0;
@@ -45,6 +63,7 @@ function moveTo(index) {
 }
 
 function handleWheel(event) {
+  if (isLocked) return;
   event.preventDefault();
   if (isMoving.value) return;
 
@@ -61,6 +80,10 @@ function handleWheel(event) {
 }
 
 function handleKeydown(event) {
+  if (isLocked) return;
+  // 버튼/링크/폼에 포커스가 있으면 Space·화살표를 가로채지 않는다 (예: OST 재생 버튼).
+  if (isInteractiveTarget(event.target)) return;
+
   const nextKeys = ["ArrowDown", "PageDown", " "];
   const prevKeys = ["ArrowUp", "PageUp"];
 
@@ -76,11 +99,13 @@ function handleKeydown(event) {
 }
 
 function handleTouchStart(event) {
+  if (isLocked) return;
   touchStartY = event.touches[0]?.clientY ?? 0;
   touchDeltaY = 0;
 }
 
 function handleTouchMove(event) {
+  if (isLocked) return;
   const currentY = event.touches[0]?.clientY ?? touchStartY;
   touchDeltaY = touchStartY - currentY;
 
@@ -90,6 +115,7 @@ function handleTouchMove(event) {
 }
 
 function handleTouchEnd(event) {
+  if (isLocked) return;
   const touchEndY = event.changedTouches[0]?.clientY ?? 0;
   const delta = touchDeltaY || touchStartY - touchEndY;
 

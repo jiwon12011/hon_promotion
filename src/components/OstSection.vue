@@ -15,68 +15,32 @@ const ostAudioUrl = `${publicBase}/assets/videos/section5-ost-audio.m4a`;
 const peaceVillageStartTime = 29 * 60 + 17;
 
 const tracks = [
-  { title: "귀혼의 전설", subtitle: "달빛 아래 깨어난 첫 여정", startTime: 0, thumbnail: thumbOneUrl, effect: "spark" },
-  { title: "선선의 길", subtitle: "푸른 밤을 건너는 발걸음", startTime: 92, thumbnail: thumbTwoUrl, effect: "leaf" },
-  { title: "전투의 서막", subtitle: "붉은 협곡에 울리는 결의", startTime: 184, thumbnail: thumbThreeUrl, effect: "ember" },
-  { title: "평화로운 마을", subtitle: "등불 사이로 흐르는 기억", startTime: peaceVillageStartTime, thumbnail: peaceVillageThumbUrl, effect: "lantern" },
-  { title: "운명의 소용돌이", subtitle: "보랏빛 균열 너머의 선율", startTime: 368, thumbnail: thumbFiveUrl, effect: "rift" }
-];
-
-const moods = [
   {
-    label: "테마",
-    icon: "♪",
-    trackIndex: 0,
-    vars: {
-      "--ost-hue": "0deg",
-      "--ost-sat": "1.16",
-      "--ost-bright": "1.08",
-      "--ost-tint": "rgba(255, 190, 86, 0.18)",
-      "--ost-tint-strong": "rgba(255, 211, 119, 0.24)"
-    }
+    title: "귀혼의 전설", subtitle: "달빛 아래 깨어난 첫 여정", startTime: 0, thumbnail: thumbOneUrl, effect: "spark",
+    vars: { "--ost-hue": "0deg", "--ost-sat": "1.08", "--ost-bright": "1.04", "--ost-tint": "rgba(255, 190, 86, 0.13)", "--ost-tint-strong": "rgba(255, 211, 119, 0.17)" }
   },
   {
-    label: "전투",
-    icon: "♬",
-    trackIndex: 2,
-    vars: {
-      "--ost-hue": "-18deg",
-      "--ost-sat": "1.34",
-      "--ost-bright": "0.98",
-      "--ost-tint": "rgba(255, 75, 52, 0.2)",
-      "--ost-tint-strong": "rgba(255, 111, 44, 0.28)"
-    }
+    title: "선선의 길", subtitle: "푸른 밤을 건너는 발걸음", startTime: 92, thumbnail: thumbTwoUrl, effect: "leaf",
+    vars: { "--ost-hue": "12deg", "--ost-sat": "1.1", "--ost-bright": "1.04", "--ost-tint": "rgba(91, 178, 155, 0.13)", "--ost-tint-strong": "rgba(111, 210, 181, 0.17)" }
   },
   {
-    label: "필드",
-    icon: "⌁",
-    trackIndex: 1,
-    vars: {
-      "--ost-hue": "22deg",
-      "--ost-sat": "1.2",
-      "--ost-bright": "1.08",
-      "--ost-tint": "rgba(91, 178, 155, 0.18)",
-      "--ost-tint-strong": "rgba(111, 210, 181, 0.24)"
-    }
+    title: "전투의 서막", subtitle: "붉은 협곡에 울리는 결의", startTime: 184, thumbnail: thumbThreeUrl, effect: "ember",
+    vars: { "--ost-hue": "-10deg", "--ost-sat": "1.14", "--ost-bright": "1.0", "--ost-tint": "rgba(255, 75, 52, 0.14)", "--ost-tint-strong": "rgba(255, 111, 44, 0.19)" }
   },
   {
-    label: "마을",
-    icon: "⌂",
-    trackIndex: 3,
-    vars: {
-      "--ost-hue": "8deg",
-      "--ost-sat": "1.12",
-      "--ost-bright": "1.14",
-      "--ost-tint": "rgba(255, 154, 72, 0.18)",
-      "--ost-tint-strong": "rgba(255, 200, 112, 0.25)"
-    }
+    title: "평화로운 마을", subtitle: "등불 사이로 흐르는 기억", startTime: peaceVillageStartTime, thumbnail: peaceVillageThumbUrl, effect: "lantern",
+    vars: { "--ost-hue": "6deg", "--ost-sat": "1.07", "--ost-bright": "1.06", "--ost-tint": "rgba(255, 154, 72, 0.13)", "--ost-tint-strong": "rgba(255, 200, 112, 0.17)" }
+  },
+  {
+    title: "운명의 소용돌이", subtitle: "보랏빛 균열 너머의 선율", startTime: 368, thumbnail: thumbFiveUrl, effect: "rift",
+    vars: { "--ost-hue": "-34deg", "--ost-sat": "1.12", "--ost-bright": "1.0", "--ost-tint": "rgba(150, 96, 255, 0.16)", "--ost-tint-strong": "rgba(190, 120, 255, 0.2)" }
   }
 ];
 
 const sectionRef = ref(null);
 const videoRef = ref(null);
+const waveCanvasRef = ref(null);
 const activeIndex = ref(0);
-const activeMoodIndex = ref(0);
 const isPlaying = ref(false);
 const hasInteracted = ref(false);
 const currentTime = ref(0);
@@ -86,7 +50,8 @@ const effectParticles = Array.from({ length: 30 }, (_, index) => index);
 
 const activeTrack = computed(() => tracks[activeIndex.value]);
 const activeEffect = computed(() => activeTrack.value.effect ?? "spark");
-const activeMoodVars = computed(() => moods[activeMoodIndex.value]?.vars ?? moods[0].vars);
+// 색감은 이제 선택된 트랙이 직접 가진다 (무드 메뉴 제거 → 트랙 선택이 색감 전환도 담당)
+const activeMoodVars = computed(() => activeTrack.value.vars ?? tracks[0].vars);
 
 let introTimeline;
 let cdRotation;
@@ -95,6 +60,91 @@ let restoreOnEnter = false;
 const toneArmRestRotation = -34;
 const toneArmPlayRotation = -13;
 
+// G. 웨이브폼 시각화 (AnalyserNode + Canvas)
+let waveCtx;
+let analyser;
+let sourceNode;
+let waveRaf = 0;
+let freqData;
+let reduceMotion = false;
+
+function ensureAudioGraph() {
+  const video = videoRef.value;
+  if (!video || analyser) return;
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    waveCtx = waveCtx || new Ctx();
+    sourceNode = waveCtx.createMediaElementSource(video);
+    analyser = waveCtx.createAnalyser();
+    analyser.fftSize = 128;
+    analyser.smoothingTimeConstant = 0.82;
+    // 그래프를 destination에 반드시 연결해야 소리가 유지된다
+    sourceNode.connect(analyser);
+    analyser.connect(waveCtx.destination);
+    freqData = new Uint8Array(analyser.frequencyBinCount);
+  } catch {
+    analyser = null;
+  }
+}
+
+function drawWave() {
+  const canvas = waveCanvasRef.value;
+  if (!canvas || !analyser || !freqData) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+  }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+
+  analyser.getByteFrequencyData(freqData);
+  const bins = freqData.length;
+  const gap = 3;
+  const barWidth = (w - gap * (bins - 1)) / bins;
+  const grad = ctx.createLinearGradient(0, h, 0, 0);
+  grad.addColorStop(0, "rgba(255, 196, 96, 0.18)");
+  grad.addColorStop(1, "rgba(255, 226, 150, 0.85)");
+  ctx.fillStyle = grad;
+
+  for (let i = 0; i < bins; i += 1) {
+    const value = freqData[i] / 255;
+    const barHeight = Math.max(2, value * h * 0.92);
+    const x = i * (barWidth + gap);
+    const y = h - barHeight;
+    const r = Math.min(barWidth / 2, 3);
+    ctx.beginPath();
+    if (typeof ctx.roundRect === "function") {
+      ctx.roundRect(x, y, barWidth, barHeight, r);
+    } else {
+      ctx.rect(x, y, barWidth, barHeight);
+    }
+    ctx.fill();
+  }
+
+  waveRaf = requestAnimationFrame(drawWave);
+}
+
+function startWave() {
+  if (reduceMotion || !analyser) return;
+  cancelAnimationFrame(waveRaf);
+  waveRaf = requestAnimationFrame(drawWave);
+}
+
+function stopWave() {
+  cancelAnimationFrame(waveRaf);
+  waveRaf = 0;
+  const canvas = waveCanvasRef.value;
+  const ctx = canvas?.getContext("2d");
+  if (canvas && ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 function moveToneArm(index, playing = isPlaying.value) {
   const root = sectionRef.value;
   const target = root?.querySelector(".ost-section__tonearm");
@@ -102,12 +152,16 @@ function moveToneArm(index, playing = isPlaying.value) {
 
   const targetRotation = playing ? toneArmPlayRotation + index * 4.2 : toneArmRestRotation;
   const targetX = playing ? -56 : -18;
-  const targetY = playing ? 18 : 0;
+  const settleY = playing ? 18 : 0;
 
-  gsap.timeline({ defaults: { ease: "power2.inOut" } })
-    .to(target, { y: playing ? 10 : 4, duration: 0.18 }, 0)
-    .to(target, { x: targetX, rotate: targetRotation, duration: 0.66 }, 0.08)
-    .to(target, { y: targetY, duration: 0.22, ease: "sine.out" }, 0.58);
+  // 실제 턴테이블처럼: ① 바늘 들어올림 → ② 새 위치로 스윙 → ③ 천천히 내려놓음
+  const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+  tl.to(target, { y: -12, rotate: targetRotation - 6, duration: 0.26, ease: "power2.out" }, 0);
+  tl.to(target, { x: targetX, rotate: targetRotation, duration: 0.5 }, 0.22);
+  tl.to(target, { y: settleY, duration: 0.36, ease: "sine.inOut" }, 0.64);
+  if (playing) {
+    tl.to(target, { rotate: targetRotation + 0.8, duration: 0.12, yoyo: true, repeat: 1, ease: "sine.inOut" }, 0.98);
+  }
 }
 
 async function startPlayback() {
@@ -124,6 +178,9 @@ async function startPlayback() {
     cdRotation?.play();
     moveToneArm(activeIndex.value, true);
     gsap.to(video, { volume: 0.86, duration: 0.8, ease: "power2.out" });
+    ensureAudioGraph();
+    if (waveCtx?.state === "suspended") waveCtx.resume();
+    startWave();
   } catch {
     isPlaying.value = false;
     cdRotation?.pause();
@@ -138,6 +195,7 @@ function pausePlayback(fade = true) {
   isPlaying.value = false;
   cdRotation?.pause();
   moveToneArm(activeIndex.value, false);
+  stopWave();
 
   if (!fade) {
     video.pause();
@@ -185,26 +243,6 @@ function selectTrack(index, autoplay = true) {
   if (autoplay) startPlayback();
 }
 
-function selectMood(index) {
-  const mood = moods[index];
-  if (!mood) return;
-
-  activeMoodIndex.value = index;
-  selectTrack(mood.trackIndex, true);
-
-  const root = sectionRef.value;
-  if (!root) return;
-
-  gsap.fromTo(root.querySelector(".ost-section__shade"),
-    { opacity: 0.72 },
-    { opacity: 1, duration: 0.42, ease: "power2.out" }
-  );
-  gsap.fromTo(root.querySelectorAll(".ost-section__light"),
-    { scale: 0.7, opacity: 0.18 },
-    { scale: 1, opacity: 0.62, stagger: 0.012, duration: 0.38, ease: "power2.out" }
-  );
-}
-
 function togglePlay() {
   if (isPlaying.value) {
     pausePlayback();
@@ -233,6 +271,7 @@ onMounted(() => {
   const root = sectionRef.value;
   const video = videoRef.value;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  reduceMotion = prefersReducedMotion;
   if (!root || !video) return;
 
   video.volume = 0;
@@ -248,7 +287,6 @@ onMounted(() => {
   introTimeline
     .fromTo(root.querySelector(".ost-section__bg"), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.45 })
     .fromTo(root.querySelector(".ost-section__title"), { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.82 }, 0.35)
-    .fromTo(root.querySelectorAll(".ost-section__menu-button"), { x: -28, opacity: 0 }, { x: 0, opacity: 1, stagger: 0.08, duration: 0.42 }, 0.65)
     .fromTo(root.querySelector(".ost-section__turntable"), { x: -90, y: 56, opacity: 0 }, { x: 0, y: 30, opacity: 1, duration: 0.92 }, 0.72)
     .fromTo(root.querySelector(".ost-section__tonearm"), { x: 18, rotate: -52, opacity: 0 }, { x: -12, rotate: toneArmRestRotation, opacity: 1, duration: 0.78, ease: "back.out(1.6)" }, 1)
     .fromTo(root.querySelectorAll(".ost-section__track"), { y: 45, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.55 }, 1.05)
@@ -297,6 +335,10 @@ onBeforeUnmount(() => {
   introTimeline?.kill();
   cdRotation?.kill();
   pausePlayback(false);
+  stopWave();
+  waveCtx?.close?.();
+  waveCtx = undefined;
+  analyser = null;
 });
 </script>
 
@@ -350,20 +392,6 @@ onBeforeUnmount(() => {
       />
     </div>
 
-    <aside class="ost-section__menu" aria-label="OST 메뉴">
-      <button
-        v-for="(mood, index) in moods"
-        :key="mood.label"
-        class="ost-section__menu-button"
-        :class="{ 'is-active': activeMoodIndex === index }"
-        type="button"
-        @click="selectMood(index)"
-      >
-        <i aria-hidden="true">{{ mood.icon }}</i>
-        <span>{{ mood.label }}</span>
-      </button>
-    </aside>
-
     <div class="ost-section__title">
       <div class="ost-section__index" aria-hidden="true">
         <strong>05</strong>
@@ -373,8 +401,10 @@ onBeforeUnmount(() => {
       <p>전설의 여정을 더욱 깊게 만드는 귀혼의 음악을 감상하세요.</p>
     </div>
 
+    <canvas ref="waveCanvasRef" class="ost-section__wave" aria-hidden="true"></canvas>
+
     <div class="ost-section__turntable">
-      <div class="ost-section__disc">
+      <div class="ost-section__disc" :class="{ 'is-playing': isPlaying }">
         <div class="ost-section__disc-spin">
           <img class="ost-section__cd" :src="cdUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
           <div
@@ -383,6 +413,7 @@ onBeforeUnmount(() => {
             aria-hidden="true"
           ></div>
         </div>
+        <div class="ost-section__disc-sheen" aria-hidden="true"></div>
         <button
           class="ost-section__cd-center"
           type="button"

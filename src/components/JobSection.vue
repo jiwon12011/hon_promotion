@@ -658,9 +658,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section ref="sectionRef" class="section job-section" data-section="jobs" aria-labelledby="job-title">
+  <section
+    ref="sectionRef"
+    class="section job-section"
+    data-section="jobs"
+    aria-labelledby="job-title"
+    :style="{ '--job-color': activeJob.color }"
+  >
     <img class="job-section__bg" :src="bgUrl" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low" />
     <div class="job-section__shade" aria-hidden="true" />
+    <div class="job-section__color-wash" aria-hidden="true" />
     <div class="job-section__effects" aria-hidden="true" />
     <div class="job-section__ambient" aria-hidden="true">
       <span
